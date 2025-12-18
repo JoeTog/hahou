@@ -1,0 +1,16 @@
+//
+//  MemInfoCell.h
+//  nationalFitness
+//
+//  Created by liumac on 15-3-16.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "NFHeadImageView.h"
+
+@interface MemInfoCell : UICollectionViewCell
+@property (weak, nonatomic) IBOutlet NFHeadImageView *headImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *stopTalkView;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@end

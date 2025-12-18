@@ -1,0 +1,69 @@
+//
+//  ScrollVChanged.h
+//  BigWheat
+//
+//  Created by bwfstu on 16/7/2.
+//  Copyright © 2016年 Joe. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#pragma mark - 代理【当点击事件出来后，通知界面变动】
+@protocol ScrollVChangedDelegate <NSObject>
+
+@optional
+-(void)ScrollChangeClick:(UIButton *)sender;
+@optional
+-(void)ScrollSecondChangeClick:(UIButton *)sender;
+
+@end
+
+
+@interface ScrollVChanged : UIView<UIScrollViewDelegate>
+
+@property(weak,nonatomic)id<ScrollVChangedDelegate> delegate;
+
+//以背景颜色 替换 indexlabel
+-(instancetype)initWithCreateScrollerWithOutIndexLabelWithFrame:(CGRect)frame andChange:(NSArray *)array AndRadius:(CGFloat)num;
+
+//button变换
+-(instancetype)initWithCreateScrollerWithFrame:(CGRect)frame andChange:(NSArray *)array;
+/**
+ *是否需要各个按钮之间的线，默认为YES
+ */
+@property(nonatomic)BOOL isNeedLine;
+
+-(instancetype)initWithCreateSecondScrollerWithFrame:(CGRect)frame andChange:(NSArray *)array;
+/**
+ *是否需要各个按钮之间的线，默认为YES
+ */
+@property(nonatomic)BOOL isNeedLineSec;
+
+//-(void)ScrollerChange;
+
+@property(nonatomic,assign)int index;
+@property(nonatomic,strong)UILabel *label;
+
+//scrollV
+//scrollView
+@property(nonatomic,strong)UIScrollView *scrollView;
+@property(nonatomic,strong)UIPageControl *pageControl;
+@property(nonatomic,assign)NSInteger countOfImage;
+//定时器
+@property(nonatomic,strong)NSTimer *timer;
+
+//scrollV和pageControl
+-(UIScrollView *)createScrollViewWithImageArr:(NSArray *)imageArray andFrame:(CGRect)frame contentSizeWidth:(CGFloat)width;
+
+
+
+-(UIView *)decreatePageControlWithFrame:(CGRect)frame;
+
+
+//头上scrollV(多label、button)
+@property(nonatomic,strong)UILabel *bottomLabel;
+
+-(UIScrollView *)createScrollViewWithTextArr:(NSArray *)textArr andFrame:(CGRect)frame;
+
+
+
+@end

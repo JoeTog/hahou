@@ -1,0 +1,357 @@
+//
+//  NFActivityParser.h
+//  nationalFitness
+//
+//  Created by 程long on 14-11-8.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFBaseParser.h"
+#import "NFActivityEntity.h"
+
+@interface NFActivityParser : NFBaseParser
+
+//同意加入拒绝加入移除成员接口
++ (id)agreeOrRemoveClubRequestParser:(NSData*)data;
+
+//俱乐部活动列表
++ (id)clubActivityListParser:(NSData*)data;
+
+//场馆活动列表
++ (id)VenueActivityParser:(NSData*)data;
+
+//上传徽章
++(id)uploadBadgeParser:(NSData *)data;
+
+//个人信息主页
++ (id)personalHomePageParser:(NSData *)data;
+
+//活动焦点图接口
++ (id)focusActivityListParser:(NSData*)data;
+
+//咨询教练
++ (id)consultCoachParser:(NSData *)data;
+
+//俱乐部焦点图接口
++ (id)focusClubListParser:(NSData*)data;
+
+//教练详情信息
++ (id)getCoachDetailInfoParser:(NSData *)data;
+
+//教练焦点图接口
++ (id)focusCoachListParser:(NSData*)data;
+
+//创建俱乐部接口
++ (id)creatClubRequestParser:(NSData*)data;
+
+//创建活动接口
++ (id)creatActRequestParser:(NSData*)data;
+
+//我的卡包
++ (id)myCardRequestParser:(NSData*)data;
+
+//场馆焦点图接口
++ (id)focusVenueListParser:(NSData*)data;
+
+//场馆列表
++ (id)getVenuesListParser:(NSData *)data;
+
+//活动列表
++ (id)activityListParser:(NSData*)data;
+
+//活动类型列表
++ (id)codemxListParser:(NSData*)data;
+
+//获取活动相册列表
++ (id)albumListParser:(NSData*)data;
+
+//获取活动计划
++ (id)activityPlanParser:(NSData*)data;
+
+//获取活动报名成员
++ (id)activityMemberParser:(NSData*)data;
+
+//获取未审核活动成员
++ (id)activityUncheckMemberParser:(NSData*)data;
+
+//推到热点
++ (id)pushToHotParser:(NSData*)data;
+
+//同意加入拒绝加入接口
++ (id)agreeOrUnagreeRequestParser:(NSData*)data;
+
+//加入活动
++ (id)jionActivityParser:(NSData*)data;
+
+//是否同意加入活动社团
++ (id)checkJoinActParser:(NSData*)data;
+
+//点击焦点图查看活动详情
++ (id)activityInfoParser:(NSData*)data;
+
+//获取活动创建人信息与该活动信息
++ (id)activityExtendInfoParser:(NSData*)data;
+
+//查询最近的评论
++ (id)maxCommentParser:(NSData*)data;
+
+//默认相册列表
++ (id)defaultAlbumListParser:(NSData*)data;
+
+//创建关注
++ (id)createAttentParser:(NSData*)data;
+
+//取消关注
++ (id)deleteAttentParser:(NSData*)data;
+
+//评论列表
++ (id)commentListParser:(NSData*)data;
+
+//发表评论
++ (id)createCommentParser:(NSData*)data;
+
+//取消评论
++ (id)deleteCommentParser:(NSData*)data;
+
+//创建相册点赞
++ (id)createAlbumPraiseParser:(NSData*)data;
+
+//取消相册点赞
++ (id)deleteAlbumPraiseParser:(NSData*)data;
+
+//删除相册
++ (id)deleteAlbumParser:(NSData*)data;
+
+//相册图片
++ (id)albumPhotoListParser:(NSData*)data;
+
+//发布相册
++ (id)createAlbumParser:(NSData*)data;
+
+//新场地列表
++ (id)czGetBookListParser:(NSData *)data;
+
+//发布相册之前上传单张照片
++ (id)uploadAlbumParser:(NSData*)data;
+
+//主题秀瀑布流
++ (id)queryShowListParser:(NSData*)data;
+
+//赞列表
++ (id)praiseListParser:(NSData *)data;
+
+//获取点赞评论详情
++ (id)seeDetailInfoParser:(NSData *)data;
+
+//排序类型
++ (id)sortTypeListParser:(NSData *)data;
+
+//获取动态详情
++ (id)getDynamicInfoParse:(NSData *)data;
+
+//用户预定场馆的列表
++ (id)getAllBookVenueList:(NSData *)data;
+
+//首页焦点图列表
++ (id)homeFocusListParse:(NSData *)data;
+
+//编辑活动
++(id)editActivityParser:(NSData *)data;
+
+//退出活动
++(id)exitActivityParser:(NSData *)data;
+
+//删除活动
++ (id)deleteActivityParser:(NSData*)data;
+
+//获取俱乐部列表
++ (id)getClubListParser:(NSData *)data;
+
+//查询与用户相关的社团列表
++ (id)getUserRelClubListParser:(NSData *)data;
+
+//点击俱乐部图片或焦点图查看俱乐部详情
++ (id)clubInfoParser:(NSData *)data;
+
+//查看场馆详情
++ (id)venuesInfoParser:(NSData *)data;
+
+//分场馆列表
++ (id)getSubVenuesListParser:(NSData *)data;
+
+//场馆最近预定人
++ (id)venueBookUserParser:(NSData *)data;
+
+//分场馆惠卡
++ (id)otherVenueParser:(NSData *)data;
+
+//查看子场馆详情
++ (id)subVenuesInfoParser:(NSData *)data;
+
+//预定场次
++ (id)sellOrdersParser:(NSData *)data;
+
+//预定场地最新版
++ (id)bookVenuesParser:(NSData *)data;
+
+// 提交订单 新版
++ (id)submitoOrdersParser:(NSData *)data;
+//支付生成订单
++ (id)createOrderInfoParser:(NSData *)data;
+
+//开始支付
++ (id)paymentOrderParser:(NSData *)data;
+
+//支付倒计时
++ (id)payTimeOrderPayser:(NSData *)data;
+
+//教练列表
++ (id)getCoachListParser:(NSData *)data;
+
+//获取CITY列表
++ (id)getCityListParser:(NSData *)data;
+
+//预订列表
++ (id)getBookListParser:(NSData *)data;
+
+//首页新闻热点列表
++ (id)queryHotListParser:(NSData *)data;
+
+// 推荐热点
++ (id)queryReferralHotListParser:(NSData *)data;
+
+//公告动态列表
++ (id)clubAnnounceListParser:(NSData *)data;
+
+//发表公共
++ (id)createAnnounceParser:(NSData *)data;
+
+//新俱乐部列表
++ (id)clubMemListParser:(NSData *)data;
+
+//查看可拼场地列表
++ (id)canPCListParser:(NSData *)data;
+
+//发布拼场
++ (id)creatPCParser:(NSData *)data;
+
+//获取所有拼场信息
++ (id)getAllPCListParser:(NSData *)data;
+
+//获取所有片场
++ (id)getAllVenueSellsParser:(NSData *)data;
+
+//自测列表
++ (id)selfTestParser:(NSData *)data;
+
+//删除动态
++ (id)deleteDynamicParser:(NSData*)data;
+
+//常州赛事焦点图
++ (id)czEventFocusParser:(NSData *)data;
+
+//常州赛事列表
++ (id)czEventListParser:(NSData *)data;
+
+//常州赛务列表
++ (id)czServiceParser:(NSData *)data;
+
+//常州培训列表
++ (id)czTrainListParser:(NSData *)data;
+
+//常州培训焦点图
++ (id)czTrainFouceParser:(NSData *)data;
+
+//常州培训详情
++ (id)czTrainDetailParser:(NSData *)data;
+
+//培训班列表
++ (id)classListParser:(NSData *)data;
+
+//常州培训教练列表
++ (id)czTrainCoachListParser:(NSData *)data;
+
+//我的培训
++ (id)myClassParser:(NSData *)data;
+
+//常州赛事详情
++ (id)czEventDetailParser:(NSData *)data;
+
+//常州榜单排名列表
++ (id)czRankingListParser:(NSData *)data;
+
+//常州志愿者报名
++ (id)czSingUpParser:(NSData *)data;
+
+//常州报名人社团
++ (id)czGetClubListParser:(NSData *)data;
+
+//全局搜索
++ (id)searchAllParser:(NSData *)data;
+
+//热门搜索
++ (id)searchHotParser:(NSData *)data;
+
+//认证
++ (id)authParser:(NSData *)data;
+
+// 热门组织
++ (id)hotOrgParser:(NSData *)data;
+// 搜索组织
++ (id)searchOrgParser:(NSData *)data;
+
+#pragma mark - new
+
+//获取用户权限
++ (id)UserRolesParser:(NSData*)data;
+
+#pragma mark - 新版活动列表相关
+//活动列表
++ (id)xinActListParser:(NSData *)data;
+
+//关联活动
++ (id)relationActListParser:(NSData *)data;
+
+//新版加入活动
++ (id)xinJoinActParser:(NSData *)data;
+
+//有兴趣
++ (id)hasIntristingParser:(NSData *)data;
+
+//取消兴趣
++ (id)cancelIntristingParser:(NSData *)data;
+
+//退出活动
++ (id)exitActParser:(NSData *)data;
+
+//举报图片上传
++ (id)reportPicParser:(NSData *)data;
+
+//保存邀请记录
++ (id)saveInviteParser:(NSData *)data;
+
+//场馆下的订单
++ (id)allVenOrderParser:(NSData *)data;
+
+//去打球首页接口
++ (id)playBallHomeParser:(NSData *)data;
+
+//首页部分信息
++ (id)homeNewInfoParser:(NSData *)data;
+
+//获取用户类型
++(id)userTypeParser:(NSData *)data;
+
+//公众号主页信息
++ (id)publicNoInfoParser:(NSData *)data;
+
+//公众号收藏夹
++ (id)publicNoCollParser:(NSData *)data;
+
+//公众号隶属社团列表
++ (id)publicNoClubListParser:(NSData *)data;
+
+//公众号咱这么活动
++ (id)publicNoActListParser:(NSData *)data;
+
+@end

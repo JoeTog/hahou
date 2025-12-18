@@ -1,0 +1,246 @@
+//
+//  NFMyWalletParser.m
+//  nationalFitness
+//
+//  Created by 林向阳 on 15/9/22.
+//  Copyright © 2015年 chenglong. All rights reserved.
+//
+
+#import "NFMyWalletParser.h"
+#import "NFMyWalletEntity.h"
+#import "NFActivityEntity.h"
+
+@implementation NFMyWalletParser
+
+// 我的主页
++ (id)myHomePageParser:(NSData *)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+// 修改设置手势密码
+
++ (id)changeSetGustureParser:(NSData *)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+// 验证手势密码
++ (id)checkGustureParser:(NSData *)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+//钱包主页信息
++ (id)getMyWalletInfoParser:(id)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        if ([bodyDic objectForKey:kWrongDlog]) {
+            return nil;
+        }
+        
+        NSDictionary * entiDic = [bodyDic objectForKey:@"myMoney"];
+        MyWalletEntity * entity = [[MyWalletEntity alloc]init];
+//        entity.accountBalance = [entiDic objectForKey:@"accountBalance"];
+        entity.walletId = [entiDic objectForKey:@"id"];
+        entity.actTotalBalance = [entiDic objectForKey:@"actTotalBalance"];
+        entity.isTelephoneBinding = [entiDic objectForKey:@"isTelephoneBinding"];
+        entity.isGustUnlockPswUsed = [entiDic objectForKey:@"isGustUnlockPswUsed"];
+        entity.gustureUnlockPsw = [entiDic objectForKey:@"gustureUnlockPsw"];
+        entity.isPayPswUsed = [entiDic objectForKey:@"isPayPswUsed"];
+        
+        entity.actRealBalance = [entiDic objectForKey:@"actRealBalance"];
+        entity.actGiveBalance = [entiDic objectForKey:@"actGiveBalance"];
+        
+        return entity;
+    }
+    
+    return nil;
+}
+
+//消费明细
++ (id)costDetailListParser:(id)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        if ([bodyDic objectForKey:kWrongDlog]) {
+            return nil;
+        }
+        
+        NSArray * cosumeArr = [bodyDic objectForKey:@"myMoneyTransDetailList"];
+        NSMutableArray * retMuarr = [[NSMutableArray alloc]initWithCapacity:0];
+        for (NSDictionary * dic in cosumeArr) {
+            CosumeEntity * entity = [[CosumeEntity alloc]init];
+            entity.transTotalAmt = [dic objectForKey:@"transTotalAmt"];
+            entity.transDate = [dic objectForKey:@"transDate"];
+            entity.transWay = [dic objectForKey:@"transWay"];
+            entity.transRemark = [dic objectForKey:@"transRemark"];
+            entity.createDate = [dic objectForKey:@"createDate"];
+            entity.transTypeName = [dic objectForKey:@"transTypeName"];
+            
+            [retMuarr addObject:entity];
+        }
+        
+        return retMuarr;
+    }
+    
+    return nil;
+}
+
+// 我的钱包信息
++ (id)myWalletParser:(id)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+//设置修改支付密码
++ (id)setPayPswParser:(id)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+//验证付密码
++ (id)checkPayPswParser:(id)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+//获取验证码
++ (id)getYzmParser:(id)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+//获取支付方式
++ (id)getRechargeTypeParser:(id)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        if ([bodyDic objectForKey:kWrongDlog]) {
+            return nil;
+        }
+        
+        NSArray * cosumeArr = [bodyDic objectForKey:@"payTypeList"];
+        NSMutableArray * retMuarr = [[NSMutableArray alloc]initWithCapacity:0];
+        for (NSDictionary * dic in cosumeArr) {
+            SportsPaymentTypeEntity * entity = [[SportsPaymentTypeEntity alloc]init];
+            entity.typeId = [dic objectForKey:@"paytypeId"];
+            entity.type = [dic objectForKey:@"payType"];
+            entity.name = [dic objectForKey:@"payName"];
+            entity.remark = [dic objectForKey:@"remark"];
+            entity.picPath = [dic objectForKey:@"picPath"];
+            entity.sortNum = [dic objectForKey:@"sortNum"];
+            
+            entity.payAddress = [dic objectForKey:@"payAddress"];
+            entity.backendURL = [dic objectForKey:@"backendURL"];
+            
+            entity.frontendUrl = [dic objectForKey:@"frontendUrl"];
+            entity.sign = [dic objectForKey:@"frontendUrl"];
+            entity.versionNum = [dic objectForKey:@"versionNum"];
+            
+            [retMuarr addObject:entity];
+        }
+        
+        return retMuarr;
+    }
+    
+    return nil;
+}
+
+//钱包支付
++  (id)walletPayParser:(id)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+
+//取现
++ (id)takeMoneyParser:(id)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+//充值
++ (id)rechargeMoneyParser:(id)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+@end

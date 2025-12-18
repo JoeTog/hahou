@@ -1,0 +1,52 @@
+//
+//  NFPointMallManager.m
+//  nationalFitness
+//
+//  Created by 林向阳 on 15/6/12.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import "NFPointMallManager.h"
+#import "NFPointMallParser.h"
+#import "NFPointMallRequest.h"
+
+@implementation NFPointMallManager
+
+//获取省市区
+- (void)getDistrictManager {
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFPointMallRequest gotRequest:infoDic andURL:getAlldistrictProUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFPointMallParser getDistrictProListParser:data];
+        return bizData;
+    };
+}
+
+//确认购买
+- (void)sureBuyManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFPointMallRequest gotRequest:infoDic andURL:sureBuyUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFPointMallParser sureBuyParser:data];
+        return bizData;
+    };
+}
+
+@end

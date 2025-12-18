@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="GroupMemberCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="50" height="80"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="50" height="80"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="head_man0" translatesAutoresizingMaskIntoConstraints="NO" id="KYC-aD-1J8" customClass="NFHeadImageView">
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="0hG-Bw-URR"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昵称" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xB8-5m-5hX">
+                        <rect key="frame" x="11.5" y="55" width="27" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="45" id="DVI-qi-sNJ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guanliBage" translatesAutoresizingMaskIntoConstraints="NO" id="K6d-nv-tRZ">
+                        <rect key="frame" x="35" y="0.0" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="fp7-9x-st2"/>
+                            <constraint firstAttribute="width" constant="15" id="rIY-p0-KmG"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="xB8-5m-5hX" firstAttribute="top" secondItem="KYC-aD-1J8" secondAttribute="bottom" constant="5" id="0Jl-RT-UVY"/>
+                <constraint firstItem="K6d-nv-tRZ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="11x-45-mxf"/>
+                <constraint firstItem="xB8-5m-5hX" firstAttribute="centerX" secondItem="KYC-aD-1J8" secondAttribute="centerX" id="1vi-pN-k55"/>
+                <constraint firstAttribute="trailing" secondItem="KYC-aD-1J8" secondAttribute="trailing" id="8x1-kA-Jf3"/>
+                <constraint firstAttribute="trailing" secondItem="K6d-nv-tRZ" secondAttribute="trailing" id="BnE-LO-lno"/>
+                <constraint firstItem="KYC-aD-1J8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="SvZ-PQ-966"/>
+                <constraint firstItem="KYC-aD-1J8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="y5q-zW-aQ0"/>
+            </constraints>
+            <connections>
+                <outlet property="badgeimageV" destination="K6d-nv-tRZ" id="ehl-4j-6Qv"/>
+                <outlet property="headImageV" destination="KYC-aD-1J8" id="weW-kk-DQj"/>
+                <outlet property="nickNamelabel" destination="xB8-5m-5hX" id="EKO-5s-7ez"/>
+            </connections>
+            <point key="canvasLocation" x="137.59999999999999" y="154.72263868065968"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="guanliBage" width="24" height="24"/>
+        <image name="head_man0" width="182" height="182"/>
+    </resources>
+</document>

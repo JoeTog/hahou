@@ -1,0 +1,18 @@
+//
+//  VenuesEntity.m
+//  nationalFitness
+//
+//  Created by liumac on 15/8/12.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import "VenuesEntity.h"
+
+@implementation VenuesEntity
+
+@end
+
+
+@implementation VenuesDateEntity
+
+@end

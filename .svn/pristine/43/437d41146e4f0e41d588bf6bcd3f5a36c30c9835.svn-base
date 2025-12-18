@@ -1,0 +1,71 @@
+//
+//  NFbaseNavViewController.m
+//  nationalFitness
+//
+//  Created by 程long on 14-11-5.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFbaseNavViewController.h"
+#import "PublicDefine.h"
+
+@interface NFbaseNavViewController ()<UIGestureRecognizerDelegate>
+
+@end
+
+@implementation NFbaseNavViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"组-8"]
+                            forBarPosition:UIBarPositionAny
+                                barMetrics:UIBarMetricsDefault];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [UIColor whiteColor],
+                                NSForegroundColorAttributeName, nil];
+    [self.navigationBar setTitleTextAttributes:attributes];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    // Do any additional setup after loading the view.
+    
+//    // 获取系统自带滑动手势的target对象
+//    id target = self.interactivePopGestureRecognizer.delegate;
+//    // 创建全屏滑动手势，调用系统自带滑动手势的target的action方法
+//    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:target action:@selector(handleNavigationTransition:)];
+//    // 设置手势代理，拦截手势触发
+//    pan.delegate = self;
+//    // 给导航控制器的view添加全屏滑动手势
+//    [self.view addGestureRecognizer:pan];
+    // 设置代理，使返回手势生效
+    self.interactivePopGestureRecognizer.delegate = self;
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if (1 == self.viewControllers.count)
+    {
+//        viewController.hidesBottomBarWhenPushed = YES;
+        self.tabBarController.tabBar.hidden = YES;
+    }
+    
+    [super pushViewController:viewController animated:animated];
+}
+
+#pragma mark - <UIGestureRecognizerDelegate>
+
+/**
+ * 每当用户触发[返回手势]时都会调用一次这个方法
+ * 返回值:返回YES,手势有效; 返回NO,手势失效
+ */
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    // 如果当前显示的是第一个子控制器,就应该禁止掉[返回手势]
+    return self.viewControllers.count > 1;
+}
+
+@end

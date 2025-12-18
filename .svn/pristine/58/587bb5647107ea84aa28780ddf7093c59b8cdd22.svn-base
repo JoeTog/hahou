@@ -1,0 +1,33 @@
+//
+//  RecentConEntity.m
+//  nationalFitness
+//
+//  Created by liumac on 15/5/14.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import "RecentConEntity.h"
+#import "NFPacketHandler.h"
+#import "KeepAppBox.h"
+
+@implementation FriendEntity
+
+- (id)initWithUser:(NSString *)userid
+{
+    self = [super self];
+    if (self)
+    {
+        self.jid = userid;
+        self.jidStr = userid;
+        self.nickName = [KeepAppBox checkValueForkey:EMClient_User_NickNAME(userid)];
+        if (self.nickName.length == 0)
+        {
+            self.nickName = userid;
+        }
+        self.displayName = self.nickName;
+//        self.smallPicPath = [NSString stringWithFormat:@"%@%@/%@_small.jpg",EMClient_User_Head_Address,userid,userid];
+    }
+    return self;
+}
+
+@end

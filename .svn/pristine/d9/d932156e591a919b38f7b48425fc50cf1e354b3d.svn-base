@@ -1,0 +1,84 @@
+//
+//  NFMatchParser.h
+//  nationalFitness
+//
+//  Created by 林向阳 on 16/2/29.
+//  Copyright © 2016年 chenglong. All rights reserved.
+//
+
+#import "NFBaseParser.h"
+#import "NFMatchEntity.h"
+
+@interface NFMatchParser : NFBaseParser
+
+//赛事首页
++ (id)matchInfoParser:(NSData *)data;
+
+//队伍列表
++ (id)teamListParser:(NSData *)data;
+
+//赛事列表
++ (id)matchListParser:(NSData *)data;
+
+//待审核成员列表
++ (id)waitApplyParser:(NSData *)data;
+
+//审核成员
++ (id)checkApplyParser:(NSData *)data;
+
+//我的队伍
++ (id)myTeamParser:(NSData *)data;
+
+//赛事类型
++ (id)matchTypeParser:(id)data;
+
+//排位排名列表
++ (id)pwRankListParser:(id)data;
+
+//创建队伍
++ (id)creatMyTeamParser:(id)data;
+
+//参赛历史
++ (id)matchHistoryParser:(id)data;
+
+////赛事统计
++ (id)matchCountParser:(id)data;
+
+//加入队伍
++ (id)joinTeamParser:(id)data;
+
+//退出队伍
++ (id)exitTeamParser:(id)data;
+
+//解散队伍
++ (id)deleteTeamParser:(NSData *)data;
+
+//赛事提醒
++ (id)matchRemindParser:(NSData *)data;
+
+//赛事详情
++ (id)matchDetailParser:(NSData *)data;
+
+//赛事结果
++ (id)matchResultParser:(NSData *)data;
+
+//报名赛事
++ (id)joinMatchParser:(NSData *)data;
+
+//队伍详情
++ (id)teamInfoParser:(NSData *)data;
+
+//邀请好友
++ (id)inviteParser:(NSData *)data;
+
+//赛事列表实体
++ (id)competitionListParser:(NSData *)data;
+
+//赛事列表详情
++ (id)competitionInfoParser:(NSData *)data;
+
+//我的赛事
++ (id)mineCompetitionParser:(NSData *)data;
+
+
+@end

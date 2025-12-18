@@ -1,0 +1,22 @@
+//
+//  NFActivityData.h
+//  nationalFitness
+//
+//  Created by 程long on 14-11-8.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFDatabaseQueue.h"
+
+@interface NFActivityData : NFDatabaseQueue
+
+//插入缓存数据searchStr 文字，searchCode组织中用到的code，检索记录中用nil，modType模块民称
++ (BOOL)insertSearchCache: (NSString *)modType searchStr:(NSString *)searchStr searchCode:(NSString *)searchCode;
+
+//取出缓存数据
++ (NSMutableArray *)selectSearchCache: (NSString *)modType;
+
+//clear data
++(BOOL)clearSearchCache: (NSString *)modType;
+
+@end

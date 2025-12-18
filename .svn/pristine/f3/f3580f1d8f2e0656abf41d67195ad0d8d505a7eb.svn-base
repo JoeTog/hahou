@@ -1,0 +1,301 @@
+//
+//  DailyAdminTableViewController.m
+//  nationalFitness
+//
+//  Created by 童杰 on 2017/2/27.
+//  Copyright © 2017年 chenglong. All rights reserved.
+//
+
+#import "DailyAdminTableViewController.h"
+#import "MessageView.h"
+#import "MessageFootView.h"
+
+@interface DailyAdminTableViewController ()
+
+@end
+
+@implementation DailyAdminTableViewController{
+    
+    
+    IBOutlet UITableView *tableV_;
+    
+    //section1
+    //酷睿目标销量
+    __weak IBOutlet UILabel *totalGoalTextL_;
+    //酷睿实际销量
+    __weak IBOutlet UILabel *totalActualTextL_;
+    //酷睿达成率
+    __weak IBOutlet UILabel *totalReachTextL_;
+    //酷睿 酷睿目标销量 0
+    __weak IBOutlet UILabel *totalGoalNumL_;
+    //酷睿实际销量 0
+    __weak IBOutlet UILabel *totalActualNumL_;
+    //酷睿达成率 0
+    __weak IBOutlet UILabel *totalReachNumL_;
+    
+    //section2
+    //赛扬
+    __weak IBOutlet UILabel *saiyangTextL_;
+    //奔腾
+    __weak IBOutlet UILabel *bengtengTextL_;
+    //酷睿i3
+    __weak IBOutlet UILabel *i3TextL_;
+    //酷睿i5
+    __weak IBOutlet UILabel *i5TextL_;
+    
+    // 酷睿i7
+    __weak IBOutlet UILabel *i7TextL_;
+    
+    
+    //赛扬 0
+    __weak IBOutlet UILabel *saiyangNumL_;
+    //奔腾 0
+    __weak IBOutlet UILabel *bengtengNumL_;
+    //酷睿i3 0
+    __weak IBOutlet UILabel *i3NumL_;
+    //酷睿i5 0
+    __weak IBOutlet UILabel *i5NumL_;
+    //酷睿i7 0
+    __weak IBOutlet UILabel *i7NumL_;
+    
+    //section3
+    //跨区域扫描条码
+    __weak IBOutlet UILabel *saomiaoYTextL_;
+    //第一个月底整体达成
+    __weak IBOutlet UILabel *firstMonthTotalTextL_;
+    //第一个月底酷睿达成
+    __weak IBOutlet UILabel *firstMonthTextL_;
+    //第二个月底整体目标达成
+    __weak IBOutlet UILabel *secMonthTotalTextL_;
+    //第二个月底酷睿目标达成
+    __weak IBOutlet UILabel *secMonthTextL_;
+    
+    //跨区域扫描条码 0
+    __weak IBOutlet UILabel *saomiaoYNumL_;
+    //第一个月底整体达成 0
+    __weak IBOutlet UILabel *firstMonthTotalNumL_;
+    //第一个月底酷睿达成 0
+    __weak IBOutlet UILabel *firstMonthNumL_;
+    //第二个月底整体目标达成 0
+    __weak IBOutlet UILabel *secMonthTotalNumL_;
+    //第二个月底酷睿目标达成 0
+    __weak IBOutlet UILabel *secMonthNumL_;
+    
+    //section 4
+    //目标课程数
+    __weak IBOutlet UILabel *totalClassTextL_;
+    //目前完成情况
+    __weak IBOutlet UILabel *completeTextL_;
+    
+    //目标课程数 0
+    __weak IBOutlet UILabel *totalClassNumL_;
+    //目前完成情况 0
+    __weak IBOutlet UILabel *completeNumL_;
+    
+    //section5
+    //最大店面覆盖数量
+    __weak IBOutlet UILabel *coverShopTextL_;
+    //实际店面数量
+    __weak IBOutlet UILabel *actualCoverTextL_;
+    //覆盖店面达标数量
+    __weak IBOutlet UILabel *actualCoverCompleteTextL_;
+    
+    
+    
+    //最大店面覆盖数量 0
+    __weak IBOutlet UILabel *coverShopNumL_;
+    //实际店面数量 0
+    __weak IBOutlet UILabel *actualCoverNumL_;
+    //覆盖店面达标数量 0
+    __weak IBOutlet UILabel *actualCoverCompleteNumL_;
+    
+    
+    //section
+    //整体销量
+    __weak IBOutlet UILabel *totalSaleTextL_;
+    //酷睿销量
+    __weak IBOutlet UILabel *kuruiSaleTextL_;
+    //整体销量 0
+    __weak IBOutlet UILabel *totalSaleNumL_;
+    //酷睿销量 0
+    __weak IBOutlet UILabel *kuruiSaleNumL_;
+    
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [self loadViewIfNeeded];
+    NSLog(@"%f",tableV_.contentSize.height);
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = @"日常管理";
+    [self initUI];
+    
+    NSLog(@"%f",tableV_.contentSize.height);
+    
+    
+}
+
+- (void)backClicked
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)initUI{
+    #pragma mark - 设置UIBarButtonItem返回
+    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 20, 34)];
+    [backBtn setImage:[UIImage imageNamed:@"everyday1_return"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithCustomView:backBtn];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+    
+   
+    ViewBorderRadius(totalGoalTextL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(totalActualTextL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(totalReachTextL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(totalGoalNumL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(totalActualNumL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(totalReachNumL_, 0, 0.5, [UIColor lightGrayColor]);
+    
+    ViewBorderRadius(saiyangTextL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(bengtengTextL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(i3TextL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(i5TextL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(i7TextL_, 0, 0.5, [UIColor lightGrayColor]);
+    
+    ViewBorderRadius(saiyangNumL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(bengtengNumL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(i3NumL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(i5NumL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(i7NumL_, 0, 0.5, [UIColor lightGrayColor]);
+    
+    ViewBorderRadius(saomiaoYTextL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(firstMonthTotalTextL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(firstMonthTextL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(secMonthTotalTextL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(secMonthTextL_, 0, 0.5, [UIColor lightGrayColor]);
+    
+    ViewBorderRadius(saomiaoYNumL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(firstMonthTotalNumL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(firstMonthNumL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(secMonthTotalNumL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(secMonthNumL_, 0, 0.5, [UIColor lightGrayColor]);
+    
+    ViewBorderRadius(totalClassTextL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(completeTextL_, 0, 0.5, [UIColor lightGrayColor]);
+    
+    ViewBorderRadius(totalClassNumL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(completeNumL_, 0, 0.5, [UIColor lightGrayColor]);
+    
+    ViewBorderRadius(coverShopTextL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(actualCoverTextL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(actualCoverCompleteTextL_, 0, 0.5, [UIColor lightGrayColor]);
+    
+    ViewBorderRadius(coverShopNumL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(actualCoverNumL_, 0, 0.5, [UIColor lightGrayColor]);
+    ViewBorderRadius(actualCoverCompleteNumL_, 0, 0.5, [UIColor lightGrayColor]);
+    
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (self.isNeedView == 0) {
+        return 30;
+    }
+    return 0.1;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if (self.isNeedView == 0 || section != 5) {
+        return 0.1;
+    }
+    return 100;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if (self.isNeedView == 0) {
+        if (section == 0) {
+            UIView *messageV = [[[NSBundle mainBundle]loadNibNamed:@"MessageView" owner:nil options:nil] firstObject];
+            messageV.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
+            
+            return messageV;
+        }
+    }
+    return nil;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if (self.isNeedView == 1) {
+        if (section == 5) {
+            UIView *messageV = [[[NSBundle mainBundle]loadNibNamed:@"MessageFootView" owner:nil options:nil] firstObject];
+            messageV.frame = CGRectMake(0, 0, SCREEN_WIDTH, 100);
+            
+            return messageV;
+        }
+    }
+    return nil;
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+/*
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    
+    // Configure the cell...
+    
+    return cell;
+}
+*/
+
+/*
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return NO if you do not want the specified item to be editable.
+    return YES;
+}
+*/
+
+/*
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }   
+}
+*/
+
+/*
+// Override to support rearranging the table view.
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+}
+*/
+
+/*
+// Override to support conditional rearranging of the table view.
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return NO if you do not want the item to be re-orderable.
+    return YES;
+}
+*/
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

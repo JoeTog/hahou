@@ -1,0 +1,114 @@
+//
+//  RequestViewController.m
+//  nationalFitness
+//
+//  Created by 童杰 on 2017/2/25.
+//  Copyright © 2017年 chenglong. All rights reserved.
+//
+
+#import "RequestViewController.h"
+#import "NFMineManager.h"
+#import "NFMineEntity.h"
+#import "SVProgressHUD.h"
+
+@interface RequestViewController ()
+
+@end
+
+@implementation RequestViewController{
+    
+    __weak IBOutlet UITextView *textV_;
+    
+    
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    // Do any additional setup after loading the view.
+    
+    
+    
+}
+
+- (IBAction)RequestClick:(id)sender {
+    
+    [self GetRequest];
+    
+}
+
+- (void)GetRequest
+{
+    [SVProgressHUD show];
+    NSMutableDictionary *sendDic = [[NSMutableDictionary alloc] initWithCapacity:2];
+    [sendDic setObject:@"1" forKey:@"priceSortCode"];
+    [sendDic setObject:@"1" forKey:@"cardTypeCode"];
+    [sendDic setObject:@"10" forKey:@"pageSize"];
+    [sendDic setObject:@"1" forKey:@"pageNum"];
+    //1:票 2：卡 3：全部（备用）
+    [sendDic setObject:@"1" forKey:@"moudleType"];
+    
+    [NFMineManager execute:@selector(RequestManager) target:self callback:@selector(RequestManagerCallBack:) args:sendDic,nil];
+}
+- (void)RequestManagerCallBack:(id)data
+{
+    [SVProgressHUD dismiss];
+    
+    if (data)
+    {
+        //该处为一个dic
+        NSString *str = [self dictionaryToJson:data];
+        textV_.text = str;
+    }
+    else
+    {
+        [SVProgressHUD showInfoWithStatus:@""];
+    }
+    //下拉刷新变量设置成可刷新状态
+    //    needReloading_ = NO;
+    //    [self doneLoadingTableViewData];
+}
+
+//字典转string
+- (NSString*)dictionaryToJson:(NSDictionary *)dic
+{
+    NSError *parseError = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

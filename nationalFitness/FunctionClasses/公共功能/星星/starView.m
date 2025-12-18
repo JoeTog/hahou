@@ -1,0 +1,149 @@
+//
+//  starView.m
+//  星星
+//
+//  Created by bwfstu on 16/6/7.
+//  Copyright © 2016年 Joe. All rights reserved.
+//
+
+#import "starView.h"
+
+//#define JOESIZE [UIScreen mainScreen].bounds.size
+//#define JOESIZESCALE JOESIZE.width/320.0
+
+//#define starGAP 3.5*JOESIZESCALE
+//#define starGAPB 5*JOESIZESCALE
+
+
+#define starH 10.0
+
+@implementation starView{
+    //空的星星
+    UIImageView *starNull;
+    //实心星星的背景view 用于裁剪
+    UIView *foreView;
+    //实心星星
+    UIImageView *star;
+    
+    UIImage *back;
+    UIImage *fore;
+}
+
+//starView *starr = [[starView alloc] initWithFrame:CGRectMake(0, starViewCenter(15, 10), starViewWidth(3, 8), 50) STARGAP:3 STARHW:8];
+//[starr setStarValue:starValue];
+//[starView_ addSubview:starr];
+
+// starViewWidth(2, 10)计算starView的总宽度，10为starView的高度，后面2为星星间距，10为星星宽度，type1为男式样，2位女式样
+-(instancetype)initWithFrame:(CGRect)frame STARGAP:(CGFloat)gap STARHW:(CGFloat)heitAndWidth TYPE:(int)type{
+    self = [super initWithFrame:frame];
+    if (self) {
+        if (type == 1) {
+            //男
+            back = [UIImage imageNamed:@"培训-切片_65-30"];
+            fore = [UIImage imageNamed:@"培训-切片_65-28"];
+        }else if (type == 2){
+            //女
+            back = [UIImage imageNamed:@"培训-切片_65-23"];
+            fore = [UIImage imageNamed:@"培训-切片_65"];
+        }
+        else if (type == 3){
+            back = [UIImage imageNamed:@"培训-切片_25-10"];
+            fore = [UIImage imageNamed:@"培训-切片_25"];
+        }
+        for (int i=0; i<10; i++) {
+            starNull = [[UIImageView alloc] initWithFrame:CGRectMake((gap+heitAndWidth) * i +gap/2, 0, heitAndWidth, heitAndWidth)];
+            [starNull setImage:back];
+            [self addSubview:starNull];
+        }
+        foreView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        [self addSubview:foreView];
+        for (int i=0; i<10; i++) {
+            star = [[UIImageView alloc] initWithFrame:CGRectMake((gap+heitAndWidth) * i + gap/2, 0, +heitAndWidth, +heitAndWidth)];
+            [star setImage:fore];
+            [foreView addSubview:star];
+        }
+    }
+    return self;
+}
+
+
+
+//如果xib
+//-(instancetype)initWithCoder:(NSCoder *)aDecoder{
+//    self = [super initWithCoder:aDecoder];
+//    if (self) {
+//        _backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 63, 30)];
+//        _backImageView.image = [UIImage imageNamed:@"starback"];
+//        _foreImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 64, 30)];
+//        _foreImageView.image = [UIImage imageNamed:@"starfore"];
+//        
+//        
+//        [self addSubview:_backImageView];
+//        [self addSubview:_foreImageView];
+//    }
+//    return self;
+//
+//    
+//}
+
+-(void)setStarValue:(CGFloat)starValue{
+    CGRect frame = foreView.frame;
+    //
+    frame.size.width = frame.size.width * (starValue/10);
+    foreView.frame = frame;
+    foreView.clipsToBounds = YES;
+    
+}
+
+
+
+#pragma mark - 评论星级
+-(instancetype)initWithFrame:(CGRect)frame TYPE:(int)type clickBlock:(void(^)(NSInteger index))selectBlock{
+    if (self = [super initWithFrame:frame]) {
+        if (_selectStar != selectBlock) {
+            _selectStar = nil;
+            _selectStar = selectBlock;
+            
+        }
+        back = [UIImage imageNamed:@"培训-切片_25-10"];
+        fore = [UIImage imageNamed:@"培训-切片_25"];
+        //循环创建空星星
+        for (int i=0; i<10; i++) {
+            UIButton *starBtn= [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width/10.0 * i, 0, frame.size.width/10.0, frame.size.width/10.0)];
+            starBtn.tag = i+1;
+            [starBtn setImage:back forState:(UIControlStateNormal)];
+            [starBtn setImage:fore forState:(UIControlStateHighlighted)];
+            [starBtn addTarget:self action:@selector(starClick:) forControlEvents:(UIControlEventTouchDown)];
+            [self addSubview:starBtn];
+        }
+    }
+    return self;
+}
+
+-(void)starClick:(UIButton *)sender{
+    for (int j=0; j<10; j++) {
+        UIButton *starButton = [self viewWithTag:j+1];
+        [starButton setImage:back forState:(UIControlStateNormal)];
+    }
+    NSInteger index = sender.tag;
+    for (int i=0; i<index; i++) {
+        UIButton *starButton = [self viewWithTag:i+1];
+        [starButton setImage:fore forState:(UIControlStateNormal)];
+    }
+    //代码块调用
+    __weak starView *ws=self;
+    if (ws.selectStar) {
+        ws.selectStar(sender.tag);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+@end

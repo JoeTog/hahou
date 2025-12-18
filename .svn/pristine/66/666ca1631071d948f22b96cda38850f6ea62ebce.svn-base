@@ -1,0 +1,69 @@
+//
+//  NFShareMoodEntity.h
+//  nationalFitness
+//
+//  Created by wangping on 15/4/7.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface NFKCEntity : NSObject
+
+@end
+
+/**
+ *  课程entity
+ */
+@interface KCEntity : NSObject
+
+//	String		课程主键
+@property (nonatomic, strong) NSString *courseId;
+//	String		课程名称
+@property (nonatomic, strong) NSString *courseName;
+//	String		科目类别
+@property (nonatomic, strong) NSString *subject;
+//	String		报名人数
+@property (nonatomic, strong) NSString *joinNum;
+//	String		计划人数
+@property (nonatomic, strong) NSString *planNum;
+//	String		课程图片
+@property (nonatomic, strong) NSString *picPath;
+//	String		是否推荐 0:否 1：是
+@property (nonatomic, assign) BOOL isRecomm;
+//	String		学费
+@property (nonatomic, strong) NSString *studyCost;
+//  String       是否需要实名 0:否 1：是
+@property (nonatomic, strong) NSString *isCollect;
+
+//是否评论 0否1是
+@property (nonatomic, strong) NSString *commNum;
+
+//上课时间
+@property (nonatomic, strong) NSString *attendDate;
+//上课地点
+@property (nonatomic, strong) NSString *classAddress;
+//培训简介
+@property (nonatomic, strong) NSString *summary;
+//报名费
+@property (nonatomic, strong) NSString *applyCost;
+//是否可以报名 0：可以 1：不可以
+@property (nonatomic, strong) NSString *joinFlag;
+//经度
+@property (nonatomic, strong) NSString *longitude;
+//纬度
+@property (nonatomic, strong) NSString *latitude;
+//联系方式
+@property (nonatomic, strong) NSString *telPhone;
+//机构名称
+@property (nonatomic, strong) NSString *orgName;
+//报名时间
+@property (nonatomic, strong) NSString *canSignDate;
+
+
+//图片数组
+@property (nonatomic, strong) NSArray *picMapList;
+//相册数组
+@property (nonatomic, strong) NSArray *photoMapList;
+
+@end

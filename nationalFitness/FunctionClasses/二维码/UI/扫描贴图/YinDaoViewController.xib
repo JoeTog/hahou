@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YinDaoViewController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="yindaoImage" destination="uvd-Ha-EEV" id="VFO-n8-x59"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QRCodeScanViewController" translatesAutoresizingMaskIntoConstraints="NO" id="uvd-Ha-EEV">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="uvd-Ha-EEV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9ZX-lg-GVU"/>
+                <constraint firstAttribute="trailing" secondItem="uvd-Ha-EEV" secondAttribute="trailing" id="EhT-h6-Hf2"/>
+                <constraint firstAttribute="bottom" secondItem="uvd-Ha-EEV" secondAttribute="bottom" id="RE8-6V-ugV"/>
+                <constraint firstItem="uvd-Ha-EEV" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ntq-JV-y1B"/>
+            </constraints>
+            <point key="canvasLocation" x="269" y="323"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="QRCodeScanViewController" width="1080" height="1920"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

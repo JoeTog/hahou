@@ -1,0 +1,1505 @@
+//
+//  NFActivityEntity.h
+//  nationalFitness
+//
+//  Created by 程long on 14-11-8.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFBaseEntity.h"
+
+@interface NFActivityEntity : NSObject
+
+
+@end
+
+/**
+ *  俱乐部通告动态entity
+ */
+@interface announceEntity : NSObject
+
+//公告内容
+@property (nonatomic, strong) NSString *annouContent;
+//公告主键
+@property (nonatomic, strong) NSString *annouId;
+//俱乐部主键
+@property (nonatomic, strong) NSString *clubId;
+//发布时间月份
+@property (nonatomic, strong) NSString *releaDatem;
+//发布时间时分
+@property (nonatomic, strong) NSString *releaDates;
+//最后一条记录时间
+@property (nonatomic, strong) NSString *tempDate;
+//详情页地址
+@property (nonatomic, strong) NSString *editorHtml;
+//说明标题
+@property (nonatomic, strong) NSString *explainTitle;
+
+@end
+
+
+/**
+ *  活动焦点图entity
+ */
+@interface focusActivityEntity : NSObject
+
+// 大图
+@property (nonatomic, strong) NSString *bigPicPath;
+// 创建日期
+@property (nonatomic, strong) NSString *createDate;
+// 创建人
+@property (nonatomic, strong) NSString *createUser;
+// 活动ID
+@property (nonatomic, strong) NSString *fkId;
+// 图片ID
+@property (nonatomic, strong) NSString *picId;
+// 小图路径
+@property (nonatomic, strong) NSString *smallPicPath;
+// 更改日期
+@property (nonatomic, strong) NSString *updateUser;
+
+@end
+
+#pragma mark - 活动entity
+
+/**
+ *  活动entity
+ */
+//新增
+@interface activityEntity : NSObject
+
+//关联外检
+@property (nonatomic, strong) NSString * relFkId;
+//活动编号
+@property (nonatomic, strong) NSString *actId;
+//活动名称
+@property (nonatomic, strong) NSString *actName;
+//发起人类型 1.个人身份 2.社团  3:场地  4:公众号
+@property (nonatomic, strong)NSString * launchType;
+//活动类型1:普通活动 2：场地活动；3：社团活动；4：培训活动；5：赛事活动 6：走跑活动
+@property (nonatomic, strong)NSString * attCode;
+//活动类型
+@property (nonatomic, strong) NSString *sportType;
+//活动开始时间日
+@property (nonatomic, strong)NSString *startDateD;
+//活动开始时间月
+@property (nonatomic, strong)NSString *startDateM;
+//活动开始时间
+@property (nonatomic, strong) NSString *startDate;
+//活动结束时间
+@property (nonatomic, strong) NSString *endDate;
+//是否收费（0:不是，1:是）
+@property (nonatomic, strong) NSString *isToll;
+//人均费用
+@property (nonatomic, strong) NSString *perCost;
+//创建时间
+@property (nonatomic, strong) NSString *createDate;
+//活动群组ID
+@property (nonatomic, strong) NSString * actGroupId;
+//商品编号
+@property (nonatomic, strong) NSString * goodId;
+//是否允许重复报名0:否 1：是
+@property (nonatomic, strong) NSString * isRepApply;
+//加入活动是否要审核 0:不需要 1:需要
+@property (nonatomic, strong) NSString * isAddAudit;
+//报名时是否显示HTML页面 0:否 1:是
+@property (nonatomic, strong) NSString * isShowHtml;
+//详情HTML页面URL
+@property (nonatomic, strong) NSString * htmlUrl;
+//经度
+@property (nonatomic, assign) CGFloat longitude;
+//纬度
+@property (nonatomic, assign) CGFloat latitude;
+//活动图片
+@property (nonatomic, strong) NSString *actBigPicPath;
+//活动图片
+@property (nonatomic, strong) NSString *actSmallPicPath;
+//活动具体地址GPS
+@property (nonatomic, strong) NSString *actAddress;
+//用户输入的地址
+@property (nonatomic, strong) NSString *actPosition;
+//活动状态（0:招募中 1：进行中 2：结束 3：取消  ）
+@property (nonatomic, strong) NSString *status;
+//活动简介
+@property (nonatomic, strong) NSString *actDescription;
+//海报图片地址
+@property (nonatomic, strong) NSString *playPicPath;
+//海报链接地址
+@property (nonatomic, strong) NSString *trigPageUrl;
+//最小时间
+@property (nonatomic, strong) NSString *startVdate;
+//最大时间
+@property (nonatomic, strong) NSString *endVdate;
+//最小里程(公里)
+@property (nonatomic, strong) NSString *needSmiles;
+//最大里程(公里)
+@property (nonatomic, strong) NSString *needEmiles;
+//活动范围：1 公共的 2 私有的
+@property (nonatomic, strong) NSString * actRange;
+//是否按顺序 0:是 1:否
+@property (nonatomic, strong) NSString *isCurSort;
+//活动参加成员数
+@property (nonatomic, strong) NSString *activityNum;
+//兴趣人数
+@property (nonatomic, strong)NSString * attNum;
+//活动创建者ID（可能的情况：用户ID、社团ID、场馆ID）
+@property (nonatomic, strong)NSString * userId;
+//邀请数
+@property (nonatomic, strong)NSString * inviteNum;
+//活动创建者ID 可能的情况：用户ID、社团ID、场馆ID
+@property (nonatomic, strong) NSString *launchUserId;
+//活动创建人昵称
+@property (nonatomic, strong) NSString *nickName;
+//创建者显示图片
+@property (nonatomic, strong) NSString * userSmallPicPath;
+//创建者显示图片
+@property (nonatomic, strong) NSString * userBigPicPath;
+//是否有兴趣  0：已有；1：没有
+@property (nonatomic, strong) NSString * attFlag;
+//是否可报名  （0：已参加；1：没有参加；2：待审核 3：待支付）
+@property (nonatomic, strong) NSString * joinFlag;
+//天气
+@property (nonatomic, strong) NSString * weather;
+//时间差
+@property (nonatomic, strong) NSString * minusDay;
+//活动状态描述
+@property (nonatomic, strong) NSString * statusDesc;
+//状态描述下面显示的时间
+@property (nonatomic, strong) NSString * statusTime;
+//走跑活动倒计时(格式：XX天XX小时)
+@property (nonatomic, strong) NSString * countdown;
+//任务点列表
+//taskId	String		任务点ID
+//serialNumber	String		序号
+//taskName	String		任务名称
+//effectRange	String		有效范围
+//longiTude	String		经度
+//latiTude	String		纬度
+@property (nonatomic, strong) NSMutableArray * taskList;
+//是否是试跑  是否试跑:0:是 1:否
+@property (nonatomic, strong) NSString *isTryRun;
+//活动详情页
+@property (nonatomic, strong) NSString *orgCode;
+//是否需要添加报名用户信息收集界面
+@property (nonatomic, strong) NSString *isCollect;
+
+
+//创建时间，用于分页
+@property (nonatomic, strong)NSString * pCreateDate;
+
+//活动开始时间之时间点
+@property (nonatomic, strong)NSString * startTime;
+//开始报名时间
+@property (nonatomic, strong)NSString * signupBegin;
+//截止报名时间
+@property (nonatomic, strong)NSString * signupEnd;
+//最近一天的日期
+@property (nonatomic, strong)NSString * showDay;
+//该活动与用户之间的关联 1：加入 2：有兴趣
+@property (nonatomic, strong)NSString * relFlag;
+//分享链接
+@property (nonatomic, strong)NSString * shareUrl;
+//活动发起人类型（1：个人；2：教练；3：私团；4：商团；5：官团；）
+@property (nonatomic, strong) NSString *actlaunchType;
+//区
+@property (nonatomic, strong) NSString *district;
+//活动人数上限
+@property (nonatomic, strong) NSString *maxNum;
+//其他活动类型关键字
+@property (nonatomic, strong) NSString *oTypeValue;
+//当前位置与活动地址的距离
+@property (nonatomic, strong) NSString *distance;
+//国家
+@property (nonatomic, strong) NSString *country;
+//省
+@property (nonatomic, strong) NSString *pro;
+//城市
+@property (nonatomic, strong) NSString *city;
+//支付类型
+@property (nonatomic, strong) NSString *payType;
+//活动计划
+@property (nonatomic, strong) NSString * actPlan;
+//是否需要触发HTML5页面 0:不需要 1：需要
+@property (nonatomic, strong) NSString * isTrigPage;
+//HTML5页面链接
+@property (nonatomic, strong) NSString * trigPageLink;
+//活动是否官方发布  0：官方 1：非官方
+@property (nonatomic, strong) NSString * isOfficial;
+//timebegin
+@property (nonatomic, strong) NSString * showStartDate;
+//timeend
+@property (nonatomic, strong) NSString * showEndDate;
+//扫码使用订单号
+@property (nonatomic, strong) NSString * bookId;
+//是否有详情HTML（0没有1 有）
+@property (nonatomic, strong) NSString * isUserHtml;
+
+@end
+
+
+//活动赞助商
+@interface ActivitySponsorEntity : NSObject
+
+//	String		赞助商ID
+@property (nonatomic, strong) NSString *sponId;
+//	String		公众号ID
+@property (nonatomic, strong) NSString *pubNumId;
+//	String		标题
+@property (nonatomic, strong) NSString *sponTitle;
+//	String		描述
+@property (nonatomic, strong) NSString *sponDescript;
+//	String		图片
+@property (nonatomic, strong) NSString *picPath;
+//	String		分享地址
+@property (nonatomic, strong) NSString *shareUrl;
+//	String		公众主页点击数
+@property (nonatomic, strong) NSString *clickNum;
+//	String		公众号昵称
+@property (nonatomic, strong) NSString *nickName;
+//	String		公众号头像
+@property (nonatomic, strong) NSString *bigPicPath;
+//	String		公众号头像
+@property (nonatomic, strong) NSString *smallPicPath;
+//	String		赞数
+@property (nonatomic, strong) NSString *praNum;
+//	String		评论数
+@property (nonatomic, strong) NSString *commNum;
+//	String		显示类别：1：赞助商 2：礼物
+@property (nonatomic, strong) NSString *showType;
+//  string      是否点赞  0 是 1否
+@property (nonatomic, strong) NSString *praFlag;
+
+@end
+
+
+//活动报名人员
+@interface ActMemberEntity : NSObject
+
+//	String		用户ID
+@property (nonatomic, strong) NSString *signUserId;
+//	String		用户昵称
+@property (nonatomic, strong) NSString *nickName;
+//	String		用户头像
+@property (nonatomic, strong) NSString *bigPicPath;
+//	String		用户头像
+@property (nonatomic, strong) NSString *smallPicPath;
+//	String		活动报名人数
+@property (nonatomic, strong) NSString *actNum;
+//String		预定时间
+@property (nonatomic, strong)NSString *bookDate;
+//	String		性别
+@property (nonatomic, assign) NSInteger sex;
+//	String		性别
+@property (nonatomic, strong) NSString *age;
+
+@end
+
+
+#pragma mark -
+
+/**
+ * 运动类型entity
+ */
+@interface codemxEntity : NSObject
+
+//编号-----排序
+@property (nonatomic, strong) NSString *codeMx;
+//值
+@property (nonatomic, strong) NSString *codemxValue;
+//图片地址
+@property (nonatomic, strong) NSString *codemxpicPath;
+//排序号
+@property (nonatomic, strong) NSString *codemxSort;
+
+//编号----选择类型
+@property (nonatomic, strong) NSString * prosetCode;
+//名称
+@property (nonatomic, strong) NSString * prosetName;
+//排序号
+@property (nonatomic, strong) NSString * sortNum;
+//是否选中
+@property (nonatomic, assign)BOOL isSelect;
+
+@end
+
+/**
+ *  获取活动相关人
+ */
+@interface activityMemberEntity : NSObject
+
+//活动人员主键
+@property (nonatomic, strong) NSString *actMemid;
+//报名人员ID
+@property (nonatomic, strong) NSString *userId;
+//报名人员名称
+@property (nonatomic, strong) NSString *userName;
+//头像图片路径
+@property (nonatomic, strong) NSString *bigPicPath;
+//头像图片路径
+@property (nonatomic, strong) NSString *smallPicPath;
+//当前参加活动人数
+@property (nonatomic, strong) NSString *actNum;
+//创建时间
+@property (nonatomic, strong) NSString *createDate;
+//性别）
+@property (nonatomic, assign) NSInteger sex;
+//生日
+@property (nonatomic, strong) NSString *birthday;
+//年龄
+@property (nonatomic, strong) NSString *age;
+//用户等级
+@property (nonatomic, strong) NSString *levelIcon;
+//手机号
+@property (nonatomic, strong) NSString *mobile;
+//是否签到 0 已签 1 未签
+@property (nonatomic, strong) NSString * isAttend;
+//赞
+//个性签名
+@property (nonatomic, strong) NSString * signature;
+//赞编号
+@property (nonatomic, strong) NSString * phopraId;
+//赞地点
+@property (nonatomic, strong) NSString * praAddress;
+//赞时间
+@property (nonatomic, strong) NSString * praDate;
+//赞用户
+@property (nonatomic, strong) NSString * prauserid;
+//兴趣爱好
+@property (nonatomic, strong) NSString * hobbyProname;
+//兴趣爱好code
+@property (nonatomic, strong) NSString * sportproject;
+//成员在俱乐部中的状态 （0:待审核 2：审核未通过）
+@property (nonatomic, strong) NSString * auditStatus;
+//加入时间
+@property (nonatomic ,strong) NSString * joinDate;
+@end
+
+/**
+ *  获取活动创建人信息及用户与该活动的信息
+ */
+@interface activityExtendInfoEntity : NSObject
+
+//活动创建人性别（0:男 1：女）
+@property (nonatomic, assign) NSInteger sex;
+//活动创建人昵称
+@property (nonatomic, strong) NSString *nickName;
+//活动创建人生日
+@property (nonatomic, strong) NSString *birthday;
+//活动创建人年龄
+@property (nonatomic, strong) NSString *age;
+//活动创建人手机号
+@property (nonatomic, strong) NSString *mobile;
+//活动关注数
+@property (nonatomic, strong) NSString *attentionNum;
+//活动创建人头像
+@property (nonatomic, strong) NSString *userBigPicPath;
+//活动创建人头像
+@property (nonatomic, strong) NSString *userSmallPicPath;
+//是否关注此活动（0：已关注；1：没有关注）
+@property (nonatomic, strong) NSString *isAttention;
+//是否参加此活动（0：已参加；1：没有参加 2.待审核）
+@property (nonatomic, strong) NSString *isJoin;
+//用户等级
+@property (nonatomic, strong) NSString *levelIcon;
+//活动创建人
+@property (nonatomic, strong) NSString *createUser;
+//活动创建时间
+@property (nonatomic, strong) NSString *createDate;
+//参加活动人数
+@property (nonatomic, strong) NSString *activityNum;
+//兴趣爱好
+@property (nonatomic, strong) NSString * hobbyProname;
+//兴趣爱好code
+@property (nonatomic, strong) NSString * sportproject;
+
+////用户类型
+//@property (nonatomic, strong) NSString * userType;
+
+@end
+
+/**
+ *  访客实体，继承自人
+ */
+@interface visitorPersonalInfoEntity : personalInfoEntity
+
+//访问时间
+@property (nonatomic, strong) NSString *visitordate;
+//分页时间
+@property (nonatomic, strong) NSString *createDate;
+//分页标记 0：当天 1：以前
+@property (nonatomic, strong) NSString *visitorFlag;
+
+@end
+
+/**
+ *  首页焦点图
+ */
+@interface homeFocusEntity : NSObject
+
+//数据来源
+@property (nonatomic, assign) NSInteger dataType;
+//关联外键
+@property (nonatomic, strong) NSString *fkId;
+//焦点图片地址
+@property (nonatomic, strong) NSString *homepicPath;
+//主题label
+@property (nonatomic, strong) NSString *hotLabel;
+//链接地址
+@property (nonatomic, strong) NSString * htmlUrl;
+
+@end
+
+#pragma mark - 俱乐部相关实体
+
+/**
+ *  俱乐部实体
+ */
+@interface clubEntity : NSObject
+
+//俱乐部编号
+@property (nonatomic, strong) NSString *clubId;
+//俱乐部名称
+@property (nonatomic, strong) NSString *clubName;
+//俱乐部据点
+@property (nonatomic, strong) NSString *address;
+//俱乐部类型 1：已认证 0:未认证
+@property (nonatomic, strong) NSString *clubType;
+//当前等级
+@property (nonatomic, strong) NSString *curLevel;
+//距离
+@property (nonatomic, strong) NSString *distance;
+//俱乐部运动类型
+@property (nonatomic, strong) NSString *sportType;
+//俱乐部成立时间
+@property (nonatomic, strong) NSString *foundDate;
+//俱乐部介绍
+@property (nonatomic, strong) NSString *introduce;
+//俱乐部口号
+@property (nonatomic, strong) NSString *slogan;
+//省
+@property (nonatomic, strong) NSString *province;
+//城市
+@property (nonatomic, strong) NSString *city;
+//区
+@property (nonatomic, strong) NSString *district;
+//经度
+@property (nonatomic, assign) CGFloat longiTude;
+//纬度
+@property (nonatomic, assign) CGFloat latiTude;
+//俱乐部创建者
+@property (nonatomic, strong) NSString *createUser;
+//俱乐部图片
+@property (nonatomic, strong) NSString *bigPicPath;
+//俱乐部图片
+@property (nonatomic, strong) NSString *smallPicPath;
+//成员个数
+@property (nonatomic, strong) NSString *clubNum;
+//加入俱乐部是否要审核（0:不需要 1:需要）
+@property (nonatomic, strong) NSString *isAudit;
+//是否收费
+@property (nonatomic, strong) NSString *isToll;
+//收费形式
+@property (nonatomic, strong) NSString *tollForm;
+//收费金额
+@property (nonatomic, strong) NSString *tollAmount;
+//俱乐部徽章
+@property (nonatomic, strong) NSString *clubBadge;
+//是否是官方 0：官方 1：非官方
+@property (nonatomic, strong) NSString *isOfficial;
+//俱乐部创建时间
+@property (nonatomic, strong) NSString * createDate;
+//HTML5页面链接
+@property (nonatomic, strong) NSString * trigPageLink;
+//公告动态1
+@property (nonatomic, strong)NSString *    announceOne;
+//公告动态2
+@property (nonatomic, strong)NSString *       announceTwo;
+//公告动态3
+@property (nonatomic, strong)NSString *       announceThree;
+//招募条件
+@property (nonatomic, strong)NSString *          recruCondition;
+//俱乐部群组ID
+@property (nonatomic, strong)NSString *clubGroupId;
+//徽章
+@property (nonatomic, strong)NSString *    badgePath;
+//评论数
+@property (nonatomic, strong)NSString * commNum;
+//当前用户是否是管理员 0：是；1：不是
+@property (nonatomic, strong)NSString *    isManager;
+
+//是否有详情HTML（0没有1 有）
+@property (nonatomic, strong) NSString * isUserHtml;
+//详情HTML页面URL
+@property (nonatomic, strong) NSString * htmlUrl;
+
+//----给我的社团添加的新字段
+//String		商品编号
+@property (nonatomic, strong)NSString *goodId;
+//String		社团人数上限
+@property (nonatomic, strong)NSString *maxNum;
+//String		昵称
+@property (nonatomic, strong)NSString *nickName;
+//加入时间
+@property (nonatomic, strong)NSString *showDate;
+//支付组织
+@property (nonatomic, strong)NSString *orgCode;
+//是否需要收集信息  0:否  1:是    2016-06-20新增属性
+@property (nonatomic, strong)NSString *isCollect;
+
+@end
+
+/**
+ *  俱乐部创建人实体，继承自人
+ */
+@interface clubCreaterEntity : personalInfoEntity
+
+//俱乐部关注数
+@property (nonatomic, strong) NSString *attentionNum;
+//是否参加此俱乐部（0：已参加；1：没有参加；2：待审核）
+@property (nonatomic, strong) NSString *isJoin;
+//俱乐部创建人
+@property (nonatomic, strong) NSString *clubCreateUser;
+//俱乐部创建日期
+@property (nonatomic, strong) NSString *clubCreateDate;
+//是否主管理员
+@property (nonatomic, strong)NSString * isMain;
+//管理员介绍
+@property (nonatomic, strong)NSString *    introduct;
+//管理员宣传图
+@property (nonatomic, strong)NSString *    publiPath;
+//网名
+@property (nonatomic, strong)NSString *   netName;
+//俱乐部主键
+@property (nonatomic, strong) NSString *clubId;
+@end
+
+/**
+ *  俱乐部成员，继承自人
+ */
+@interface clubMemberEntity : personalInfoEntity
+
+//当前参加活动/俱乐部人数
+@property (nonatomic, strong) NSString *actNum;
+//创建时间
+@property (nonatomic, strong) NSString *createDate;
+
+@end
+
+//场馆实体
+@interface venueEntity : NSObject
+//优惠价
+@property (nonatomic, strong) NSString * perPrice;
+//最低价-最高价元
+@property (nonatomic, strong) NSString * lowPriceKz;
+//场馆编号
+@property (nonatomic, strong)NSString * venueId;
+//场馆名称
+@property (nonatomic, strong)NSString * venName;
+//场馆等级
+@property (nonatomic, strong)NSString * star;
+//城市
+@property (nonatomic, strong) NSString * city;
+//区
+@property (nonatomic, strong) NSString * district;
+//场馆地址
+@property (nonatomic, strong) NSString * venuAddress;
+//场馆运动类型
+@property (nonatomic ,strong) NSString * sportType;
+//距离
+@property (nonatomic, strong) NSString * distance;
+//经度
+@property (nonatomic, assign) CGFloat longiTude;
+//纬度
+@property (nonatomic, assign) CGFloat latiTude;
+//场馆小图片
+@property (nonatomic, strong) NSString * venueSmallPicPath;
+//场馆大图片
+@property (nonatomic, strong) NSString * venueBigPicPath;
+//场馆内新活动个数
+@property (nonatomic, strong) NSString * venueActNums;
+//是否子馆 0:子馆 1:总管
+@property (nonatomic, strong) NSString * isSubVenue;
+//是否有折扣(0-没有，1-有)
+@property (nonatomic, strong) NSString * hasVenueDiscount;
+//是否有低价转(0-没有，1-有)
+@property (nonatomic, strong) NSString * hasVenueIndivSell;
+//是否有拼场(0-没有，1-有)
+@property (nonatomic, strong)NSString * hasVenueFight;
+//简介
+@property (nonatomic, strong)NSString * introduce;
+//手机
+@property (nonatomic, strong)NSString * mobile;
+//关注数
+@property (nonatomic, strong)NSString * attentionCount;
+//是否关注 1.关注 0.未关注
+@property (nonatomic, strong) NSString * isAttention;
+//组织号
+@property (nonatomic, strong) NSString * orgCode;
+//1：按小时收费；2：按次收费 3:只售卖卡
+@property (nonatomic, strong) NSString * saleForm;
+//出售
+@property (nonatomic, strong) NSString * saledate;
+//开始时间
+@property (nonatomic, strong) NSString * startdate;
+//订单价格
+@property (nonatomic, strong) NSString * orderprice;
+//类型
+@property (nonatomic, strong) NSString * ventype;
+//条件
+@property (nonatomic, strong) NSString * conditions;
+//分享的html
+@property (nonatomic,strong)NSString *shareUrl;
+//startDate	String		开始时间
+@property (nonatomic, strong)NSString *startDate;
+//endDate	String		结束时间
+@property (nonatomic, strong)NSString *endDate;
+//timeInterval	String		时间间隔  0:半小时   1:一小时
+@property (nonatomic, strong)NSString *timeInterval;
+//buyCount	String		购买次数  0:不限   1:1次   2:2次    3:3次
+@property (nonatomic, strong)NSString *buyCount;
+//venSelCount	String		场地选择次数
+@property (nonatomic, strong)NSString *venSelCount;
+
+// 最少必须选择的场地数
+@property (nonatomic, strong)NSString *minCount;
+
+// 是否可以跨场选择 0 可以  1 不可以
+@property (nonatomic, strong)NSString *isCrossVen;
+//
+@property (nonatomic, strong)NSString * createDate;
+//评论数
+@property (nonatomic, strong)NSString *commNum;
+//公交路线
+@property (nonatomic, strong)NSString * busRoute;
+//地铁路线
+@property (nonatomic, strong)NSString * metroRoute;
+//公告标题
+@property (nonatomic, strong) NSString * explainTitle;
+
+//新增场馆属性
+@property (nonatomic, strong) NSString *logoPicPath;//	String		场馆LOGO图片
+@property (nonatomic, strong) NSString *detailAddress;//	String		场馆地址
+@property (nonatomic, strong) NSString *serviceInfo;//	String		场地服务
+@property (nonatomic, strong) NSString *explainDate;//	String		公告日期之日期
+@property (nonatomic, strong) NSString *explainTime;//	String		公告日期之时间点
+@property (nonatomic, strong) NSString *praFlag;//	String		是否点赞 0：已点赞 1：未点赞
+@property (nonatomic, strong) NSString *praNum;//	String		赞数
+@property (nonatomic, strong) NSString *inviteNum;//	String		分享数
+@property (nonatomic, strong) NSString *weather;//	String		天气
+
+@end
+
+//场馆焦点图实体
+@interface focusVenueEntity : NSObject
+//图片主键
+@property (nonatomic, strong)NSString * picId;
+//小图片路径
+@property (nonatomic, strong)NSString * smallPicPath;
+//大图片路径
+@property (nonatomic, strong)NSString * bigPicPath;
+//场馆主键
+@property (nonatomic, strong)NSString * fkId;
+//是否子场馆
+@property (nonatomic, strong)NSString * isSubVenue;
+//组织号
+@property (nonatomic, strong) NSString * orgCode;
+
+@end
+
+//教练焦点图实体
+@interface focusCoachEntity : NSObject
+//图片主键
+@property (nonatomic, strong)NSString * picId;
+//小图片路径
+@property (nonatomic, strong)NSString * smallPicPath;
+//大图片路径
+@property (nonatomic, strong)NSString * bigPicPath;
+//用户主键
+@property (nonatomic, strong)NSString * fkId;
+
+@end
+
+
+
+//场馆视频实体
+@interface monitEntity : NSObject
+
+//视频地址
+@property (nonatomic, strong)NSString *monitUrl;
+@property (nonatomic, strong)NSString *monitName;
+//视频截图
+@property (nonatomic, strong)NSString *monitPic;
+//设备查看用户名
+@property (nonatomic, strong)NSString *strUser;
+//设备查看密码
+@property (nonatomic, strong)NSString *strPsw;
+//设备ID
+@property (nonatomic, strong)NSString *strID;
+
+@end
+
+
+
+//场馆优惠卡实体
+@interface venueCardEntity : NSObject
+//ID
+@property (nonatomic, strong)NSString * venucardid;
+//名称
+@property (nonatomic, strong)NSString * cardname;
+//价格
+@property (nonatomic, strong)NSString * cardprice;
+//售价
+@property (nonatomic ,strong)NSString * cardsellprice;
+//图片地址
+@property (nonatomic, strong)NSString * cardpicpath;
+//卡类型
+@property (nonatomic, strong)NSString * cardtype;
+//有效期
+@property (nonatomic, strong)NSString * cardValidity;
+//0子馆1主馆
+@property (nonatomic, strong)NSString * issubvenue;
+//组织code
+@property (nonatomic, strong)NSString * orgcode;
+//c场馆id
+@property (nonatomic, strong)NSString * venueId;
+//商品ID
+@property (nonatomic, strong)NSString * goodId;
+//有效期
+@property (nonatomic, strong)NSString * validateDate;
+//惠卡数量
+@property (nonatomic, strong)NSString * cardNum;
+
+@end
+/**
+ *  教练列表，继承自人
+ */
+@interface coachEntity : personalInfoEntity
+//教练名称
+@property (nonatomic, strong) NSString *coachName;
+//教练主键
+@property (nonatomic, strong) NSString *coachId;
+//教练慧动号
+@property (nonatomic, strong) NSString *hdNumber;
+//星级
+@property (nonatomic, strong) NSString *star;
+//创建时间
+@property (nonatomic, strong) NSString *createDate;
+//授课项目
+@property (nonatomic, strong) NSString *sportType;
+//简介
+@property (nonatomic, strong) NSString *introcuction;
+//服务价格
+@property (nonatomic, strong) NSString *servicePrice;
+//执教场馆
+@property (nonatomic, strong) NSString *venueName;
+//执教年限
+@property (nonatomic, strong) NSString *coaYear;
+//曾获荣誉
+@property (nonatomic, strong) NSString *honorContent;
+//场馆距离
+@property (nonatomic, strong) NSString *distance;
+//级别
+@property (nonatomic,strong)NSString *certifiLevel;
+//最近一次的活动时间差
+@property (nonatomic,strong)NSString *laterTimeDiff;
+@property (nonatomic,strong)NSString *venueId;
+//分享的html
+@property (nonatomic,strong)NSString *shareUrl;
+//评论数量可
+@property (nonatomic, strong)NSString *commNum;
+//教授课程
+@property (nonatomic, strong)NSString *teachCourse;
+//评价信息
+@property (nonatomic, strong)NSString *appraisalInfo;
+//图片1
+@property (nonatomic, strong)NSString *publiPathOne;
+//图片2
+@property (nonatomic, strong)NSString * publiPathTwo;
+//开始时间
+@property (nonatomic, strong)NSString * startDate;
+//结束时间
+@property (nonatomic, strong)NSString *endDate;
+//档期
+@property (nonatomic, strong)NSString *timeValue;
+//城市
+@property (nonatomic, strong)NSString *cityName;
+
+@end
+
+
+//卖单实体
+@interface SellOrderEntity : NSObject
+//场地名称
+@property (nonatomic, strong)NSString * certainVenuName;
+//是否可售卖 0：可售；1：不可售
+@property (nonatomic, strong)NSString * isSale;
+
+@property (nonatomic, strong)NSMutableArray * sellOrderMxList;
+
+@property (nonatomic, assign)BOOL isSelect;
+@end
+
+//场地实体
+@interface areaEntity : NSObject
+//预定场地数
+@property (nonatomic, strong)NSString * num;
+//起价
+@property (nonatomic, strong)NSString * price;
+@end
+
+//场地实体
+@interface venueSellOrderMxEntity : NSObject
+
+@property (nonatomic, strong)NSDictionary * Map;
+//场地条件 1：塑胶；2：水泥
+@property (nonatomic, strong)NSString * conditions;
+//场地条件名称
+@property (nonatomic, strong)NSString *   conditionsName;
+//场地类型 1：露天；2：室内；3：中央空调（室内）
+@property (nonatomic, strong)NSString * venType;
+//1：上午；2：下午；3：晚上
+@property (nonatomic, strong)NSString * perriodivide;
+//商品编号
+@property (nonatomic, strong)NSString * goodid;
+//定价
+@property (nonatomic, strong)NSString * orderPrice;
+//标价
+@property (nonatomic, strong)NSString * price;
+//定金
+@property (nonatomic, strong)NSString *  deposit;
+//开始时间
+@property (nonatomic, strong)NSString * startDate;
+//结束时间
+@property (nonatomic, strong)NSString * endDate;
+//场地卖单明细主键
+@property (nonatomic, strong)NSString * sellordermxid;
+//售卖场地主键
+@property (nonatomic, strong)NSString * venuSaleId;
+//场地卖单主键
+@property (nonatomic, strong)NSString * sellOrderId;
+//场馆名称
+@property (nonatomic, strong)NSString * venuename;
+//时间段
+@property (nonatomic, strong)NSString * ordertime;
+//订单数量
+@property (nonatomic, assign)NSInteger  venCount;
+//票类ID
+@property (nonatomic, strong)NSString *typeTicketId;
+//票类名称
+@property (nonatomic, strong)NSString *ticketName;
+//场地名称
+@property (nonatomic, strong)NSString * certainVenuName;
+
+@property (nonatomic, assign)BOOL isSelect;
+
+@end
+
+//城市实体
+@interface cityEntity : NSObject
+
+//城市code
+@property (nonatomic, strong)NSString * code;
+//城市名称
+@property (nonatomic, strong)NSString * name;
+//城市上级
+@property (nonatomic, strong)NSString * preCode;
+//城市首字母
+@property (nonatomic, strong)NSString * firstLetter;
+
+@end
+
+// 组织实体
+@interface orgEntity : NSObject
+
+// 组织code
+@property (nonatomic, strong)NSString *code;
+// 组织name
+@property (nonatomic, strong)NSString *name;
+// 组织的行业属性 1:教育 2:医疗 3：通讯
+@property (nonatomic, strong)NSString *industry;
+@end
+
+//商品实体
+@interface PayOrderMxEntity : NSObject
+//商品编号
+@property (nonatomic, strong)NSString * goodId;
+//商品名称
+@property (nonatomic, strong)NSString * goodName;
+//订购原价
+@property (nonatomic, strong)NSString * oldPrice;
+//订购现价
+@property (nonatomic, strong)NSString * nowPrice;
+//商品数量
+@property (nonatomic, strong)NSString * goodCount;
+//商品总价
+@property (nonatomic, strong)NSString * totalAmount;
+//商品名称下面的信息
+@property (nonatomic, strong)NSString *goodNameExt;
+//扫码里面显示的图片
+@property (nonatomic, strong)NSString *smallPicPath;
+//子订单编号
+@property (nonatomic, strong)NSString * subBookNumber;
+@end
+
+//订单实体
+@interface PayOrderEntity : NSObject
+//订单主键
+@property (nonatomic, strong)NSString * bookId;
+//订购时间
+@property (nonatomic, strong)NSString *  bookDate;
+//订单编号
+@property (nonatomic, strong)NSString * bookNumber;
+//订单人员
+@property (nonatomic, strong)NSString * bookUserid;
+//订单来源 1:活动 2：场地  3 慧卡 4：惠卡 5：教练 6：俱乐部
+@property (nonatomic, strong)NSString * bookSource;
+//订单关联外键
+@property (nonatomic, strong)NSString * fkId;
+//关联外键名称
+@property (nonatomic, strong)NSString * fkName;
+//关联外键小图
+@property (nonatomic, strong)NSString * smallPicPath;
+//关联外键大图
+@property (nonatomic, strong)NSString * bigPicPath;
+//订单说明
+@property (nonatomic, strong)NSString * bookDescription;
+//订购总价
+@property (nonatomic, strong)NSString * totalAmount;
+//订单状态 1：等待付款；2：付款完成等待发货；3：发货完成等待收货确认；4：收货确认；5：已取消交易关闭；6：已退货 8 线下交易
+@property (nonatomic, strong)NSString * bookStatus;
+//抵扣金额
+@property (nonatomic, strong)NSString * couponAmount;
+//支付金额
+@property (nonatomic, strong)NSString * payAmount;
+//商品数量
+@property (nonatomic, strong)NSString * goodCount;
+//买家要求
+@property (nonatomic, strong)NSString *buyerRequire;
+//买家联系电话
+@property (nonatomic, strong)NSString * buyerTelphone;
+//运费
+@property (nonatomic, strong)NSString * shipment;
+//创建时间
+@property (nonatomic, strong)NSString * createDate;
+//商品列表
+@property (nonatomic, strong)NSMutableArray * payOrderMxList;
+//组织code
+@property (nonatomic, strong)NSString * orgCode;
+//是否子馆 0:子馆 1:总管
+@property (nonatomic, strong)NSString * isSubVenue;
+//商品来源ID
+@property (nonatomic, strong)NSString * sourceId;
+//售卖日期
+@property (nonatomic, strong)NSString * saleDay;
+//预定开始时间
+@property (nonatomic, strong)NSString * startDate;
+//预定结束时间
+@property (nonatomic, strong)NSString * endDate;
+//场馆售卖方式  1：按小时；2：按次
+@property (nonatomic, strong)NSString * saleForm;
+@end
+
+
+//首页热点新闻实体
+@interface newsEntity : NSObject
+
+//评论数
+@property (nonatomic, strong) NSString *commentCount;
+//赞数
+@property (nonatomic, strong) NSString *praiseCount;
+//描述
+@property (nonatomic, strong) NSString *descr;
+//热点id
+@property (nonatomic, strong) NSString *hotId;
+//热点类型（11:场馆12:俱乐部13:活动14:教练15:新闻16:焦点图式17:相册式）
+@property (nonatomic, strong) NSString *hotType;
+// 实体ID(场馆ID,社团ID,活动ID,教练ID)
+@property (nonatomic, strong) NSString *entityId;
+// 实体orgCode
+@property (nonatomic, strong) NSString *entityOrgCode;
+
+//新闻页面url
+@property (nonatomic, strong) NSString *htmlUrl;
+@property (nonatomic, strong) NSString *imgBigUrl;
+@property (nonatomic, strong) NSString *imgSmallUrl;
+
+//图片集合
+@property (nonatomic, strong) NSMutableArray *imgList;
+//标题
+@property (nonatomic, strong) NSString *title;
+//显示时间
+@property (nonatomic, strong) NSString *showTime;
+
+/*
+ * 四个自定义按钮的属性集合
+ */
+
+@property (nonatomic, strong) NSString *featrureId; // 功能点主键
+@property (nonatomic, strong) NSString *featureName; // 功能点名称
+@property (nonatomic, strong) NSString *picPath; // 功能点图片地址
+@property (nonatomic, strong) NSString *picLinkUrl; // 链接地址
+@property (nonatomic, strong) NSString *sortNum; // 排序号
+@property (nonatomic, strong) NSString *featureType; // 功能点类型 1:图标 2：运动心情 3：约运动
+//动态模块编码 场地：1001  活动：1002  培训：1003  教练：1004 俱乐部：1005  国民体质：1006  智能步道：1007  健身设施：1008
+@property (nonatomic, strong) NSString *moduleCode;
+
+@end
+
+
+//首页热点图片实体
+@interface newsImageEntity : NSObject
+
+@property (nonatomic, strong)NSString *imgBigUrl;
+@property (nonatomic, strong)NSString *imgSmallUrl;
+//图片对应的描述
+@property (nonatomic, strong)NSString *descr;
+
+@end
+
+//俱乐部宣传图实体
+@interface ClubPhotoEntity : NSObject
+//宣传图主键 
+@property (nonatomic, strong)NSString *    publiId;
+//宣传图路径
+@property (nonatomic, strong)NSString *    publiPath;
+
+@end
+
+//俱乐部成员分析实体
+@interface ClubMemAnalysisEntity : NSObject
+//俱乐部总人数
+@property (nonatomic, strong)NSString * actNum;
+//男生个数
+@property (nonatomic, strong)NSString * boysNum;
+//女生个数
+@property (nonatomic, strong)NSString * girlsNum;
+//女生比例
+@property (nonatomic, strong)NSString * girlsRate;
+//男生比例
+@property (nonatomic, strong)NSString * boysRate;
+
+@end
+
+//拼场实体
+@interface PayOrderVenueEntity : NSObject
+//订单扩展编号
+@property (nonatomic, strong)NSString * orderVenId;
+//售卖场地编号
+@property (nonatomic, strong)NSString * venuSaleId;
+//售卖场地名称
+@property (nonatomic, strong)NSString * certainVenuName;
+//起始时间点
+@property (nonatomic, strong)NSString * startDate;
+//结束时间点
+@property (nonatomic, strong)NSString *     endDate;
+//场地的总价
+@property (nonatomic, strong)NSString * perPrice;
+//订购日期
+@property (nonatomic, strong)NSString *      bookDate;
+
+// 售卖场地主键
+@property (nonatomic, strong)NSString *sellOrderMxId;
+
+@end
+
+/*
+ 
+ ** 拼场实体
+ 
+ */
+@interface FightEntity : NSObject
+//拼场主键
+@property (nonatomic, strong)NSString * fightId;
+//场地卖单主键
+@property (nonatomic, strong)NSString * sellorderMxId;
+//场地卖单名称
+@property (nonatomic, strong)NSString * certainVenuName;
+//拼场要求
+@property (nonatomic, strong)NSString * fightDescription;
+//商品编号
+@property (nonatomic, strong)NSString * goodId;
+//费用类型
+@property (nonatomic, strong)NSString * costType;
+//人均费用
+@property (nonatomic, strong)NSString * perCost;
+//支付方式
+@property (nonatomic, strong)NSString * payType;
+//开始时间点
+@property (nonatomic, strong)NSString * startDate;
+//结束时间点
+@property (nonatomic, strong)NSString * endDate;
+//拼场发起人
+@property (nonatomic, strong)NSString * createUser;
+
+//订单数量
+@property (nonatomic ,assign) NSInteger goodCount;
+//场地类型  1：露天；2：室内；3：中央空调
+@property (nonatomic, strong)NSString *venueType;
+
+//售卖日期（格式：XX月XX日）
+@property (nonatomic, strong)NSString * saleDay;
+
+@property (nonatomic, assign)BOOL isSelect;
+
+@end
+
+
+
+//自测实体
+@interface SelfTesEntity : NSObject
+
+//	String		自测类型
+@property (nonatomic, strong)NSString * topicTypeId;
+//	String		自测名称
+@property (nonatomic, strong)NSString * topicTypeName;
+//	String		自测标识
+@property (nonatomic, strong)NSString * typeFlag;
+//	String		html5页面
+@property (nonatomic, strong)NSString * htmlUrl;
+
+@end
+
+//常州赛务实体
+@interface czServiceEntity : NSObject
+//大图地址
+@property (nonatomic, strong)NSString * bigpicpath;
+//小图地址
+@property (nonatomic, strong)NSString * smallpicpath;
+//开始时间
+@property (nonatomic, strong)NSString * startdate;
+//地址
+@property (nonatomic, strong)NSString * copetAddress;
+//价格
+@property (nonatomic, strong)NSString * price;
+//标题
+@property (nonatomic, strong)NSString * raceTitle;
+//id
+@property (nonatomic, strong)NSString * raceServiceId;
+//商品编号
+@property (nonatomic, strong)NSString * goodId;
+@end
+
+
+//常州赛事实体
+@interface czEventEntity : NSObject
+//成员人数
+@property (nonatomic, strong)NSString * joinNum;
+//id
+@property (nonatomic, strong)NSString * competId;
+//名称
+@property (nonatomic, strong)NSString * competName;
+//类型
+@property (nonatomic, strong)NSString * sportType;
+//地址
+@property (nonatomic, strong)NSString * copetAddress;
+//开始时间
+@property (nonatomic, strong)NSString * startdate;
+//结束时间
+@property (nonatomic, strong)NSString * enddate;
+//是否收费
+@property (nonatomic, strong)NSString * isToll;
+//费用
+@property (nonatomic, strong)NSString * perCost;
+//人数上限
+@property (nonatomic, strong)NSString * maxNum;
+//比赛状态 0:准备中  1：进行中  2:结束 3：取消
+@property (nonatomic, strong)NSString * status;
+//国家
+@property (nonatomic, strong)NSString * country;
+//省
+@property (nonatomic, strong)NSString * pro;
+//市
+@property (nonatomic, strong)NSString * city;
+//地区
+@property (nonatomic, strong)NSString * district;
+//经度
+@property (nonatomic, strong)NSString * longitude;
+//纬度
+@property (nonatomic, strong)NSString * latitude;
+//0:否，1：是
+@property (nonatomic, strong)NSString * isAdd;
+//0:不推荐  1:推荐
+@property (nonatomic, strong)NSString * isRecommend;
+//推荐序号
+@property (nonatomic, strong)NSString * recommendNo;
+//比赛积分
+@property (nonatomic, strong)NSString * competPoints;
+//比赛群组
+@property (nonatomic, strong)NSString * competGroupId;
+//其它类型值
+@property (nonatomic, strong)NSString * oTypeValue;
+//分享链接
+@property (nonatomic, strong)NSString * shareLink;
+//创建人
+@property (nonatomic, strong)NSString * createUser;
+//创建时间
+@property (nonatomic, strong)NSString * createDate;
+//更新人
+@property (nonatomic, strong)NSString * updateUser;
+//更新时间
+@property (nonatomic, strong)NSString * updateDate;
+//大图
+@property (nonatomic, strong)NSString * bigpicpath;
+//小图
+@property (nonatomic, strong)NSString * smallpicpath;
+//用户头像
+@property (nonatomic, strong)NSString * userBigPicPath;
+@property (nonatomic, strong)NSString * userSmallPicPath;
+//手机
+@property (nonatomic, strong)NSString * mobile;
+//昵称
+@property (nonatomic, strong)NSString * nickName;
+//年龄
+@property (nonatomic, strong)NSString * age;
+//性别
+@property (nonatomic, strong)NSString * sex;
+//比赛类型 1:个人 2：团体
+@property (nonatomic ,strong)NSString * competType;
+//1.关注了 0.未关注
+@property (nonatomic, strong)NSString * isAttention;
+//关注数
+@property (nonatomic, strong)NSString * attentionCount;
+//0.未加入任何  1.都加入了 2.加入个人或者团队 3.加入志愿者
+@property (nonatomic, strong)NSString * isJoin;
+//赛程安排url
+@property (nonatomic, strong)NSString * scUrl;
+//比分列表Url
+@property (nonatomic, strong)NSString * bfUrl;
+//抽签情况Url
+@property (nonatomic, strong)NSString * cqUrl;
+//权益回报Url
+@property (nonatomic, strong)NSString * qyUrl;
+@end
+
+//常州赛事焦点图实体
+@interface eventFocusEntity : NSObject
+//大图地址
+@property (nonatomic, strong)NSString * bigPicPath;
+//小图地址
+@property (nonatomic, strong)NSString * smallPicPath;
+//id
+@property (nonatomic, strong)NSString * competId;
+@end
+
+
+
+//培训实体
+@interface czTrainEntity : NSObject
+//培训ID
+@property (nonatomic, strong)NSString * cultId;
+//培训名称
+@property (nonatomic, strong)NSString * cultName;
+//培训开始时间
+@property (nonatomic, strong)NSString * startDate;
+//培训结束时间
+@property (nonatomic, strong)NSString * endDate;
+//费用
+@property (nonatomic, strong)NSString * cost;
+//培训图片
+@property (nonatomic,strong)NSString * cultPicPath;
+//地址
+@property (nonatomic, strong)NSString * address;
+//时间
+@property (nonatomic, strong)NSString * createDate;
+//经度
+@property (nonatomic, strong)NSString * longitude;
+//维度
+@property (nonatomic, strong)NSString * latitude;
+//用户与培训的关系  1:报名中 2：已报名 3:未报名
+@property (nonatomic, strong)NSString * relStatus;
+//分享；链接
+@property (nonatomic, strong)NSString * shareUrl;
+//商品编号
+@property (nonatomic, strong)NSString * goodId;
+//图文URL
+@property (nonatomic, strong)NSString * tuwenURL;
+//图文列表URL
+@property (nonatomic, strong)NSString * tuwenListURL;
+//招生简章Url
+@property (nonatomic, strong)NSString * studentRuleUrl;
+
+@property (nonatomic, strong)NSString * costInterval;
+//培训状态    1：报名中  2：进行中  3：已结束
+@property (nonatomic, strong)NSString * cultStatus;
+
+//视频列表URL
+@property (nonatomic, strong)NSString * videoListURL;
+//培训实况URL
+@property (nonatomic, strong)NSString * culInfoURL;
+@end
+
+//培训焦点图实体
+@interface czTrainFouceEntity : NSObject
+//培训ID
+@property (nonatomic,strong)NSString *cultId;
+//培训焦点图
+@property (nonatomic, strong)NSString * focusPicPath;
+@end
+
+
+//排名成员实体
+@interface czCompetitionMemberEntity : NSObject
+
+//大图地址
+@property (nonatomic, strong)NSString * bigPicPath;
+//小图地址
+@property (nonatomic, strong)NSString * smallPicPath;
+//昵称
+@property (nonatomic, strong)NSString * nickName;
+//关注数
+@property (nonatomic, strong)NSString * attNum;
+//是否已关注 1未关注，2已关注
+@property (nonatomic, strong)NSString * isAtt;
+//个人报名ID
+@property (nonatomic, strong)NSString * signId;
+//团体报名ID
+@property (nonatomic, strong)NSString * clubId;
+//id
+@property (nonatomic, strong)NSString * createUser;
+//报名状态 1:报名中 2：已报名 3:已取消
+@property (nonatomic, strong)NSString * signStatus;
+//报名时间
+@property (nonatomic, strong)NSString * signDate;
+//培训id
+@property (nonatomic, strong)NSString * cultId;
+//教练id
+@property (nonatomic, strong)NSString * coachId;
+//教练用户ID
+@property (nonatomic, strong)NSString * userId;
+//运动名称
+@property (nonatomic, strong)NSString * proName;
+
+@property (nonatomic, strong)NSString * coachName;
+@end
+
+
+//培训地点实体
+@interface addEntity : NSObject
+//培训地址ID
+@property (nonatomic, strong)NSString * culAddId;
+//所属组织代码
+@property (nonatomic, strong)NSString * orgCode;
+//培训ID
+@property (nonatomic, strong)NSString * clutId;
+//培训地址
+@property (nonatomic, strong)NSString *cul_address;
+//培训地址简称
+@property (nonatomic, strong)NSString * cul_addressj;
+//培训地址说明
+@property (nonatomic, strong)NSString * add_description;
+
+@end
+
+@interface ClassEntity : NSObject
+//培训地区
+@property (nonatomic, strong)NSString *culAddress;
+//班级名称
+@property (nonatomic, strong)NSString *className;
+//班级公告
+@property (nonatomic, strong)NSString * classDescription;
+//期别名称
+@property (nonatomic, strong)NSString * perName;
+//期别开始时间
+@property (nonatomic, strong)NSString * pstartDate;
+//期别结束时间
+@property (nonatomic, strong)NSString *pendDate;
+//开始时间
+@property (nonatomic, strong)NSString * tstartDate;
+//结束时间
+@property (nonatomic, strong)NSString * tendDate;
+//昵称
+@property (nonatomic, strong)NSString * nickName;
+//教练id
+@property (nonatomic, strong)NSString *coachId;
+//班级ID
+@property (nonatomic, strong)NSString * culClaId;
+
+@property (nonatomic, strong)NSString * createDate;
+
+//商品编号
+@property (nonatomic, strong)NSString * goodId;
+//商品名称
+@property (nonatomic, strong)NSString * goodName;
+//价格
+@property (nonatomic, strong)NSString * perCost;
+//培训时间id
+@property (nonatomic, strong)NSString * culTimId;
+//教练电话
+@property (nonatomic, strong)NSString * mobile;
+
+
+@end
+
+//期别实体
+@interface culPeriodEntity : NSObject
+//期别ID
+@property (nonatomic, strong)NSString * culPerId;
+//期别名字
+@property (nonatomic, strong)NSString *perName;
+//开始时间
+@property (nonatomic, strong)NSString *startDate;
+//结束时间
+@property (nonatomic, strong)NSString *endDate;
+@end
+
+//培训时间实体
+
+@interface TimeEntity : NSObject
+//时间id
+@property (nonatomic, strong)NSString *culTimId;
+//开始时间
+@property (nonatomic, strong)NSString *startDate;
+//结束时间
+@property (nonatomic, strong)NSString *endDate;
+//费用
+@property (nonatomic, strong)NSString *perCost;
+//商品编号
+@property (nonatomic, strong)NSString *goodId;
+
+@end
+
+//场地预定  按时
+@interface saleVenueBookEntity : NSObject
+
+//yyyy-MM-dd格式
+@property (nonatomic, strong)NSString *saleDate;
+//xx月xx日格式
+@property (nonatomic, strong)NSString * saleDateYr;
+//星期
+@property (nonatomic, strong)NSString *week;
+//是否可预定 1 可预定 2售罄
+@property (nonatomic, strong)NSString *isBook;
+//是否有拼场 1有拼场 2 无
+@property (nonatomic, strong)NSString *isFight;
+
+@end
+
+//场地预定  按次
+
+@interface venueTicketbookEntity : NSObject
+
+//票主键
+@property (nonatomic, strong)NSString *ventBookId;
+
+//商品ID
+@property (nonatomic, strong)NSString *goodId;
+//有效期
+@property (nonatomic, strong)NSString *expireDate;
+//门票标题
+@property (nonatomic, strong)NSString * title;
+//原始价格
+@property (nonatomic, strong)NSString *      ticketPrice;
+//优惠价
+@property (nonatomic, strong)NSString *      perperPrice;
+//预定显示地址
+@property (nonatomic, strong)NSString *showUrl;
+
+
+
+
+@end
+
+
+
+
+

@@ -1,0 +1,89 @@
+//
+//  NFShareMoodManager.m
+//  nationalFitness
+//
+//  Created by wangping on 15/4/7.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import "NFKCManager.h"
+
+@implementation NFKCManager
+
+//课程列表
+- (void)CourseListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFKCRequest gotRequest:infoDic andURL:CourseListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFKCParser CourseListParser:data];
+        return bizData;
+    };
+}
+
+//课程详情
+- (void)CourseInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFKCRequest gotRequest:infoDic andURL:CourseInfoUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFKCParser CourseInfoParser:data];
+        return bizData;
+    };
+}
+
+//报名课程
+-(void)CourseOrderManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFKCRequest gotRequest:infoDic andURL:CourseOrderUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFKCParser createOrderInfoParser:data];
+        return bizData;
+    };
+}
+
+//我的课程
+- (void)MyCourseListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFKCRequest gotRequest:infoDic andURL:MyCourseListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFKCParser MyCourseListParser:data];
+        return bizData;
+    };
+}
+
+@end

@@ -1,0 +1,2369 @@
+//
+//  NFActivityManager.m
+//  nationalFitness
+//
+//  Created by 程long on 14-11-8.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFActivityManager.h"
+
+@implementation NFActivityManager
+
+//获取用户权限
+- (void)UserRolesManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:UserRolesUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser UserRolesParser:data];
+        return bizData;
+    };
+}
+
+//活动焦点图接口
+- (void)focusActivityListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:focusActivityListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser focusActivityListParser:data];
+        return bizData;
+    };
+}
+
+//创建俱乐部接口
+- (void)creatClubManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:creatClubURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser creatActRequestParser:data];
+        return bizData;
+    };
+}
+
+//创建活动接口
+- (void)creatActivityManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:creatActivityListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser creatActRequestParser:data];
+        return bizData;
+    };
+}
+
+//同意或拒绝加入俱乐部接口
+
+- (void)agreeOrUnagreeClubManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:agreeOrRemoveClubUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser agreeOrRemoveClubRequestParser:data];
+        return bizData;
+    };
+}
+
+//同意或拒绝加入活动接口
+- (void)agreeOrUnagreeActivityManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:agreeOrUnagreeJoinUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser agreeOrUnagreeRequestParser:data];
+        return bizData;
+    };
+}
+
+//俱乐部创建活动列表
+- (void)clubActivityListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:clubActivityURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser clubActivityListParser:data];
+        return bizData;
+    };
+}
+
+//场馆活动列表
+- (void)VenueActivityManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:VenueActivityURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser VenueActivityParser:data];
+        return bizData;
+    };
+}
+
+//新俱乐部成员列表
+- (void)clubMembListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:clubMemListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser clubMemListParser:data];
+        return bizData;
+    };
+}
+
+//我的卡包
+- (void)myCardManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:myCardUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser myCardRequestParser:data];
+        return bizData;
+    };
+}
+
+//活动列表
+- (void)activityListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:activityListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser activityListParser:data];
+        return bizData;
+    };
+}
+    
+//活动类型列表
+- (void)codemxListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:codemxListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser codemxListParser:data];
+        return bizData;
+    };
+}
+
+
+//获取活动相册列表
+- (void)albumListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:albumListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser albumListParser:data];
+        return bizData;
+    };
+}
+
+
+//获取活动计划
+- (void)activityPlanManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:activityPlanURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser activityPlanParser:data];
+        return bizData;
+    };
+}
+
+//赞列表
+- (void)praiseListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:praiseListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser praiseListParser:data];
+        return bizData;
+    };
+}
+
+//获取活动报名成员
+- (void)activityMemberManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:activityMemberURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser activityMemberParser:data];
+        return bizData;
+    };
+}
+
+
+//获取未审核报名成员
+- (void)activityUncheckMemberManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:activityWaitMemberURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser activityUncheckMemberParser:data];
+        return bizData;
+    };
+}
+
+
+//编辑活动
+- (void)editActivityManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:editActivityURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser editActivityParser:data];
+        return bizData;
+    };
+
+}
+
+
+//退出活动
+- (void)exitActivityManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:exitActivityURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser exitActivityParser:data];
+        return bizData;
+    };
+}
+
+//加入活动
+- (void)jionActivityManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:jionActivityURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser jionActivityParser:data];
+        return bizData;
+    };
+}
+
+//是否同意加入活动社团
+- (void)checkJoinActManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:checkJoinActURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser checkJoinActParser:data];
+        return bizData;
+    };
+}
+
+//删除活动
+- (void)deleteActivityManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:deleteActivityURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser deleteActivityParser:data];
+        return bizData;
+    };
+}
+
+//点击焦点图查看活动详情
+- (void)activityInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:activityInfoURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser activityInfoParser:data];
+        return bizData;
+    };
+}
+
+//获取活动相关信息
+- (void)activityExtendInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:activityExtendInfoURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser activityExtendInfoParser:data];
+        return bizData;
+    };
+}
+
+//获取动态信息
+- (void)getDynamicInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:dynamicInfoUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser getDynamicInfoParse:data];
+        return bizData;
+    };
+}
+
+//用户预定场馆的列表
+- (void)allBookVenueListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:AllBookVenueListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser getAllBookVenueList:data];
+        return bizData;
+    };
+}
+
+//删除动态
+- (void)deleteDynamicManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:deleteDynamicUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser deleteDynamicParser:data];
+        return bizData;
+    };
+    
+}
+
+//查看详情
+- (void)seeDetailInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:seeDetailInfoUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser seeDetailInfoParser:data];
+        return bizData;
+    };
+}
+
+//查询最近的评论
+- (void)maxCommentManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:maxCommentURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser maxCommentParser:data];
+        return bizData;
+    };
+}
+
+//默认相册列表
+- (void)defaultAlbumListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:defaultAlbumListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser defaultAlbumListParser:data];
+        return bizData;
+    };
+}
+
+
+//排序类型列表
+- (void)sortTypeListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:sortTypeUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser sortTypeListParser:data];
+        return bizData;
+    };
+}
+
+//咨询教练
+- (void)consultCoachManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:consultCoachUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser consultCoachParser:data];
+        return bizData;
+    };
+}
+
+//创建关注
+- (void)createAttentManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:createAttentURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser createAttentParser:data];
+        return bizData;
+    };
+}
+
+//推到热点
+- (void)pushToHotManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:pushToHotURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser pushToHotParser:data];
+        return bizData;
+    };
+}
+
+//取消关注
+- (void)deleteAttentManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:deleteAttentURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser deleteAttentParser:data];
+        return bizData;
+    };
+}
+
+
+
+//评论列表
+- (void)commentListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:commentListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser commentListParser:data];
+        return bizData;
+    };
+}
+
+
+//发表评论
+- (void)createCommentManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:createCommentURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser createCommentParser:data];
+        return bizData;
+    };
+}
+
+
+//取消评论
+- (void)deleteCommentManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:deleteCommentURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser deleteCommentParser:data];
+        return bizData;
+    };
+}
+
+
+//创建相册点赞
+- (void)createAlbumPraiseManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:createAlbumPraiseURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser createAlbumPraiseParser:data];
+        return bizData;
+    };
+}
+
+
+//取消相册点赞
+- (void)deleteAlbumPraiseManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:deleteAlbumPraiseURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser deleteAlbumPraiseParser:data];
+        return bizData;
+    };
+}
+
+
+//删除相册
+- (void)deleteAlbumManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:deleteAlbumURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser deleteAlbumParser:data];
+        return bizData;
+    };
+}
+
+
+//相册图片
+- (void)albumPhotoListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:albumPhotoListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser albumPhotoListParser:data];
+        return bizData;
+    };
+}
+
+//发布相册
+- (void)createAlbumManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:createAlbumURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser createAlbumParser:data];
+        return bizData;
+    };
+}
+
+//发布相册之前上传单张照片
+-(void) uploadAlbumManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    __strong NSData *imageData = [_argList objectAtIndex:1];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest uploadAlbumWithParams:infoDic imageData:imageData];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser uploadAlbumParser:data];
+        return bizData;
+    };
+
+}
+//上传徽章
+-(void) uploadClubBadgeManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    __strong NSData *imageData = [_argList objectAtIndex:1];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest uploadBadgeWithParams:infoDic imageData:imageData];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser uploadBadgeParser:data];
+        return bizData;
+    };
+    
+}
+
+//主题秀瀑布流
+- (void)queryShowListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:queryShowListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser queryShowListParser:data];
+        return bizData;
+    };
+}
+
+//个人主页信息
+- (void)personalHomePageManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:personalHomePageURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser personalHomePageParser:data];
+        return bizData;
+    };
+}
+
+//首页焦点图列表
+- (void)homeFocusListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //needCache 是是否需要缓存  needGetCache是是否需要从缓存中取出数据－下拉刷新不取缓存数据但是要更新缓存
+    BOOL needCache = NO;
+    BOOL needGetCache = NO;
+    if (_argList.count >= 2)
+    {
+        needCache = YES;
+        needGetCache = [[_argList objectAtIndex:1] integerValue];
+    }
+    
+    if (needGetCache)
+    {
+        bizDataGetter = ^ {
+            NSString *dataStr = [NFDatabaseQueue selectManagerCache:homeFocusListURL];
+            NSData *strData = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
+            id data = [NFActivityParser homeFocusListParse:strData];
+            return data;
+        };
+    }
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:homeFocusListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser homeFocusListParse:data];
+        
+        if (bizData && needCache)
+        {
+            NSString *aStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            [NFDatabaseQueue insertManagerCache:homeFocusListURL dataStr:aStr];
+        }
+        
+        return bizData;
+    };
+}
+
+//获取分场馆列表
+- (void)getSubVenuesListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:subVenuesListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser getSubVenuesListParser:data];
+        return bizData;
+    };
+}
+
+//获取场馆列表
+- (void)getVenuesListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:venuesListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser getVenuesListParser:data];
+        return bizData;
+    };
+}
+
+//获取俱乐部列表
+-(void)getClubListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:findClubListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser getClubListParser:data];
+        return bizData;
+    };
+}
+
+//查询与用户相关的社团列表
+-(void)getUserRelClubList
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:userRelClubListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser getUserRelClubListParser:data];
+        return bizData;
+    };
+}
+
+//申请创建社团
+- (void)appClubManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:appClubURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser createCommentParser:data];
+        return bizData;
+    };
+}
+
+//场馆焦点图
+- (void)focusVenueListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:focusVneueListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser focusVenueListParser:data];
+        return bizData;
+    };
+}
+
+//俱乐部焦点图
+- (void)focusClubListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:focusClubListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser focusClubListParser:data];
+        return bizData;
+    };
+}
+//教练焦点图
+- (void)focusCoachListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:focusCoachListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser focusCoachListParser:data];
+        return bizData;
+    };
+
+}
+
+//发布拼场
+- (void)creatPCManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:creatPCUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser creatPCParser:data];
+        return bizData;
+    };
+    
+}
+
+//获取所有片场
+- (void)getAllVenueSellsManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:getAllVenueSellsUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser getAllVenueSellsParser:data];
+        return bizData;
+    };
+}
+
+//获取所有拼场列表
+- (void)getAllPcListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:allPcListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser getAllPCListParser:data];
+        return bizData;
+    };
+
+}
+
+//查看可拼场地列表
+- (void)getCanPCListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:canPCListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser canPCListParser:data];
+        return bizData;
+    };
+}
+
+//查看子场馆详情
+- (void)subVenueInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:subVenueInfoURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser subVenuesInfoParser:data];
+        return bizData;
+    };
+}
+
+//查看场馆详情
+-(void)venuesInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:venuesInfoURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser venuesInfoParser:data];
+        return bizData;
+    };
+}
+
+//点击俱乐部图片或焦点图查看俱乐部详情
+-(void)clubInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:clubInfoUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser clubInfoParser:data];
+        return bizData;
+    };
+}
+
+//主场馆最近预定人
+-(void)venueBookUserManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+   
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:venueBookUserURL];
+
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser venueBookUserParser:data];
+        return bizData;
+    };
+}
+
+//分场馆惠卡
+- (void)otherVenueListManager
+{
+    
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:otherVenueURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser otherVenueParser:data];
+        return bizData;
+    };
+    
+    
+}
+//预定场地
+-(void)sellOrderMxEntityManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:sellOrdersURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser sellOrdersParser:data];
+        return bizData;
+    };
+
+}//预定场次最新版
+- (void)bookVenuesManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:queryVenSellOrderURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser bookVenuesParser:data];
+        return bizData;
+    };
+}
+
+//支付生成订单
+- (void)createOrderInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:createOrderInfoURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser createOrderInfoParser:data];
+        return bizData;
+    };
+}
+
+- (void)createActOrderInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:createActOrderInfoURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser createOrderInfoParser:data];
+        return bizData;
+    };
+}
+
+//开始支付
+- (void)paymentOrderManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:paymentOrderURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser paymentOrderParser:data];
+        return bizData;
+    };
+}
+
+//支付倒计时
+- (void)payTimeOrderManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:payTimeOrderURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser payTimeOrderPayser:data];
+        return bizData;
+    };
+}
+
+//获取教练详情信息
+- (void)getCoachDetailInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:coachDetailInfoUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser getCoachDetailInfoParser:data];
+        return bizData;
+    };
+}
+
+
+//获取教练列表
+-(void)getCoachListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:coachURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser getCoachListParser:data];
+        return bizData;
+    };
+}
+
+
+//获取CITY列表
+-(void)getCityListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:cityListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser getCityListParser:data];
+        return bizData;
+    };
+}
+
+//首页之预定的场馆
+- (void)bookVenueListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:bookVenueListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser getVenuesListParser:data];
+        return bizData;
+    };
+}
+
+//新版获取场地列表
+- (void)czGetBookSpaceListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:czBookSpaceUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser czGetBookListParser:data];
+        return bizData;
+    };
+}
+
+
+//获取预订场地列表
+- (void)getBookSpaceListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:bookSpaceListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser getBookListParser:data];
+        return bizData;
+    };
+}
+
+//首页新闻热点列表
+- (void)queryHotListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //needCache 是是否需要缓存  needGetCache是是否需要从缓存中取出数据－下拉刷新不取缓存数据但是要更新缓存
+    BOOL needCache = NO;
+    BOOL needGetCache = NO;
+    if (_argList.count >= 2)
+    {
+        needCache = YES;
+        needGetCache = [[_argList objectAtIndex:1] integerValue];
+    }
+    
+    if (needGetCache)
+    {
+        bizDataGetter = ^ {
+            NSString *dataStr = [NFDatabaseQueue selectManagerCache:queryHotListURL];
+            NSData *strData = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
+            id data = [NFActivityParser queryHotListParser:strData];
+            return data;
+        };
+    }
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:queryHotListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser queryHotListParser:data];
+        
+        if (bizData && needCache)
+        {
+            NSString *aStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            [NFDatabaseQueue insertManagerCache:queryHotListURL dataStr:aStr];
+        }
+        
+        return bizData;
+    };
+}
+
+//推荐热点
+- (void)queryReferralHotListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:queryReferralHotListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser queryReferralHotListParser:data];
+        return bizData;
+    };
+}
+
+//club公告动态列表
+-(void)clubAnnounceListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:clubAnnounceListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser clubAnnounceListParser:data];
+        return bizData;
+    };
+}
+
+//场地公告列表
+- (void)VenueAnnounceManager;
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:VenueAnnounceURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser clubAnnounceListParser:data];
+        return bizData;
+    };
+}
+
+//发表公共
+-(void)createAnnounceManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:createAnnounceURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser createAnnounceParser:data];
+        return bizData;
+    };
+}
+
+//自测列表
+- (void)selfTestManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:selfTestUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser selfTestParser:data];
+        return bizData;
+    };
+}
+
+#pragma mark - 赛事培训
+
+//常州赛事焦点图
+- (void)getEventFocusManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:czEventFouceURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser czEventFocusParser:data];
+        return bizData;
+    };
+}
+
+//常州赛事列表
+- (void)getEventListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:czEventListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser czEventListParser:data];
+        return bizData;
+    };
+}
+
+//常州赛务列表
+- (void)getServiceListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:czServiceListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser czServiceParser:data];
+        return bizData;
+    };
+}
+
+//常州培训列表
+- (void)getTrainListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:czTrainListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser czTrainListParser:data];
+        return bizData;
+    };
+}
+
+//常州培训焦点图
+- (void)getTrainFouceManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:czTrainFouceUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser czTrainFouceParser:data];
+        return bizData;
+    };
+}
+
+
+//常州培训详情
+- (void)getTrainDetailManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:czTrainDetailUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser czTrainDetailParser:data];
+        return bizData;
+    };
+}
+
+//培训班列表
+- (void)getClassListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:classListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser classListParser:data];
+        return bizData;
+    };
+}
+
+//常州培训教练列表
+- (void)getTrainCoachListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:czTrainCoachListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser czTrainCoachListParser:data];
+        return bizData;
+    };
+}
+
+//我的培训
+- (void)getMyClassListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:myClassUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser myClassParser:data];
+        return bizData;
+    };
+}
+
+//常州赛事详情接口
+- (void)getEventDetailInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:czEventInfoUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser czEventDetailParser:data];
+        return bizData;
+    };
+}
+
+//常州赛事榜单排名
+- (void)getRankingListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:czRankingListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser czRankingListParser:data];
+        return bizData;
+    };
+}
+
+//常州志愿者报名
+- (void)signUpManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:czSignUpUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser czSingUpParser:data];
+        return bizData;
+    };
+}
+
+//常州报名人社团列表
+- (void)getCZClubListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:czClubListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser czGetClubListParser:data];
+        return bizData;
+    };
+}
+
+//全局搜索
+- (void)searchAllManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:searchAllUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser searchAllParser:data];
+        return bizData;
+    };
+}
+
+//热门搜索
+- (void)hotSearchManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:searchHotUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser searchHotParser:data];
+        return bizData;
+    };
+}
+
+
+// 生成订单 新版
+- (void)submitoOrdersManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:submitoOrderURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser submitoOrdersParser:data];
+        return bizData;
+    };
+}
+
+//认证
+- (void)authManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:authUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser authParser:data];
+        return bizData;
+    };
+}
+
+//热门组织
+- (void)hotOrgManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:hotOrgUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser hotOrgParser:data];
+        return bizData;
+    };
+}
+
+//组织搜索
+- (void)searchOrgManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:orgSearchUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser searchOrgParser:data];
+        return bizData;
+    };
+}
+
+#pragma mark - 以下是新版活动列表
+//新版活动列表
+- (void)newActListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:newActListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser xinActListParser:data];
+        return bizData;
+    };
+}
+
+//关联活动列表
+- (void)relationActListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:relationActListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser relationActListParser:data];
+        return bizData;
+    };
+}
+
+//加入活动
+- (void)xinJoinActManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:xinJoinActUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser xinJoinActParser:data];
+        return bizData;
+    };
+}
+
+//有兴趣
+- (void)hasIntristingManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:hasIntristingUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser hasIntristingParser:data];
+        return bizData;
+    };
+}
+
+//取消兴趣
+- (void)cancelIntristingManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:cancelIntristingUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser cancelIntristingParser:data];
+        return bizData;
+    };
+}
+
+//退出活动
+- (void)exitActManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:exitActUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser exitActParser:data];
+        return bizData;
+    };
+}
+
+//举报上传图片
+- (void)reportPicManager
+{
+    
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    __strong NSData *imageData = [_argList objectAtIndex:1];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest uploadReportWithParams:infoDic imageData:imageData];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser reportPicParser:data];
+        return bizData;
+    };
+}
+
+//保存邀请记录
+- (void)saveInviteManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:saveInviteUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser saveInviteParser:data];
+        return bizData;
+    };
+}
+
+#pragma mark - 新版场馆
+//场馆订单
+- (void)allVenOrderManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:allVenOrderUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser allVenOrderParser:data];
+        return bizData;
+    };
+}
+
+//去打球首页接口
+- (void)playBallManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:playBallHomeUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser playBallHomeParser:data];
+        return bizData;
+    };
+}
+
+
+#pragma mark - 新版首页
+//首页部分信息
+- (void)homeShowInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //needCache 是是否需要缓存  needGetCache是是否需要从缓存中取出数据－下拉刷新不取缓存数据但是要更新缓存
+    BOOL needCache = NO;
+    BOOL needGetCache = NO;
+    if (_argList.count >= 2)
+    {
+        needCache = YES;
+        needGetCache = [[_argList objectAtIndex:1] integerValue];
+    }
+    
+    if (needGetCache)
+    {
+        bizDataGetter = ^ {
+            NSString *dataStr = [NFDatabaseQueue selectManagerCache:homeNewInfoUrl];
+            NSData *strData = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
+            id data = [NFActivityParser homeNewInfoParser:strData];
+            return data;
+        };
+    }
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:homeNewInfoUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser homeNewInfoParser:data];
+        
+        if (bizData && needCache)
+        {
+            NSString *aStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            [NFDatabaseQueue insertManagerCache:homeNewInfoUrl dataStr:aStr];
+        }
+        
+        return bizData;
+    };
+}
+
+#pragma mark - 获取用户类型
+- (void)userTypeManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:userTypeUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser userTypeParser:data];
+        return bizData;
+    };
+}
+
+
+//公众号主页信息
+- (void)publicNoInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:publicNoInfoUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser publicNoInfoParser:data];
+        return bizData;
+    };
+}
+
+//公众号收藏夹
+- (void)publicNoCollectionManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:publicNoCollUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser publicNoCollParser:data];
+        return bizData;
+    };
+}
+
+//公众号隶属社团列表
+- (void)publicNoClubListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:publicNoClubListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser publicNoClubListParser:data];
+        return bizData;
+    };
+}
+
+//公众号赞助活动
+- (void)publicNoActListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFActivityRequest gotRequest:infoDic andURL:publicNoActListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFActivityParser publicNoActListParser:data];
+        return bizData;
+    };
+}
+
+@end

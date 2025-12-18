@@ -1,0 +1,38 @@
+//
+//  MessageView.m
+//  nationalFitness
+//
+//  Created by 童杰 on 2017/2/27.
+//  Copyright © 2017年 chenglong. All rights reserved.
+//
+
+#import "MessageView.h"
+#import "MessageLookViewController.h"
+@implementation MessageView
+
+//跳转到信息列表
+- (IBAction)tapClick:(id)sender {
+    NSLog(@"tt");
+    //MessageLookTableViewController
+    
+    UIStoryboard *st = [UIStoryboard storyboardWithName:@"DailyAdminStoryboard" bundle:nil];
+    MessageLookViewController *vc = [st instantiateViewControllerWithIdentifier:@"MessageLookViewController"];
+    [[KeepAppBox viewController:self].navigationController pushViewController:vc animated:YES];
+    
+}
+
+
+- (UIViewController *)viewController
+{
+    for (UIView *next = [self superview]; next; next = next.superview)
+    {
+        UIResponder *nextResponder = [next nextResponder];
+        if ([nextResponder isKindOfClass:[UIViewController class]])
+        {
+            return (UIViewController *)nextResponder;
+        }
+    }
+    return nil;
+}
+
+@end

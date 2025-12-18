@@ -1,0 +1,78 @@
+//
+//  RegSetImageViewCtroller
+//  编辑选择的头像
+//
+#import "NFbaseViewController.h"
+#import "NFShowImageView.h"
+//#import "NFShareMoodEntity.h"
+
+/**
+ *  剪切类型
+ */
+typedef NS_ENUM(NSInteger, NFCutImageType)
+{
+    /*
+     *  用户头像
+     */
+    CutUserHeadImage = 0,
+    /*
+     *  只裁剪， 不操作
+     */
+    CutOnlyCutImage = 1,
+    /*
+     *  发起活动的焦点图
+     */
+    CutActivityHeadImag = 2,
+    /*
+     *  发起主题秀
+     */
+    CutThemeShowImag = 5,
+    /*
+     *  徽章
+     */
+    CutClubBadgeImage = 6,
+    /*
+     *  俱乐部
+     */
+    CutClubHeadImage = 7,
+    /*
+     *  举报
+     */
+    CutReportImage = 8
+    
+};
+
+
+@interface RegSetImageViewCtroller : NFbaseViewController
+
+@property (nonatomic,weak) id backToVC;
+
+@property (nonatomic, strong) UIImage *originalImage;
+
+@property (nonatomic, assign) NFCutImageType cutType;
+
+//－－－－－－－－－－－－－－－－－－活动－－－－－－－－－－－－
+
+//编辑活动传来
+@property (nonatomic, strong) NSString * fkid;
+//只需编辑活动传1，其他0
+@property (nonatomic, strong) NSString * upLoadType;
+
+@property (nonatomic, strong) NSString * clubId;
+
+//－－－－－－－－－－－－－－－－－－活动－－－－－－－－－－－－
+
+//－－－－－－－－－－－－－－－－－－晒心情－－－－－－－－－－－
+
+//匿名实体
+//@property (strong,nonatomic) hotAnonyInfoEntity * entity;
+
+//心情类型
+@property (strong,nonatomic) NSString *hotId;
+
+//热点标签数据
+@property (strong,nonatomic) NSArray *  hotFocusArr;
+
+//－－－－－－－－－－－－－－－－－－晒心情－－－－－－－－－－－
+
+@end

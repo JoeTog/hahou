@@ -1,0 +1,388 @@
+//
+//  UserRegistViewController.m
+//  newTestUe
+//
+//  Created by 林向阳 on 15/12/2.
+//  Copyright © 2015年 程龙. All rights reserved.
+//
+
+#import "UserRegistViewController.h"
+#import "RegistSuccessViewController.h"
+//#import "NFLoginManger.h"
+//#import "NFMineManager.h"
+#import "RegProtocolViewController.h"
+
+@interface UserRegistViewController ()<UITextFieldDelegate>
+{
+    __weak IBOutlet UIButton *getCodeBtn;
+    __weak IBOutlet UITextField *codeTextField;
+    __weak IBOutlet UITextField *phoneTextField;
+    __weak IBOutlet UIButton *sureBtn;
+    __weak IBOutlet UIButton *noRegistBtn;
+    __weak IBOutlet UIButton *tiaokuanBtn;
+    __weak IBOutlet UILabel *showLabel;
+    __weak IBOutlet UILabel *titleLabel;
+    __weak IBOutlet UITextField *pswTextField;
+    
+    __weak IBOutlet UITextField *pswTextField2;
+    
+    
+    
+    __weak IBOutlet UIView *titleView_;
+    //秒
+    int secTime_;
+    NSTimer * timer_;
+}
+
+@end
+
+@implementation UserRegistViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    phoneTextField.delegate = self;
+    if (_isForgetPsw) {
+        titleLabel.text = @"重设登录密码";
+        showLabel.hidden = YES;
+        tiaokuanBtn.hidden = YES;
+        noRegistBtn.hidden = YES;
+        [sureBtn setTitle:@"确定" forState:UIControlStateNormal];
+        if (self.title.length > 0)
+        {
+            titleView_.hidden = YES;
+        }
+    }
+    else
+    {
+        titleLabel.text = @"注册";
+        showLabel.hidden = NO;
+        tiaokuanBtn.hidden = NO;
+        noRegistBtn.hidden = YES;
+        [sureBtn setTitle:@"注册" forState:UIControlStateNormal];
+    }
+    // Do any additional setup after loading the view.
+}
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    //    我是这么写的
+    if (textField.text.length+string.length-range.length>11) {
+        return NO;
+    }
+    return YES;
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
+//返回
+- (IBAction)back:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+//获取验证码
+- (IBAction)getVildCode:(id)sender {
+    UIButton * btn = (UIButton *)sender;
+    [self.view endEditing:YES];
+    if ([btn.titleLabel.text isEqualToString:@"获取验证码"]) {
+        if (phoneTextField.text.length == 0) {
+            
+            [SVProgressHUD showInfoWithStatus:@"请输入手机号"];
+        }
+//        else if (![KeepAppBox isValidatePhone:phoneTextField.text])
+//        {
+//            [SVProgressHUD showInfoWithStatus:@"请输入正确手机号"];
+//        }
+        else if (phoneTextField.text.length < 11 & phoneTextField.text.length > 0){
+            [SVProgressHUD showInfoWithStatus:@"请输入合法手机号"];
+        }
+        else
+        {
+            [self verificationManager];
+        }
+    }
+}
+
+
+
+
+//服务条款
+- (IBAction)readServer:(id)sender {
+    UIStoryboard * sb = [UIStoryboard storyboardWithName:@"NFLoginStoryboard" bundle:nil];
+    RegProtocolViewController * vc = [sb instantiateViewControllerWithIdentifier:@"RegProtocolViewController"];
+    vc.isFromReg = YES;
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+//密码明文暗文显示切换
+- (IBAction)switchChage:(id)sender {
+    UIButton * btn = (UIButton *)sender;
+    btn.selected = !btn.selected;
+    if (btn.tag == 1) {
+        if (btn.selected) {
+            pswTextField.secureTextEntry = NO;
+        }
+        else
+        {
+            pswTextField.secureTextEntry = YES;
+        }
+    }else if (btn.tag == 2){
+        if (btn.selected) {
+            pswTextField2.secureTextEntry = NO;
+        }
+        else
+        {
+            pswTextField2.secureTextEntry = YES;
+        }
+    }
+    
+}
+
+//注册
+- (IBAction)regeist:(id)sender {
+    [self.view endEditing:YES];
+    if (phoneTextField.text.length == 0) {
+        [SVProgressHUD showInfoWithStatus:@"请输入手机号"];
+        
+    }
+//    else if (![KeepAppBox isValidatePhone:phoneTextField.text])
+//    {
+//        [SVProgressHUD showInfoWithStatus:@"请输入正确手机号"];
+//    }
+    else if (phoneTextField.text.length > 0 & phoneTextField.text.length < 11){
+        [SVProgressHUD showInfoWithStatus:@"请输入合法手机号"];
+    }
+    else if (codeTextField.text.length == 0)
+    {
+        [SVProgressHUD showInfoWithStatus:@"请输入验证码"];
+    }
+    else if (pswTextField.text.length < 6)
+    {
+        [SVProgressHUD showInfoWithStatus:@"输入6位以上密码"];
+    }else if (![pswTextField.text isEqualToString:pswTextField2.text]){
+        [SVProgressHUD showInfoWithStatus:@"两次密码输入不相同"];
+    }
+    else
+    {
+        //注册按钮后
+        
+//        [self checkVerification];
+//        RegistSuccessViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RegistSuccessViewController"];
+//        [self.navigationController pushViewController:vc animated:YES];
+        NSLog(@"succeed regist");
+        if (_isForgetPsw) {
+            [SVProgressHUD showSuccessWithStatus:@"密码重置成功"];
+//            [NFUserEntity shareInstance].password = pswTextField.text;
+            [self performSelector:@selector(back:) withObject:nil afterDelay:1.0];
+        }
+        else
+        {
+            RegistSuccessViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RegistSuccessViewController"];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+}
+
+
+//定时器
+- (void)timeBegin
+{
+    secTime_ --;
+    if (secTime_ == 0)
+    {
+        [getCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [timer_ invalidate];
+        timer_ = nil;
+        
+    }
+    else
+    {
+        [getCodeBtn setTitle:[NSString stringWithFormat:@"%dS",secTime_] forState:UIControlStateNormal];
+    }
+    
+}
+
+#pragma mark - 接口请求
+//重置密码
+//- (void)resetPsw
+//{
+//    [SVProgressHUD show];
+//    NSMutableDictionary * sendDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+//    
+//    [sendDic setObject:phoneTextField.text forKey:@"mobile"];
+//    //新密码
+//    [sendDic setObject:pswTextField.text forKey:@"newPassword"];
+//    
+//    [NFMineManager execute:@selector(resetPswManager) target:self callback:@selector(resetPswCallBack:) args:sendDic,nil];
+//}
+
+//- (void)resetPswCallBack:(id)data
+//{
+//    if (data) {
+//        if ([data objectForKey:kWrongDlog]) {
+//            [SVProgressHUD showErrorWithStatus:[data objectForKey:kWrongDlog]];
+//        }
+//        else
+//        {
+//            [SVProgressHUD showSuccessWithStatus:@"密码设置成功"];
+//            [NFUserEntity shareInstance].password = pswTextField.text;
+//            [self performSelector:@selector(back:) withObject:nil afterDelay:1.0];
+//        }
+//    }
+//    else
+//    {
+//        [SVProgressHUD dismiss];
+//    }
+//}
+
+/**
+ *  获取验证码请求
+ */
+- (void)verificationManager
+{
+//    NSMutableDictionary *userId = [[NSMutableDictionary alloc] initWithCapacity:2];
+//    [userId setObject:phoneTextField.text forKey:@"mobileNumber"];
+//    [userId setObject:@"3" forKey:@"flag"];;
+    secTime_ = 59;
+    timer_ =  [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timeBegin) userInfo:self repeats:YES];
+    [getCodeBtn setTitle:[NSString stringWithFormat:@"%dS",secTime_] forState:UIControlStateNormal];
+//    [NFLoginManger execute:@selector(gotVerificationManager) target:self callback:@selector(gotVerificationCallBack:) args:userId,nil];
+}
+
+- (void)gotVerificationCallBack :(id)data
+{
+    
+}
+
+/**
+ *  验证验证码和回调
+ */
+//- (void)checkVerification
+//{
+//    NSMutableDictionary *userId = [[NSMutableDictionary alloc] initWithCapacity:2];
+//    [userId setObject:phoneTextField.text forKey:@"mobile"];
+//    [userId setObject:codeTextField.text forKey:@"vailCode"];
+//    
+//    [SVProgressHUD show];
+    
+//    [NFLoginManger execute:@selector(checkVerificationManager) target:self callback:@selector(checkVerificationCallBack:) args:userId,nil];
+//}
+
+//- (void)checkVerificationCallBack :(id)data
+//{
+//    if (data)
+//    {
+//        if ([data objectForKey:kWrongDlog])
+//        {
+//            [SVProgressHUD showErrorWithStatus:[data objectForKey:kWrongDlog]];
+//        }
+//        else
+//        {
+//            [SVProgressHUD dismiss];
+//            if (_isForgetPsw)
+//            {
+//                //重置密码
+//                [self resetPsw];
+//            }
+//            else
+//            {
+//                //注册
+//                [self updataPassword];
+//                
+//            }
+//        }
+//    }
+//    else
+//    {
+//        [SVProgressHUD dismiss];
+//    }
+//}
+
+/**
+ *  注册
+ */
+//- (void)updataPassword
+//{
+//    NSMutableDictionary *sendDic = [[NSMutableDictionary alloc] initWithCapacity:2];
+//    [sendDic setObject:phoneTextField.text forKey:@"mobile"];
+//    [sendDic setObject:pswTextField.text forKey:@"password"];
+//
+//    [sendDic setObject:@"1" forKey:@"flag"];
+//    
+//    if ([NFUserEntity shareInstance].inviteCode) {
+//        [sendDic setObject:[NFUserEntity shareInstance].inviteCode forKey:@"invitionCode"];
+//    }else
+//    {
+//        [sendDic setObject:@"" forKey:@"invitionCode"];
+//    }
+//    
+//    [SVProgressHUD show];
+//    
+//    [NFLoginManger execute:@selector(findPassWordManager) target:self callback:@selector(updataPasswordCallBack:) args:sendDic,nil];
+//}
+
+//用户状态：0-正常 1-封号 2-未注册 3-完善信息 4-账号已经存在
+//-(void)updataPasswordCallBack:(id)data
+//{
+//    if (data)
+//    {
+//        [NFUserEntity shareInstance].userId = [data objectForKey:@"userId"];
+//        
+//        if (0 == [[[data objectForKey:@"userStatus"]  description] integerValue])
+//        {
+//            [SVProgressHUD dismiss];
+//            //正常注册， 跳转到完善信息界面
+//            if (_isForgetPsw) {
+//                [SVProgressHUD showSuccessWithStatus:@"密码重置成功"];
+//                [NFUserEntity shareInstance].password = pswTextField.text;
+//                [self performSelector:@selector(back:) withObject:nil afterDelay:1.0];
+//            }
+//            else
+//            {
+//                RegistSuccessViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RegistSuccessViewController"];
+//                [self.navigationController pushViewController:vc animated:YES];
+//            }  
+//        }
+//        else if (1 == [[[data objectForKey:@"userStatus"]  description] integerValue])
+//        {
+//            [SVProgressHUD showInfoWithStatus:@"您已经被屏蔽"];
+//        }
+//        else if (2 == [[[data objectForKey:@"userStatus"]  description] integerValue])
+//        {
+//            [SVProgressHUD showInfoWithStatus:@"您的手机号码未注册"];
+//        }
+//        else if (3 == [[[data objectForKey:@"userStatus"]  description] integerValue])
+//        {
+//            [SVProgressHUD dismiss];
+//            RegistSuccessViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RegistSuccessViewController"];
+//            [self.navigationController pushViewController:vc animated:YES];
+//        }
+//        else if(4 == [[[data objectForKey:@"userStatus"]  description] integerValue])
+//        {
+//            [SVProgressHUD showInfoWithStatus:@"账号已经存在!"];
+//            [self performSelector:@selector(back:) withObject:nil afterDelay:1.0];
+//        }
+//    }
+//    else
+//    {
+//        [SVProgressHUD dismiss];
+//    }
+//}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

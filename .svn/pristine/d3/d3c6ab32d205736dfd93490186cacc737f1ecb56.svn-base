@@ -1,0 +1,27 @@
+//
+//  NFShareMoodManager.h
+//  nationalFitness
+//
+//  Created by wangping on 15/4/7.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import "NFBaseManager.h"
+#import "NFKCRequest.h"
+#import "NFKCParser.h"
+
+@interface NFKCManager : NFBaseManager
+
+//课程列表
+- (void)CourseListManager;
+
+//课程详情
+- (void)CourseInfoManager;
+
+//报名课程
+-(void)CourseOrderManager;
+
+//我的课程
+- (void)MyCourseListManager;
+
+@end

@@ -1,0 +1,71 @@
+//
+//  NFMatchEntity.m
+//  nationalFitness
+//
+//  Created by 林向阳 on 16/2/29.
+//  Copyright © 2016年 chenglong. All rights reserved.
+//
+
+#import "NFMatchEntity.h"
+
+@implementation NFMatchEntity
+
+@end
+
+
+@implementation CompetitionEntity
+
+
+@end
+
+@implementation CompetionRemindEntity
+
+
+
+@end
+
+@implementation AdvertEntity
+
+
+@end
+
+@implementation ContingentEntity
+
+
+
+@end
+
+@implementation ContingentMemberEntity
+
+
+
+@end
+
+@implementation CompetitionTypeEntity
+
+
+
+@end
+
+
+@implementation CompetitionCountingEntity
+
+
+
+@end
+
+@implementation CompetitionHistoryEntity
+
+
+
+@end
+
+@implementation CompetitionResultEntity
+
+@end
+
+
+@implementation competitionEntity
+
+@end
+

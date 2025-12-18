@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="forgetPassHeadView" id="iN0-l3-epB" customClass="forgetPassHeadView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AE0-ut-cwi">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="忘记密码" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFT-44-E58">
+                    <rect key="frame" x="152.5" y="21.5" width="70" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KKR-7S-AQG">
+                    <rect key="frame" x="15" y="12" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="NHT-bv-ROG"/>
+                        <constraint firstAttribute="width" constant="40" id="d4d-c3-6QM"/>
+                    </constraints>
+                    <state key="normal" image="everyday1_return"/>
+                </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VpS-Pw-Ed0">
+                    <rect key="frame" x="325" y="17" width="35" height="30"/>
+                    <state key="normal" title="跳 过"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="mFT-44-E58" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="4S0-Ji-xak"/>
+                <constraint firstItem="AE0-ut-cwi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="99e-lo-JOF"/>
+                <constraint firstAttribute="trailing" secondItem="AE0-ut-cwi" secondAttribute="trailing" id="Hfx-wp-h4u"/>
+                <constraint firstItem="KKR-7S-AQG" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="IaO-4q-ley"/>
+                <constraint firstItem="AE0-ut-cwi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="QjO-e1-GoH"/>
+                <constraint firstItem="VpS-Pw-Ed0" firstAttribute="centerY" secondItem="KKR-7S-AQG" secondAttribute="centerY" id="X7m-K4-JZw"/>
+                <constraint firstAttribute="trailing" secondItem="VpS-Pw-Ed0" secondAttribute="trailing" constant="15" id="eoW-1E-mbF"/>
+                <constraint firstItem="KKR-7S-AQG" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="idK-T1-fKX"/>
+                <constraint firstItem="mFT-44-E58" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="qvK-6U-hhp"/>
+                <constraint firstAttribute="bottom" secondItem="AE0-ut-cwi" secondAttribute="bottom" id="zN4-Cb-OZs"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="backBtn" destination="KKR-7S-AQG" id="UwE-mC-bF3"/>
+                <outlet property="backimageV" destination="AE0-ut-cwi" id="sl8-0G-fCa"/>
+                <outlet property="passBtn" destination="VpS-Pw-Ed0" id="zS2-0p-6kX"/>
+                <outlet property="titleText" destination="mFT-44-E58" id="Dhj-WQ-ZCB"/>
+            </connections>
+            <point key="canvasLocation" x="-267.5" y="46"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="everyday1_return" width="9" height="15"/>
+    </resources>
+</document>

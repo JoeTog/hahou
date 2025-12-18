@@ -1,0 +1,205 @@
+//
+//  NFTouchImageView.m
+//  nationalFitness
+//
+//  Created by 程long on 14-11-4.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFHeadImageView.h"
+#import "UIImageView+WebCache.h"
+#import "PublicDefine.h"
+//#import "NFActivityManager.h"
+#import "SVProgressHUD.h"
+
+@implementation NFHeadImageView
+{
+    NSString *userId_;
+}
+
+/**
+ *  给自己添加圆角
+ */
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    ViewRadius(self, self.frame.size.width / 2);
+    if ([self.gestureRecognizers count] == 0)
+    {
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                     action:@selector(handleSingleTapGesture:)];
+        [self addGestureRecognizer:tapGesture];
+        
+        self.userInteractionEnabled = YES;
+    }
+    
+    self.backgroundColor = [UIColor lightGrayColor];
+}
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        // Initialization code
+        ViewRadius(self, self.frame.size.width / 2);
+        if ([self.gestureRecognizers count] == 0)
+        {
+            UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                         action:@selector(handleSingleTapGesture:)];
+            [self addGestureRecognizer:tapGesture];
+            
+            self.userInteractionEnabled = YES;
+        }
+        
+        self.backgroundColor = [UIColor lightGrayColor];
+    }
+    return self;
+}
+
+- (void)ShowHeadImageWithUrlStr: (NSString *)URLStr withUerId:(NSString *)userId completion:(ResultDown)completion
+{
+    userId_ = userId;
+    
+    //居中显示
+    if (self.contentMode != UIViewContentModeScaleAspectFill)
+    {
+        self.contentMode = UIViewContentModeScaleAspectFill;
+    }
+    if (!self.clipsToBounds)
+    {
+        self.clipsToBounds = YES;
+    }
+    
+    self.image = nil;
+    
+    SDWebImageManager *webImageManager = [SDWebImageManager sharedManager];
+    NSURL *url = [NSURL URLWithString:URLStr];
+    
+    //先选择本地缓存，没有再下载
+    UIImage *headImage;
+    if ([webImageManager diskImageExistsForURL:url])
+    {
+        headImage = [webImageManager.imageCache imageFromDiskCacheForKey:[webImageManager cacheKeyForURL:url]];
+        [self setImage:headImage];
+        if (completion)
+        {
+            completion(YES, headImage);
+        }
+    }
+    else
+    {
+        [[SDWebImageManager sharedManager] downloadImageWithURL:url
+                                                        options:SDWebImageRetryFailed
+                                                       progress:nil
+                                                      completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                                          if (image)
+                                                          {
+                                                              if (completion)
+                                                              {
+                                                                  completion(YES, image);
+                                                              }
+                                                              self.alpha = 0.0;
+                                                              [UIView transitionWithView:self
+                                                                                duration:0.6
+                                                                                 options:UIViewAnimationOptionTransitionCrossDissolve
+                                                                              animations:^{
+                                                                                  [self setImage:image];
+                                                                                  self.alpha = 1.0;
+                                                                              } completion:NULL];
+                                                          }
+                                                          else
+                                                          {
+                                                              if (completion)
+                                                              {
+                                                                  completion(NO, nil);
+                                                              }
+                                                          }
+                                                      }];
+    }
+}
+
+- (void)ShowHeadImageWithUrlStr: (NSString *)URLStr withUerId:(NSString *)userId andSex:(NFSex)sex lineWidth:(CGFloat)width
+{
+    [self ShowHeadImageWithUrlStr:URLStr withUerId:userId completion:nil];
+    if (NFMan == sex)
+    {
+        ViewBorderRadius(self, self.frame.size.width / 2, width, kManBackColor);
+    }
+    else
+    {
+        ViewBorderRadius(self, self.frame.size.width / 2, width, kWoManBackColor);
+    }
+}
+
+/**
+ *  点击头像触发的事件
+ *
+ *  @param recognizer recognizer
+ */
+- (void)handleSingleTapGesture:(UITapGestureRecognizer*)recognizer
+{
+    [self getUserType];
+}
+
+//获取用户类型
+- (void)getUserType
+{
+    [SVProgressHUD show];
+//    NSMutableDictionary * sendDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+//    if(0 == userId_.length)
+//    {
+//        userId_ = [NFUserEntity shareInstance].userId;
+//    }
+//    [sendDic setObject:userId_ forKey:@"userId"];
+//    [NFActivityManager execute:@selector(userTypeManager) target:self callback:@selector(userTypeCallBack:) args:sendDic,nil];
+}
+
+- (void)userTypeCallBack:(id)data
+{
+//    [SVProgressHUD dismiss];
+    if (data) {
+        if ([data objectForKey:kWrongDlog]) {
+            [SVProgressHUD showErrorWithStatus:[data objectForKey:kWrongDlog]];
+        }
+        else
+        {
+            [SVProgressHUD dismiss];
+            NSString * userType = [data objectForKey:@"userType"];
+            if ([userType isEqualToString:@"9"]) {
+                [self publicPage];
+            }
+            else
+            {
+                [self personPage];
+            }
+        }
+    }
+    else
+    {
+        [SVProgressHUD showErrorWithStatus:@"身份获取失败"];
+    }
+}
+
+//个人主页
+- (void)personPage
+{
+    UIViewController *viewCtrol = [KeepAppBox viewController:self];
+    if (viewCtrol)
+    {
+        
+    }
+}
+
+//公共号主页
+- (void)publicPage
+{
+    
+}
+
+- (void)dealloc
+{
+
+}
+
+@end

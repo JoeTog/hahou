@@ -1,0 +1,551 @@
+//
+//  NFUserEntity.h
+//  SummaryHoperun
+//
+//  Created by 程long on 14-7-30.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+//#import "CLLocation+WGS_GCJ.h"
+
+/**
+ *  用户在登陆首页选择的操作类型
+ */
+typedef NS_ENUM(NSInteger, OPERATION_TYOE)
+{
+    OT_LoginDefault,
+    /**
+     *  用户名密码登陆
+     */
+    OT_LoginUseName,
+    /**
+     *  QQ登陆
+     */
+    OT_LoginUseQQ,
+    /**
+     *  新浪微博登陆
+     */
+    OT_LoginUseWB,
+    /**
+     *  人人网登陆
+     */
+    OT_LoginUseRR,
+    /**
+     *  微信登陆
+     */
+    OT_LoginUseWX,
+    /**
+     *  智能门户登陆
+     */
+    OT_LoginUseMyNj,
+    /**
+     *  找回密码操作
+     */
+    OT_FindPassword,
+    /**
+     *  注册用户操作
+     */
+    OT_RegsterUser,
+    /*
+     活动报名
+     */
+    OT_EnterFor
+    
+};
+
+typedef NS_ENUM(NSInteger, NFUserPermission) {
+    NFUserGeneral    =    0,    //普通用户
+    NFUserVolunteer,            //志愿者
+    NFUserMyNJ,                 //智能门户用户
+    NFUserClub,                 //普通用户（代表商团)
+    NFUserQQ,                   //QQ
+    NFUserRR,                   //人人
+    NFUserWX,                   //微信
+    NFUserXL                    //新浪微博
+};
+
+/**
+ *  用户性别
+ */
+typedef NS_ENUM(NSInteger, NFSex) {
+    
+    /**
+     *  0 未知
+     */
+    NFUnknow = 0,
+    /**
+     *  1 男
+     */
+    NFMan,
+    /**
+     *  女
+     */
+    NFWoman
+};
+
+/**
+ *  活动属性代码 1：个人活动 2：场馆；3：俱乐部；4：商家（卖产品）；5：官方
+ */
+
+typedef NS_ENUM(NSInteger, AttCode) {
+    //个人活动
+    AttCodePersonal = 1,
+    //场馆
+    AttCodeVenues = 2,
+    //俱乐部
+    AttCodeClub = 3,
+    //商家
+    AttCodeSeller = 4,
+    //官方
+    AttCodeOfficial = 5,
+};
+
+//创建活动的身份
+typedef NS_ENUM(NSUInteger, CreatUserType) {
+    //个人
+    CreatUserTypeSelf,
+    //场地
+    CreatUserTypeSpace,
+    //社团
+    CreatUserTypeClub,
+    //公共主页
+    CreatUserTypePublic
+};
+
+//活动类型
+typedef NS_ENUM(NSUInteger, CreatActType) {
+    //基础类型活动
+    CreatActTypePublic,
+    //培训课程
+    CreatActTypeTrain,
+    //走跑活动
+    CreatActTypeRun,
+    //赛事售票
+    CreatActTypeEvent
+};
+
+/**
+ *  相册或者活动所属类型
+ */
+typedef NS_ENUM(NSInteger,SuperTheirType) {
+    /**
+     *  热点
+     */
+    SuperTheirTypeHot = 0,
+    /**
+     *  活动
+     */
+    SuperTheirTypeActivity = 1,
+    /**
+     *  场馆
+     */
+    SuperTheirTypeVenues = 2,
+    /**
+     *  俱乐部
+     */
+    SuperTheirTypeClub = 3,
+    /**
+     *  个人
+     */
+    SuperTheirTypeSelf = 4,
+    /**
+     *  动态界面
+     */
+    SuperTheirTypeDynamic = 5,
+    
+    /**
+     教练
+     */
+    SuperTheirTypeCoach = 6,
+    
+    /*
+     常州培训相册
+     */
+    SuperTheirTypePX = 7,
+    
+    /*
+     *举报
+     */
+    
+    SuperTheirTypeReport = 9,
+    /**
+     *  瀑布流相册
+     */
+    SuperTheirTypeAlbum = 1000,
+    /**
+     *  健身设备
+     */
+    SuperTheirTypeHealth = 10,
+    /**
+     *  赛事
+     */
+    SuperTheirTypeSaiShi = 17,
+    /**
+     *  培训
+     */
+    SuperTheirTypePeiXun = 18
+};
+
+
+//@interface NFUserEntity : NSObject<CLLocationManagerDelegate>
+
+@interface NFUserEntity : NSObject<NSLayoutManagerDelegate>
+/*!
+ @property
+ @abstract      用户唯一id
+ 
+ */
+@property (nonatomic, strong)   NSString *userId;
+
+
+/*!
+ @property
+ @abstract      用户唯一慧动id
+ 
+ */
+@property (nonatomic, strong)   NSString *hdnumber;
+
+
+/*!
+ @property
+ @abstract      用户手机号
+ 
+ */
+@property (nonatomic, strong)   NSString *mobile;
+
+
+
+/*!
+ @property
+ @abstract      单点登录需使用的token
+ 
+ */
+@property (nonatomic, strong)   NSString *accessToken;
+
+/*!
+ @property
+ @abstract      健康状态 健康状态 1:超重  2:偏瘦 3:正常 4:完美
+ 
+ */
+@property (nonatomic, strong)   NSString *healthStatus;
+
+/*!
+ @property
+ @abstract      邀请码
+ 
+ */
+@property (nonatomic, strong)   NSString *inviteCode;
+
+/*!
+ @property
+ @abstract      登录名
+ 
+ */
+@property (nonatomic, strong)   NSString *loginName;
+
+
+
+/*!
+ @property
+ @abstract      密码
+ 
+ */
+@property (nonatomic, strong)   NSString *password;
+
+
+
+/*!
+ @property
+ @abstract      用户类型
+ 
+ */
+@property (nonatomic, assign)   NFUserPermission    userType;
+
+
+/*!
+ @property
+ @abstract      个人 性别  性别：1-男人、2-女人
+ 
+ */
+@property (nonatomic, assign)   NFSex    sex;
+
+
+/*!
+ @property
+ @abstract      爱好 hobby
+ 
+ */
+@property (nonatomic, strong)   NSString    *hobby;
+
+/*!
+ @property
+ @abstract      个人签名 signaTure
+ 
+ */
+@property (nonatomic, strong)   NSString    *signaTure;
+
+/*!
+ @property
+ @abstract      最新动态 newDynamic
+ 
+ */
+@property (nonatomic, strong)   NSString    *dynamicNew;
+
+/*!
+ @property
+ @abstract      地区 currentArea
+ 
+ */
+@property (nonatomic, strong)   NSString    *currentArea;
+
+/*!
+ @property
+ @abstract      生日 birthDay 出生日期，例如 1975-01-01
+ 
+ */
+@property (nonatomic, strong)   NSString    *birthDay;
+
+/*!
+ @property
+ @abstract      用户权限  0：普通用户  报修 ， 其它  管理员用户  安装
+ 
+ */
+@property (nonatomic, strong)   NSString    *roleType;
+
+/*!
+ @property
+ @abstract      用户头像 bigpicpath
+ 
+ */
+@property (nonatomic, strong)   NSString    *bigpicpath;
+
+/*!
+ @property
+ @abstract      用户头像 smallpicpath
+ 
+ */
+@property (nonatomic, strong)   NSString    *smallpicpath;
+
+/*!
+ @property
+ @abstract      二维码图片地址 matrixPicUrl
+ 
+ */
+@property (nonatomic, strong)   NSString    *matrixPicUrl;
+
+/*!
+ @property
+ @abstract      小二维码图片地址 matrixPicUrl
+ 
+ */
+@property (nonatomic, strong)   NSString    *smallMatrixPicUrl;
+
+/*!
+ @property
+ @abstract      用户经度 userLongitude
+ 
+ */
+@property (nonatomic, assign)   CGFloat    userLongitude;
+
+/*!
+ @property
+ @abstract      用户纬度 userLatitude
+ 
+ */
+@property (nonatomic, assign)   CGFloat    userLatitude;
+
+/*!
+ @property
+ @abstract      用户当前所在位置 currentLoName
+ 
+ */
+@property (nonatomic, strong)   NSString    *currentLoName;
+
+/*!
+ @property
+ @abstract      查看数据的 － 户籍市 cityName
+ 
+ */
+@property (nonatomic, strong)   NSString    *cityName;
+
+/*!
+ @property
+ @abstract      查看数据的 － 户籍市 cityCode
+ 
+ */
+@property (nonatomic, strong)   NSString    *cityCode;
+
+/*!
+ @property
+ @abstract      用户所在 － 户籍市 cityName
+ 
+ */
+@property (nonatomic, strong)   NSString    *currentCityName;
+
+/*!
+ @property
+ @abstract      用户所在 － 户籍市 cityCode
+ 
+ */
+@property (nonatomic, strong)   NSString    *currentCityCode;
+
+/*!
+ @property
+ @abstract      用户切换的组织code
+ 
+ */
+@property (nonatomic, strong)   NSString    *orgCode;
+
+/*!
+ @property
+ @abstract      用户切换的组织名称
+ 
+ */
+@property (nonatomic, strong)   NSString    *orgName;
+
+
+/*!
+ @property
+ @abstract      用户切换的系统code
+ 
+ */
+@property (nonatomic, strong)   NSString    *sysCode;
+
+/*!
+ @property
+ @abstract      用户切换的系统名称
+ 
+ */
+@property (nonatomic, strong)   NSString    *sysName;
+
+
+/*!
+ @property
+ @abstract      身份证号 idNumber
+ 
+ */
+@property (nonatomic, strong)   NSString    *idNumber;
+
+
+/*!
+ @property
+ @abstract      昵称 nickName
+ 
+ */
+@property (nonatomic, strong)   NSString    *nickName;
+
+/*!
+ @property
+ @abstract      备注 remark
+ 
+ */
+@property (nonatomic, strong)   NSString    *remark;
+
+/*!
+ @property
+ @abstract      用户真实姓名
+ 
+ */
+@property (nonatomic, strong)   NSString    *realName;
+
+/*!
+ @property
+ @abstract      户籍省 proName
+ 
+ */
+@property (nonatomic, strong)   NSString    *proName;
+
+/*!
+ @property
+ @abstract      慧动号修改次数
+ 
+ */
+@property (nonatomic)   NSInteger    nickNameChanged;
+
+/*!
+ @property
+ @abstract      用户类型 是否是爱趴直接登录用户
+ 
+ */
+@property (nonatomic)   BOOL    isUserMynj;
+
+/*!
+ @property
+ @abstract      用户操作类型， 是找回密码还是注册用户判断
+ 
+ */
+@property (assign, nonatomic) OPERATION_TYOE orepationType;
+
+/*!
+ @property
+ @abstract      用户的身高  身高，cm，格式176
+ 
+ */
+@property (nonatomic, strong)NSString      *userHeight;
+
+/*!
+ @property
+ @abstract      用户的体重  体重,kg,格式8
+ 
+ */
+@property (nonatomic, strong) NSString      *userWeight;
+
+/*!
+ @property
+ @abstract      用户导航
+ 
+ */
+//@property (nonatomic, strong) CLLocationManager *locationManager;
+
+//年龄
+@property (nonatomic, strong) NSString      *userAge;
+
+//星座
+@property (nonatomic, strong) NSString      *conStell;
+
+//性取向
+@property (nonatomic, strong) NSString      *sexUality;
+
+//广告的title
+@property (nonatomic, strong) NSString      *alertTitleStr;
+
+//广告的标题
+@property (nonatomic, strong) NSString      *alertHtmlStr;
+
+//是否刷新首页
+@property (nonatomic, assign) BOOL reloadHomePage;
+
+//是否刷新排名
+@property (nonatomic, assign) BOOL reloadHomeRange;
+
+//体型描述
+@property (nonatomic, strong) NSString * shapeType;
+
+//BMI指数
+@property (nonatomic, strong) NSString * BMI;
+
+//体重浮动数（预留）
+@property (nonatomic, strong) NSString * weightFloat;
+
+//积分商城地址
+@property (nonatomic, strong) NSString * integralUrl;
+
+//体重升降(预留字段) 0:升；1：降
+@property (nonatomic, strong) NSString * weightUpDown;
+
+//首页top背景图地址
+@property (nonatomic, strong) NSString * backGroundPicPath;
+
+//服务器下发的服务器地址
+@property (nonatomic, strong) NSString *urlStr;
+
++ (instancetype)shareInstance;
+
+//改变定位的精准度和代理对象
+- (void)changeUserDistanceFilter:(CGFloat)distanceFilter andDelagate:(id)delagate;
+
+//清空当前用户数据
+- (void)clearUserData;
+
+@end

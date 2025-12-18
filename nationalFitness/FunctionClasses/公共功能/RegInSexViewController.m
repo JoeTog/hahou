@@ -1,0 +1,243 @@
+//
+//  RegInSexViewController.m
+//  nationalFitness
+//
+//  Created by 程long on 14-10-24.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "RegInSexViewController.h"
+//#import "SetUserInfoManager.h"
+
+@interface RegInSexViewController ()
+{
+    //选男
+    __weak IBOutlet UILabel *manLab;
+    //选女
+    __weak IBOutlet UILabel *womanLab;
+    //选中的性别是不是男
+    BOOL isSearchMan_;
+    BOOL goNext_;
+    NFSex nfSex_;
+}
+
+@end
+
+@implementation RegInSexViewController
+
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
+    
+    [self initUi];
+    // Do any additional setup after loading the view.
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)initUi
+{
+    
+    goNext_ = NO;
+    
+    if([NFUserEntity shareInstance].sex == NFMan)
+    {
+        [self touchMan:manLab];
+    }
+    else
+    {
+        isSearchMan_ = YES;
+        [self touchWoman:womanLab];
+    }
+    
+    if (_isFromSet)
+    {
+        self.title = @"修改性别";
+        [self setNavBarButton];
+    }
+    //培训界面设置性别
+    if (self.fromType == 0) {
+        self.title = @"设置性别";
+        [self setNavBarButton];
+    }
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+ 
+    if (!_isFromSet)
+    {
+        
+    }
+    //
+}
+
+
+/**
+ *  点击男，用来选取性别
+ *
+ *  @param sender touch man
+ */
+- (IBAction)touchMan:(id)sender
+{
+    nfSex_ = NFMan;
+    
+    if (isSearchMan_)
+    {
+        [self goNetView:nil];
+        
+        return;
+    }
+    
+    isSearchMan_ = !isSearchMan_;
+    
+    [self changeSearch:manLab];
+    
+    
+    
+}
+
+
+
+/**
+ *  点击女，用来选取性别
+ *
+ *  @param sender touch woman
+ */
+- (IBAction)touchWoman:(id)sender
+{
+    nfSex_ = NFWoman;
+    
+    if (!isSearchMan_)
+    {
+        [self goNetView:nil];
+        
+        return;
+    }
+    
+    isSearchMan_ = !isSearchMan_;
+    
+    [self changeSearch:womanLab];
+}
+
+
+- (void)changeSearch:(UILabel *) sexLab
+{
+    CAKeyframeAnimation *k = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+    k.values = @[@(0.1),@(1.0),@(1.2)];
+    k.keyTimes = @[@(0.0),@(0.5),@(0.8),@(1.0)];
+    k.calculationMode = kCAAnimationLinear;
+    [sexLab.layer addAnimation:k forKey:@"SHOW"];
+    
+    if (isSearchMan_)
+    {
+        [UIView animateWithDuration:0.3 animations:^{
+            manLab.alpha = 1.0;
+            womanLab.alpha = 0.38;
+        }completion:^(BOOL finished) {
+            if (goNext_ == NO)
+            {
+                goNext_ = YES;
+            }
+            else
+            {
+                [self goNetView:nil];
+            }
+        }];
+    }
+    else
+    {
+        [UIView animateWithDuration:0.3 animations:^{
+            womanLab.alpha = 1.0;
+            manLab.alpha = 0.38;
+        }completion:^(BOOL finished) {
+            if (goNext_ == NO)
+            {
+                goNext_ = YES;
+            }
+            else
+            {
+                [self goNetView:nil];
+            }
+        }];
+    }
+}
+
+
+/**
+ *  给当前界面添加手势，滑到下一个界面
+ *
+ *  @param sender sender
+ */
+- (IBAction)goNetView:(id)sender
+{
+//    if (!_isFromSet)
+//    {
+//        if (isSearchMan_ )
+//        {
+//            [NFUserEntity shareInstance].sex = NFMan;
+//        }
+//        else
+//        {
+//            [NFUserEntity shareInstance].sex = NFWoman;
+//        }
+    
+//        [self performSegueWithIdentifier:@"inRegDataSeg" sender:nil];
+//    }
+}
+
+#pragma mark - 右侧保存
+
+- (void)setNavBarButton
+{
+    // 设置 navigation bar 右侧按钮
+    UIButton * leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 27)];
+    leftBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
+    
+    [leftBtn setTitle:@"保存" forState:UIControlStateNormal];
+    [leftBtn addTarget:self action:@selector(handleRightBtn) forControlEvents:UIControlEventTouchUpInside];
+//    [leftBtn setBackgroundColor:NFSendBlueColor];
+    leftBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    ViewRadius(leftBtn, 2);
+    
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
+    self.navigationItem.rightBarButtonItem = leftButtonItem;
+}
+
+- (void)handleRightBtn
+{
+//    SetUserInfoManager *setUserInfo_ = [[SetUserInfoManager alloc] init];
+//    [setUserInfo_ setUserInfoWithType:SetStringTypeSex withInfo:[NSString stringWithFormat:@"%@",@(nfSex_)] result:^(BOOL success, NSString *wrongStr) {
+//        if (success)
+//        {
+//            [NFUserEntity shareInstance].sex = nfSex_;
+//            [KeepAppBox keepVale:[NSString stringWithFormat:@"%@",@(nfSex_)] forKey:@"sex"];
+//            
+//            [self.navigationController popViewControllerAnimated:YES];
+//            
+//            
+//        }
+//        else
+//        {
+//            [self showAlertHud:CGPointZero withStr:wrongStr];
+//        }
+//    }];
+    
+    //保存返回培训信息确认界面
+//    if (self.fromType == 0) {
+        [self.delegate sendSexValue:nfSex_];
+        [self.navigationController popViewControllerAnimated:YES];
+//    }
+    
+    
+    
+}
+
+
+@end

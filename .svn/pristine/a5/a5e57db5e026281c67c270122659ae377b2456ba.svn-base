@@ -1,0 +1,53 @@
+//
+//  NFPointMallParser.m
+//  nationalFitness
+//
+//  Created by 林向阳 on 15/6/12.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import "NFPointMallParser.h"
+#import "NFPointMallEntity.h"
+
+@implementation NFPointMallParser
+
+//获取省市区
++(id)getDistrictProListParser:(NSData *)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        if ([bodyDic objectForKey:kWrongDlog]) {
+            return nil;
+        }
+        NSArray *entityArr = [bodyDic objectForKey:@"districtProList"];
+        NSMutableArray * dataArr = [[NSMutableArray alloc]initWithCapacity:0];
+        for (NSDictionary * entiyDic in entityArr) {
+            districtProEntity * entity = [[districtProEntity alloc]init];
+            entity.name = [[entiyDic objectForKey:@"name"] description];
+            entity.code = [[entiyDic objectForKey:@"code"] description];
+             entity.preCode = [[entiyDic objectForKey:@"preCode"] description];
+            [dataArr addObject:entity];
+        }
+        
+        return dataArr;
+    }
+    
+    return nil;
+}
+
+//确认预约
++(id)sureBuyParser:(NSData *)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+@end

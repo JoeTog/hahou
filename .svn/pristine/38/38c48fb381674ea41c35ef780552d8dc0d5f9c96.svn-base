@@ -1,0 +1,111 @@
+//
+//  AchieveQueryViewController.m
+//  nationalFitness
+//
+//  Created by 童杰 on 2017/2/28.
+//  Copyright © 2017年 chenglong. All rights reserved.
+//
+
+#import "AchieveQueryViewController.h"
+#import "ScrollVChanged.h"
+#import "IntegralView.h"
+#import "DailyAdminTableViewController.h"
+
+@interface AchieveQueryViewController ()<ScrollVChangedDelegate,UIScrollViewDelegate>
+
+@end
+
+@implementation AchieveQueryViewController{
+    
+    //scrollView
+    
+    __weak IBOutlet UIScrollView *scrollV_;
+    
+    IntegralView *integralV_;
+    
+    DailyAdminTableViewController *DailyAdminTableV_;
+    
+}
+
+//设置navigationController 基点从下面左上角算起
+-(void)viewWillAppear:(BOOL)animated{
+    //设置navigationController no基点从下面左上角算起
+    [[UINavigationBar appearance] setTranslucent:NO];
+    self.navigationController.navigationBar.translucent = NO;
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [self loadViewIfNeeded];
+    integralV_.frame = CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, 290);
+    [scrollV_ addSubview:integralV_];
+    //184为tabbleview 以上的总高度
+    DailyAdminTableV_.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 184);
+    [scrollV_ addSubview:DailyAdminTableV_.view];
+    
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    //top  高度50
+    self.title = @"业绩查询";
+    [self initUI];
+    
+}
+
+-(void)initUI{
+//    ScrollVChanged *topViews = [[ScrollVChanged alloc] initWithCreateScrollerWithOutIndexLabelWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 30) andChange:@[@"季度报告",@"积分情况"]];
+    ScrollVChanged *topViews = [[ScrollVChanged alloc] initWithCreateScrollerWithOutIndexLabelWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 30) andChange:@[@"季度报告",@"积分情况"] AndRadius:8];
+    topViews.delegate = self;
+    topViews.isNeedLine = NO;
+    [self.view addSubview:topViews];
+    scrollV_.contentSize = CGSizeMake(2*SCREEN_WIDTH, scrollV_.contentSize.height);
+    scrollV_.contentOffset = CGPointMake(0, 0);
+    scrollV_.scrollEnabled = NO;
+    integralV_ = [[[NSBundle mainBundle]loadNibNamed:@"IntegralView" owner:nil options:nil] firstObject];
+    //在didappear 中设置frame
+    
+    UIStoryboard * sb = [UIStoryboard storyboardWithName:@"DailyAdminStoryboard" bundle:nil];
+    DailyAdminTableV_ = [sb instantiateViewControllerWithIdentifier:@"DailyAdminTableViewController"];
+    DailyAdminTableV_.isNeedView = 1;
+    [self addChildViewController:DailyAdminTableV_];
+    
+}
+
+-(void)ScrollChangeClick:(UIButton *)sender{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelay:0];
+    [UIView setAnimationDuration:0.5];
+    scrollV_.contentOffset = CGPointMake(SCREEN_WIDTH * (sender.tag - 1), 0);
+    [UIView commitAnimations];
+    
+}
+
+
+
+
+//点击top的季度
+- (IBAction)GestureClick:(id)sender {
+    
+}
+
+
+
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

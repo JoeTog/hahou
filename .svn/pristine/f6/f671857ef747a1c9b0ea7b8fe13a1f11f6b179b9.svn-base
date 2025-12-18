@@ -1,0 +1,473 @@
+//
+//  NFbaseViewController.m
+//  nationalFitness
+//
+//  Created by 程long on 14-10-22.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFbaseViewController.h"
+//#import "BaiduMobStat.h"
+#import "SystemInfo.h"
+
+@interface NFbaseViewController ()
+
+@end
+
+@implementation NFbaseViewController
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.tabBarController.tabBar.hidden = YES;
+//    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBar.translucent = YES;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+//    isConnectNet = ([self currentNetworkStatus] == 0 ? NO :YES);
+    
+    if (self.navigationController && self.navigationController.viewControllers.count > 1)
+    {
+        UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
+        [backBtn setImage:[UIImage imageNamed:@"everyday1_return"] forState:UIControlStateNormal];
+        [backBtn addTarget:self action:@selector(backClicked:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithCustomView:backBtn];
+        self.navigationItem.leftBarButtonItem = backButtonItem;
+    }
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    orepationType = [NFUserEntity shareInstance].orepationType;
+    // Do any additional setup after loading the view.
+}
+
+//自定义NAV返回按钮
+- (void)backClicked:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+//- (void)viewWillAppear:(BOOL)animated
+//{
+//    [super viewWillAppear:animated];
+//    
+//    NSString* cName;
+//    if (self.title)
+//    {
+//        cName = self.title;
+////        [[BaiduMobStat defaultStat] pageviewStartWithName:cName];
+//    }
+//}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    NSString* cName;
+    if (self.title)
+    {
+        cName = self.title;
+//        [[BaiduMobStat defaultStat] pageviewEndWithName:cName];
+    }
+}
+
+
+#pragma mark - show alert hud
+
+-(void)showAlertHud:(CGPoint)point withStr:(NSString *)message
+{
+    if([SVProgressHUD isVisible])
+    {
+        [SVProgressHUD setStatus:message];
+    }
+    else
+    {
+        [SVProgressHUD showInfoWithStatus:message];
+    }
+}
+
+#pragma mark - showHUD
+- (void)showHUD
+{
+    [SVProgressHUD show];
+}
+
+#pragma mark - hideHud
+-(void)hideHud
+{
+    [SVProgressHUD dismiss];
+}
+
+- (UIViewController*)topViewController {
+    return [self topViewControllerWithRootViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
+}
+
+- (UIViewController*)topViewControllerWithRootViewController:(UIViewController*)rootViewController {
+    if ([rootViewController isKindOfClass:[UITabBarController class]]) {
+        UITabBarController* tabBarController = (UITabBarController*)rootViewController;
+        return [self topViewControllerWithRootViewController:tabBarController.selectedViewController];
+    } else if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* navigationController = (UINavigationController*)rootViewController;
+        return [self topViewControllerWithRootViewController:navigationController.visibleViewController];
+    } else if (rootViewController.presentedViewController) {
+        UIViewController* presentedViewController = rootViewController.presentedViewController;
+        return [self topViewControllerWithRootViewController:presentedViewController];
+    } else {
+        return rootViewController;
+    }
+}
+
+/**
+ *  返回当前网络状态
+ *
+ *  @return     NotReachable = 0,
+ ReachableViaWiFi,
+ ReachableViaWWAN
+ */
+//- (NetworkStatus)currentNetworkStatus
+//{
+//    return [[SystemInfo shareSystemInfo] currentNetworkStatus];
+//}
+
+#pragma mark - joe添加
+-(void)createNaviGationbarItemWithTitle:(NSString *)title{//attributes
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, JOESIZE.width, 64)];
+    label.text = title;
+    label.textColor = [UIColor colorWithRed:0.17 green:0.55 blue:0.87 alpha:1.00];
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:20];
+    label.textAlignment = NSTextAlignmentCenter;
+    self.navigationItem.titleView = label;
+}
+
+-(void)createNaviGationbarItemWithTitleImage:(NSString *)titleImageName andTitleText:(NSString *)titleText andTag:(int)tag isLeft:(BOOL)left{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:17]};
+    CGFloat length = [titleText boundingRectWithSize:CGSizeMake(2000, 30*JOESIZESCALE) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size.width;
+    CGFloat height = 30;
+    //判断titleTextlength 如果是三字一下高度就设置矮一点
+    if (titleText.length <= 3) {
+        height = 25;
+    }
+    button.frame = CGRectMake(0, 0, length, height);
+    if (titleImageName.length) {
+        [button setBackgroundImage:[[UIImage imageNamed:titleImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+    }
+    if (tag) {
+        button.tag = tag;
+    }
+    button.titleLabel.font = JoeNAVIGATION_LEFTBARTEXSIZE;
+    if (titleText.length != 0) {
+        [button setTitle:titleText forState:UIControlStateNormal];
+        [button setTitleColor:JoeNAVIGATION_LEFTBARCOLOR forState:UIControlStateNormal];
+    }else{
+        button.frame = CGRectMake(0, 0, 24, 24);
+    }
+    [button addTarget:self action:@selector(barButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView: button];
+    if (left) {
+        self.navigationItem.leftBarButtonItem = item;
+    }else{
+        self.navigationItem.rightBarButtonItem = item;
+    }
+}
+
+#pragma mark - navigation左右按钮点击事件
+-(void)barButtonClick:(UIButton *)sender{
+    
+}
+
+-(UIView *)JoeTitleImageViewWithTitle:(NSString *)title frame:(CGRect)frame imageName:(NSString *)name tag:(int)tag{
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    UIImageView *imageV = [self JoeImageViewWithImage:name andFrame:CGRectMake(0, 0, frame.size.width, frame.size.width) tag:tag];
+    view.userInteractionEnabled = YES;
+    [view addSubview:imageV];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, frame.size.width, frame.size.width, frame.size.height-frame.size.width)];
+    label.text = title;
+    label.font = [UIFont boldSystemFontOfSize:11];
+    label.textAlignment = NSTextAlignmentCenter;
+    //    label.adjustsFontSizeToFitWidth = YES;
+    [view addSubview:label];
+    return view;
+}
+
+-(UIImageView *)JoeImageViewWithImage:(NSString *)name andFrame:(CGRect)frame tag:(int)tag{
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:frame];
+    //        imageV.image = [UIImage imageNamed:name];
+    //        [imageV setImageWithURL:[NSURL URLWithString:name] placeholderImage:[UIImage imageNamed:@"picture17.png"]];
+    if (name.length <= 20) {
+        imageV.image = [UIImage imageNamed:name];
+    }else{
+        [imageV sd_setImageWithURL:[NSURL URLWithString:name] placeholderImage:[UIImage imageNamed:placeHolderImage]];
+    }
+    imageV.userInteractionEnabled = YES;
+    imageV.layer.cornerRadius = 10;
+    imageV.clipsToBounds = YES;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = imageV.bounds;
+    if (tag) {
+        button.tag = tag;
+    }
+    
+    [button addTarget:self action:@selector(JoeImageClick:) forControlEvents:(UIControlEventTouchUpInside)];
+    [imageV addSubview:button];
+    return imageV;
+}
+
+-(void)JoeImageClick:(UIButton *)sender{}
+
+-(UIView *)JoeTitleImageViewWithTitle:(NSString *)title frame:(CGRect)frame imageName:(NSString *)name tag:(int)tag cornerRadius:(CGFloat)cornerRadius{
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    UIImageView *imageV = [self JoeImageViewWithImage:name andFrame:CGRectMake(0, 0, frame.size.width, frame.size.width) tag:tag cornerRadius:cornerRadius];
+    view.userInteractionEnabled = YES;
+    [view addSubview:imageV];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, frame.size.width, frame.size.width, frame.size.height-frame.size.width)];
+    label.text = title;
+    label.font = [UIFont boldSystemFontOfSize:11];
+    label.textAlignment = NSTextAlignmentCenter;
+    //    label.adjustsFontSizeToFitWidth = YES;
+    [view addSubview:label];
+    return view;
+}
+
+-(UIImageView *)JoeImageViewWithImage:(NSString *)name andFrame:(CGRect)frame tag:(int)tag cornerRadius:(CGFloat)cornerRadius{
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:frame];
+    //        imageV.image = [UIImage imageNamed:name];
+    //        [imageV setImageWithURL:[NSURL URLWithString:name] placeholderImage:[UIImage imageNamed:@"picture17.png"]];
+    [imageV sd_setImageWithURL:[NSURL URLWithString:name] placeholderImage:[UIImage imageNamed:placeHolderImage]];
+    imageV.userInteractionEnabled = YES;
+    imageV.layer.cornerRadius = cornerRadius;
+    imageV.clipsToBounds = YES;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = imageV.bounds;
+    if (tag) {
+        button.tag = tag;
+    }
+    
+    [button addTarget:self action:@selector(JoeImageBringCornerRadiusClick:) forControlEvents:(UIControlEventTouchUpInside)];
+    [imageV addSubview:button];
+    return imageV;
+}
+
+-(void)JoeImageBringCornerRadiusClick:(UIButton *)sender{}
+
+#pragma mark - scrollV封装(无限轮播图)如果同一控制器有两个 这是第一个
+-(UIView *)createScrollViewWithImageArr:(NSArray *)imageArray andFrame:(CGRect)frame{
+//    self.countOfImage = imageArray.count;
+//    UIView *view = [[UIView alloc] initWithFrame:frame];
+//    _boundlessScrollV = [[UIScrollView alloc] initWithFrame:frame];
+//    _boundlessScrollV.tag = 701;
+//    _boundlessScrollV.delegate = self;
+//    _boundlessScrollV.contentSize = CGSizeMake((imageArray.count+2)*JOESIZE.width, frame.size.height);
+//    _boundlessScrollV.contentOffset = CGPointMake(JOESIZE.width, 0);
+//    _boundlessScrollV.bounces = NO;
+//    _boundlessScrollV.pagingEnabled = YES;
+//    for (int i=0; i<imageArray.count+2; i++) {
+//        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(JOESIZE.width*i, 0, frame.size.width, frame.size.height)];
+//        if (i==0) {
+//            imageV = [self JoeImageViewWithImage:imageArray.lastObject andFrame:CGRectMake(JOESIZE.width*i, 0, JOESIZE.width, JOESIZE.height/4) tag:i+1 cornerRadius:0];
+//        }else if (i==imageArray.count+1){
+//            imageV = [self JoeImageViewWithImage:imageArray.firstObject andFrame:CGRectMake(JOESIZE.width*i, 0, JOESIZE.width, JOESIZE.height/4) tag:i+1 cornerRadius:0];
+//        }else{
+//            imageV = [self JoeImageViewWithImage:imageArray[i-1] andFrame:CGRectMake(JOESIZE.width*i, 0, JOESIZE.width, JOESIZE.height/4) tag:i+1 cornerRadius:0];
+//        }
+//        imageV.userInteractionEnabled = YES;
+//        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//        button.frame = imageV.bounds;
+//        button.tag = i+1;
+//        
+//        [button addTarget:self action:@selector(JoeScrollViewImageClick:) forControlEvents:(UIControlEventTouchUpInside)];
+//        [imageV addSubview:button];
+//        [_boundlessScrollV addSubview:imageV];
+//    }
+//    UIView *view1 = [self decreatePageControlWithFrame:CGRectMake(0, CGRectGetMaxY(_boundlessScrollV.frame)-20*JoeSCREENSCALE, JOESIZE.width, 20*JoeSCREENSCALE)];
+//    view.tag = 99;
+//    [view addSubview:_boundlessScrollV];
+//    [view addSubview:view1];
+//    return view;
+    return nil;
+}
+
+-(UIView *)decreatePageControlWithFrame:(CGRect)frame{
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 0, JOESIZE.width, 20*JOESIZESCALE)];
+    _pageControl.tintColor = [UIColor blueColor];
+    _pageControl.pageIndicatorTintColor = [UIColor yellowColor];
+    _pageControl.tintColor = [UIColor blueColor];
+    _pageControl.numberOfPages = _countOfImage;
+    _pageControl.currentPage = 0;
+    [_pageControl addTarget:self action:@selector(pageControlChange:) forControlEvents:UIControlEventValueChanged];
+    [view addSubview:_pageControl];
+    if (_timer) {
+        
+    }else{
+        //        _timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timeRun) userInfo:nil repeats:YES];
+        //        [_timer fire];
+        _timer = [NSTimer timerWithTimeInterval:2 target:self selector:@selector(timeRun) userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+    }
+    return view;
+}
+
+-(void)timeRun{
+    if (_boundlessScrollV.contentOffset.x/JOESIZE.width == _boundlessScrollV.contentSize.width/JOESIZE.width-1) {
+        _boundlessScrollV.contentOffset = CGPointMake(JOESIZE.width, 0);
+    }
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelay:0.1];
+    [UIView setAnimationDuration:durationTime];
+    _boundlessScrollV.contentOffset = CGPointMake(_boundlessScrollV.contentOffset.x+JOESIZE.width, 0);
+    if (_boundlessScrollV.contentOffset.x == 0) {
+        _pageControl.currentPage = _countOfImage-1;
+    }else if (_boundlessScrollV.contentOffset.x/JOESIZE.width == _countOfImage+1){
+        _pageControl.currentPage = 0;
+    }else{
+        _pageControl.currentPage = _boundlessScrollV.contentOffset.x/JOESIZE.width-1;
+    }
+    [UIView commitAnimations];
+}
+
+
+-(void)JoeScrollViewImageClick:(UIButton *)sender{}
+
+//-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+//    if (scrollView.contentOffset.x/JOESIZE.width == _countOfImage-1) {
+//        scrollView.contentOffset = CGPointMake(JOESIZE.width, 0);
+//        _pageControl.currentPage = 1;
+//    }else if (scrollView.contentOffset.x/JOESIZE.width == 0){
+//        scrollView.contentOffset = CGPointMake(JOESIZE.width*(_countOfImage-2), 0);
+//        _pageControl.currentPage = _countOfImage-1;
+//    }else{
+//        _pageControl.currentPage = scrollView.contentOffset.x/JOESIZE.width;
+//    }
+//}
+
+#pragma mark - prepareData相关
+-(void)prepareData{
+}
+
+-(void)getDataSourceWithObject:(id)object{
+}
+
+
+-(void)prepareDataGetURLWithString:(NSString *)string{
+//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+//    hud.label.text = @"加载中";
+//    AFHTTPSessionManager *manger = [AFHTTPSessionManager manager];
+//    manger.responseSerializer = [AFHTTPResponseSerializer serializer];
+//    [manger GET:string parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+//        
+//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        NSError *error;
+//        id object = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers|NSJSONReadingMutableLeaves|NSJSONReadingAllowFragments error:&error];
+//        if (error) {
+//            hud.label.text = @"数据序列化失败";
+//        }else{
+//            hud.label.text = @"加载成功";
+//            [self getDataSourceWithObject:object];
+//            //            [self.tableV reloadData];
+//        }
+//        [hud hideAnimated:YES afterDelay:0.3];
+//        [hud removeFromSuperview];
+//        //        [_tableV.mj_header endRefreshing];
+//        //        [_tableV.mj_footer endRefreshing];
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        hud.label.text = @"加载失败";
+//        [hud hideAnimated:YES afterDelay:0.3];
+//        [hud removeFromSuperview];
+//        //        [_tableV.mj_header endRefreshing];
+//        //        [_tableV.mj_footer endRefreshing];
+//    }];
+    
+}
+
+//UIRectCornerTopLeft     = 1 << 0,
+//UIRectCornerTopRight    = 1 << 1,
+//UIRectCornerBottomLeft  = 1 << 2,
+//UIRectCornerBottomRight = 1 << 3,
+
+#pragma mark - 设置不规则圆角 view  button
+-(void)setViewRound:(UIView *)view TopLeft:(BOOL)TopLeft TopRight:(BOOL)TopRight BottomLeft:(BOOL)BottomLeft BottomRight:(BOOL)BottomRight cornerRadii:(CGFloat)roundW{
+    UIRectCorner a;
+    UIRectCorner b;
+    UIRectCorner c;
+    UIRectCorner d;
+    if (TopLeft) {
+        a = UIRectCornerTopLeft;
+    }
+    //    else{
+    //        a = NULL;
+    //    }
+    if (TopRight){
+        b = UIRectCornerTopRight;
+    }
+    //    else{
+    //        b = NULL;
+    //    }
+    if (BottomLeft){
+        c = UIRectCornerBottomLeft;
+    }
+    //    else{
+    //        c = NULL;
+    //    }
+    if (BottomRight){
+        d = UIRectCornerBottomRight;
+    }
+    //    else{
+    //        d = NULL;
+    //    }
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:view.bounds byRoundingCorners:a | b | c | d cornerRadii:CGSizeMake(roundW, roundW)];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = view.bounds;
+    maskLayer.path = maskPath.CGPath;
+    view.layer.mask = maskLayer;
+}
+
+-(void)setBtnRound:(UIButton *)sender TopLeft:(BOOL)TopLeft TopRight:(BOOL)TopRight BottomLeft:(BOOL)BottomLeft BottomRight:(BOOL)BottomRight cornerRadii:(CGFloat)roundW{
+    UIRectCorner a;
+    UIRectCorner b;
+    UIRectCorner c;
+    UIRectCorner d;
+    if (TopLeft) {
+        a = UIRectCornerTopLeft;
+    }
+    if (TopRight){
+        b = UIRectCornerTopRight;
+    }
+    if (BottomLeft){
+        c = UIRectCornerBottomLeft;
+    }
+    if (BottomRight){
+        d = UIRectCornerBottomRight;
+    }
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:sender.bounds byRoundingCorners:a | b | c | d cornerRadii:CGSizeMake(roundW, roundW)];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = sender.bounds;
+    maskLayer.path = maskPath.CGPath;
+    sender.layer.mask = maskLayer;
+}
+
+//延迟n秒调用主线程
+-(void)createDispatchWithDelay:(CGFloat)time block:(void(^)(void))block{
+    //    if (self.TakeBlock != block) {
+    //        self.TakeBlock = block;
+    //    }
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
+        sleep(time);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            block();
+        });
+    });
+}
+
+
+@end

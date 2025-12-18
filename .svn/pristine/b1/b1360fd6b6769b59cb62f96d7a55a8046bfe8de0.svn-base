@@ -1,0 +1,415 @@
+//
+//  AppDelegate.m
+//  nationalFitness
+//
+//  Created by 程long on 14-10-22.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "AppDelegate.h"
+//#import "NFLoginManger.h"
+/**
+ *  ShareSDK
+ */
+//#import <Sha/entOpenAPI/TencentOAuth.h>
+/**
+ *  FMDB
+ */
+#import "PublicDefine.h"
+#import "NFDatabaseQueue.h"
+/**
+ *  高德地图
+ */
+//#import <MAMapKit/MAMapKit.h>
+//#include <sys/xattr.h>
+
+#define kUpdateAlertViewTag         101
+
+#define kLatestVersion    @"latestVersion"
+
+#import <MediaPlayer/MediaPlayer.h>
+#import "UIImageView+WebCache.h"
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
+
+#include <sys/xattr.h>
+
+//#import "BaiduMobStat.h"
+#import "SVProgressHUD.h"
+
+//#import "EMClient.h"
+
+#import "AppDelegate+Parse.h"
+//#import "UPPaymentControl.h"
+
+#define IosAppVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
+
+@interface AppDelegate ()<AVAudioPlayerDelegate>
+
+@end
+
+@implementation AppDelegate
+
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // Override point for customization after application launch.
+    
+    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (userInfo)
+    {
+        [NFUserEntity shareInstance].alertTitleStr = [userInfo objectForKey:@"title"];
+        [NFUserEntity shareInstance].alertHtmlStr = [userInfo objectForKey:@"messUrl"];
+    }
+    
+    NSString *thisAppVerson = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    //保存系统的版本号
+    if (![KeepAppBox checkValueForkey:@"appVerson"])
+    {
+        [KeepAppBox keepVale:thisAppVerson forKey:@"appVerson"];
+        DLog(@"%@",[KeepAppBox checkValueForkey:@"appVerson"]);
+    }
+    
+    //默认经纬度
+    [NFUserEntity shareInstance].userLongitude = 112.4305814012;
+    [NFUserEntity shareInstance].userLatitude = 34.6240092102;
+    
+    //检查版本升级
+    
+    /**
+     *  数据库
+     */
+    NSString *databasePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+                              stringByAppendingPathComponent: kFMDBFilename];
+    
+    if (![thisAppVerson isEqualToString:[KeepAppBox checkValueForkey:@"appVerson"]])
+    {
+        [[NSFileManager defaultManager] removeItemAtPath:databasePath error:nil];
+        [KeepAppBox keepVale:thisAppVerson forKey:@"appVerson"];
+        DLog(@"%@",[KeepAppBox checkValueForkey:@"appVerson"]);
+    }
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:databasePath])
+    {
+        NSLog(@"数据库已经存在");
+    }
+    else
+    {
+        NFDatabaseQueue *creatFMDB = [[NFDatabaseQueue alloc]init];
+        [creatFMDB createAllTables];
+    }
+    
+    application.applicationIconBadgeNumber = 0;
+    
+    /*
+     *  注册推送通知功能
+     */
+    if (UIDeviceCurrentDevice >= 8.0)
+    {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings
+                                                                             settingsForTypes:(UIUserNotificationTypeSound |
+                                                                                               UIUserNotificationTypeAlert |
+                                                                                               UIUserNotificationTypeBadge)
+                                                                             categories:nil]];
+        
+        
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
+    else
+    {
+        //这里还是原来的代码
+        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
+                                                         UIRemoteNotificationTypeBadge |
+                                                         UIRemoteNotificationTypeSound)];
+    }
+    
+    /*
+     *   苹果健康中心
+     */
+    if (UIDeviceCurrentDevice >= 8.0) {
+        if ([HKHealthStore isHealthDataAvailable]) {
+            self.healthStore = [[HKHealthStore alloc] init];
+            NSSet *writeDataTypes = [self dataTypesToWrite];
+            NSSet *readDataTypes = [self dataTypesToRead];
+            
+            [self.healthStore requestAuthorizationToShareTypes:writeDataTypes readTypes:readDataTypes completion:^(BOOL success, NSError *error) {
+                
+                if (!success) {
+                    NSLog(@"You didn't allow HealthKit to access these read/write data types. In your app, try to handle this error gracefully when a user decides not to provide access. The error was: %@. If you're using a simulator, try it on a device.", error);
+                    return;
+                }
+                
+                // Handle success in your app here.
+                [self setupHealthStoreForTabBarControllers];
+            }];
+//            [NFHealthKitManager shareManager];
+        }
+    }
+    
+    /**
+     *  添加百度统计
+     */
+//    BaiduMobStat* statTracker = [BaiduMobStat defaultStat];
+//    statTracker.enableExceptionLog = YES; // 是否允许截获并发送崩溃信息，请设置YES或者NO
+//    statTracker.channelId = @"云动洛阳";//设置您的app的发布渠道
+//    statTracker.logStrategy = BaiduMobStatLogStrategyAppLaunch;//根据开发者设定的发送策略,发送日志
+//    statTracker.logSendWifiOnly = NO; //是否仅在WIfi情况下发送日志数据
+//    statTracker.sessionResumeInterval = 10;//设置应用进入后台再回到前台为同一次session的间隔时间[0~600s],超过600s则设为600s，默认为30s
+//    statTracker.shortAppVersion  = IosAppVersion; //参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
+//    statTracker.enableDebugOn = NO; //调试的时候打开，会有log打印，发布时候关闭
+//    [statTracker startWithAppId:@"da7d16f4d1"];//设置您在mtj网站上添加的app的appkey,此处AppId即为应用的appKey
+//    
+//    /**
+//     *  社会化分享组件初始化
+//     */
+//    
+//    [ShareSDK registerApp:@"2c1d9f029d68"];
+//    
+//    //添加微信应用 注册网址 http://open.weixin.qq.com
+//    [ShareSDK connectWeChatWithAppId:@"wx376439cb237063e0"
+//                           appSecret:@"cf38d52ffc9232c97a21d6d7e8dba503"
+//                           wechatCls:[WXApi class]];
+//    
+//    //添加新浪微博应用 注册网址 http://open.weibo.com
+//    [ShareSDK connectSinaWeiboWithAppKey:@"354676205"
+//                               appSecret:@"cfbc3c5e4ee0363639a260f8f14a714d"
+//                             redirectUri:@"http://www.sharesdk.cn"];
+//    
+//    //添加QQ空间应用  注册网址  http://connect.qq.com/intro/login/
+//    [ShareSDK connectQZoneWithAppKey:@"1104718002"
+//                           appSecret:@"t9tDDj2UR11u5p2o"
+//                   qqApiInterfaceCls:[QQApiInterface class]
+//                     tencentOAuthCls:[TencentOAuth class]];
+//    
+//    //添加QQ应用  注册网址  http://open.qq.com/
+//    [ShareSDK connectQQWithQZoneAppKey:@"1104718002"
+//                     qqApiInterfaceCls:[QQApiInterface class]
+//                       tencentOAuthCls:[TencentOAuth class]];
+//    
+//    //添加短信
+//    [ShareSDK connectSMS];
+    
+    //注册高德地图
+    //个人账号 com.developer.qmjs
+//    [MAMapServices sharedServices].apiKey = @"ce3a62595f7dfb2670910465c12e90f5";
+//    appstore 提交的 com.smartsport.luoyang
+//    [MAMapServices sharedServices].apiKey = @"0a31075a1e0273b7c697d22160edc348";
+    // 常州299 com.changzhou.OlympicStadium
+//    [MAMapServices sharedServices].apiKey = @"0977a36c819acec738b4b9faeb0e11d6";
+    
+    //关闭icloud
+    [self closeUpIcloud];
+    
+    // 环信中有用到Parse，您的项目中需要添加
+    [self parseApplication:application didFinishLaunchingWithOptions:launchOptions];
+    
+    //设置hud的样式
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+    [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeNative];
+    [SVProgressHUD setFont:[UIFont systemFontOfSize:14.0f]];
+    
+    return YES;
+}
+
+// Returns the types of data that Fit wishes to write to HealthKit.
+
+- (NSSet *)dataTypesToWrite {
+//    HKQuantityType *dietaryCalorieEnergyType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierDietaryChloride];
+    HKQuantityType *activeEnergyBurnType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierStepCount];
+//    HKQuantityType *heightType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierHeight];
+//    HKQuantityType *weightType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierBodyMass];
+    HKQuantityType *disType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierDistanceWalkingRunning];
+    HKQuantityType *calType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierActiveEnergyBurned];
+    
+//    return [NSSet setWithObjects:dietaryCalorieEnergyType, activeEnergyBurnType, heightType, weightType,disType,calType, nil];
+    return [NSSet setWithObjects:activeEnergyBurnType, disType, calType, nil];
+}
+
+// Returns the types of data that Fit wishes to read from HealthKit.
+- (NSSet *)dataTypesToRead {
+//    HKQuantityType *dietaryCalorieEnergyType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierDietaryChloride];
+    HKQuantityType *activeEnergyBurnType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierStepCount];
+//    HKQuantityType *heightType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierHeight];
+//    HKQuantityType *weightType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierBodyMass];
+//    HKCharacteristicType *birthdayType = [HKCharacteristicType characteristicTypeForIdentifier:HKCharacteristicTypeIdentifierDateOfBirth];
+    HKQuantityType *disType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierDistanceWalkingRunning];
+    HKQuantityType *calType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierActiveEnergyBurned];
+    
+//    return [NSSet setWithObjects:dietaryCalorieEnergyType, activeEnergyBurnType, heightType, weightType, birthdayType,disType,calType, nil];
+     return [NSSet setWithObjects:activeEnergyBurnType, disType, calType, nil];
+}
+
+#pragma mark - 判断屏幕旋转
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    // Get topmost/visible view controller
+    UIViewController *currentViewController = [self topViewController];
+    
+    NSString *className = currentViewController ? NSStringFromClass([currentViewController class]) : nil;
+    
+    if ([className isEqualToString:@"AVFullScreenViewController"] || [className isEqualToString:@"MPMoviePlayerViewController"])
+    {
+        return UIInterfaceOrientationMaskAll;
+    }
+    
+    // Only allow portrait (standard behaviour)
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIViewController*)topViewController
+{
+    return [KeepAppBox topViewController];
+}
+
+#pragma mark - push 设置
+
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    //生成的deviceToken
+    NSString* devToken = [NSString stringWithFormat:@"%@",deviceToken];
+    NSString *devToken1 = [devToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *token = [devToken1 substringWithRange:NSMakeRange(1,64)];
+    [KeepAppBox keepVale:token forKey:kDeviceTokenKey];
+    //环信token
+//    [[EMClient sharedClient] bindDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
+{
+    NSLog(@"apns -> 注册推送功能时发生错误， 错误信息:\n %@", err);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    application.applicationIconBadgeNumber = 0;
+}
+
+#pragma mark - Convenience
+
+// Set the healthStore property on each view controller that will be presented to the user. The root view controller is a tab
+// bar controller. Each tab of the root view controller is a navigation controller which contains its root view controller—
+// these are the subclasses of the view controller that present HealthKit information to the user.
+- (void)setupHealthStoreForTabBarControllers
+{
+//    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:self.healthStore,@"healthStore", nil];
+//    [[NSNotificationCenter defaultCenter]postNotificationName:@"healthStore" object:self userInfo:dic];
+//    
+//    UIApplication *app = [UIApplication sharedApplication];
+}
+
+- (void)applicationWillResignActive:(UIApplication *)application {
+    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    application.applicationIconBadgeNumber = 0;
+}
+
+// App进入后台
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    
+//    [[EMClient sharedClient] applicationDidEnterBackground:application];
+}
+
+// App将要从后台返回
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    
+    // 直接打开app时，图标上的数字清零
+    application.applicationIconBadgeNumber = 0;
+//    [[EMClient sharedClient] applicationWillEnterForeground:application];
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - 第三方回调
+- (BOOL)application:(UIApplication *)application  handleOpenURL:(NSURL *)url
+{
+//    return [ShareSDK handleOpenURL:url
+//                        wxDelegate:self];
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    //scheme -- 智能门户返回值
+    if ([[url scheme] isEqualToString:kAppScheme])
+    {
+        // 支付宝支付
+        if ([[url host] isEqualToString:@"safepay"]) {
+            NSString *query = [[url query] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSDictionary *dict = @{@"query": query};
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"AliPayNotification" object:nil userInfo:dict];
+            return YES;
+        }
+        else if([[url host] isEqualToString:@"uppayresult"])
+        {
+//            [[UPPaymentControl defaultControl] handlePaymentResult:url completeBlock:^(NSString *code, NSDictionary *data) {
+            
+//                NSDictionary *dict = @{@"query": code};
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"uppayresultNotification" object:nil userInfo:dict];
+//            }];
+        }
+        
+        //参数
+        NSString *tHost = [[url host] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGIN_FROM_MYNJ" object:tHost];
+        return YES;
+    }
+    
+    //scheme -- 第三方返回值
+//    return [ShareSDK handleOpenURL:url
+//                 sourceApplication:sourceApplication
+//                        annotation:annotation
+//                        wxDelegate:self];
+    return YES;
+}
+
+#pragma mark - 微信支付回调
+//-(void) onResp:(BaseResp*)resp
+//{
+//    if([resp isKindOfClass:[PayResp class]]){
+//        NSDictionary *result = [[NSDictionary alloc] initWithObjectsAndKeys:resp,@"resp", nil];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"wxChatonResp" object:nil userInfo:result];
+//    }
+//}
+
+
+#pragma mark - wtx
+- (UIViewController *)topController{
+    UIViewController *topController = [[[[UIApplication sharedApplication]delegate] window] rootViewController];
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+    return topController;
+}
+
+#pragma mark - 关闭iCloud的方法
+- (void)addSkipBackupAttributeToPath:(NSString*)path
+{
+    u_int8_t b = 1;
+    setxattr([path fileSystemRepresentation], "com.apple.MobileBackup", &b, 1, 0, 0);
+}
+
+- (void)closeUpIcloud
+{
+    //为Document文件设置不iCloud存储属性，防止AppStore审核无法通过2.23条款
+    NSString *notBackUpPathDoc = nil;
+    notBackUpPathDoc = [NSString stringWithFormat:@"%@/Documents/",NSHomeDirectory()];
+    [self addSkipBackupAttributeToPath:notBackUpPathDoc];
+    
+    NSString *notBackUpPathCach = nil;
+    notBackUpPathCach = [NSString stringWithFormat:@"%@/Library/Caches/",NSHomeDirectory()];
+    [self addSkipBackupAttributeToPath:notBackUpPathCach];
+}
+
+@end

@@ -1,0 +1,35 @@
+//
+//  NFMineManager.m
+//  nationalFitness
+//
+//  Created by 程long on 14-12-11.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFMineManager.h"
+
+@implementation NFMineManager
+
+
+-(void)RequestManager{
+    
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMineRequest gotRequest:infoDic andURL:updateVersionURL];
+        
+        return request;
+
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMineParser GetRequestParser:data];
+        return bizData;
+    };
+    
+}
+
+
+@end

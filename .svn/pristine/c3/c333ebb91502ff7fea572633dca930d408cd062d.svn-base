@@ -1,0 +1,6 @@
+platform :ios,'8.0'
+target 'nationalFitness' do
+pod 'SVProgressHUD', '~> 2.0.4'
+pod 'FMDB', '~> 2.6.2’
+pod 'Masonry', '~> 1.0.2'
+end

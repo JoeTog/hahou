@@ -1,0 +1,19 @@
+//
+//  NFPointMallManager.h
+//  nationalFitness
+//
+//  Created by 林向阳 on 15/6/12.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import "NFBaseManager.h"
+
+@interface NFPointMallManager : NFBaseManager
+
+//获取省市区
+- (void)getDistrictManager;
+
+//确认购买
+- (void)sureBuyManager;
+
+@end

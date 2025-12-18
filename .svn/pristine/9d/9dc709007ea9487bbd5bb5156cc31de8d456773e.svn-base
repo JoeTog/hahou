@@ -1,0 +1,13 @@
+//
+//  MessageDetailTableViewController.h
+//  nationalFitness
+//
+//  Created by 童杰 on 2017/2/27.
+//  Copyright © 2017年 chenglong. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface MessageDetailTableViewController : UITableViewController
+
+@end

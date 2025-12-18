@@ -1,0 +1,100 @@
+//
+//  VenuesEntity.h
+//  nationalFitness
+//
+//  Created by liumac on 15/8/12.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface VenuesEntity : NSObject
+
+// 场次
+@property (strong, nonatomic)   NSString *venName;
+
+// 售卖场次的主键
+@property (strong, nonatomic)   NSString *venuSaleId;
+
+// 商品相关主键
+@property (strong, nonatomic)   NSString *goodRelId;
+
+// 拼场ID
+@property (strong, nonatomic)   NSString *fightId;
+
+// 商品编号
+@property (strong, nonatomic)   NSString *goodId;
+
+// 预定开始的时间
+@property (strong, nonatomic)   NSString *startTime;
+
+// 预定结束的时间
+@property (strong, nonatomic)   NSString *endTime;
+
+// 场地类型 1 室内 2 室外
+@property (strong, nonatomic)   NSString *venType;
+
+// 是否可卖 0 可售   1 不可售
+@property (strong, nonatomic)   NSString *isBook;
+
+// 是否可以拼场 0 可以   1 不可以
+@property (strong,nonatomic)    NSString *isFight;
+
+// 拼场要求
+@property (strong, nonatomic)   NSString *fightDescription;
+
+// 费用类型 1 AA制   2 我请客   3 自定义
+@property (strong, nonatomic)   NSString *costType;
+
+// 人均费用
+@property (strong, nonatomic)   NSString *perCost;
+
+// 支付方式 0 线上  1 见面支付
+@property (strong, nonatomic)   NSString *payType;
+
+// 拼场发起人
+@property (strong, nonatomic)   NSString *fightUserID;
+
+// 拼场发起人昵称
+@property (strong, nonatomic)   NSString *fightUserNickName;
+
+// 拼场发起人头像
+@property (strong, nonatomic)   NSString *fightUserPicPath;
+
+// 价格
+@property (strong, nonatomic)   NSString *venPrice;
+
+// 商品的数量
+@property (strong, nonatomic)   NSString *venCount;
+
+// 是否选择了场地
+
+@property (unsafe_unretained, nonatomic)    BOOL    isSelectVen;
+
+// 拼场剩余的人数
+@property (strong, nonatomic)   NSString *remainNum;
+
+//可拼场的人数
+@property (strong, nonatomic)   NSString *fightNum;
+
+// 是否选择了拼场
+@property (unsafe_unretained, nonatomic)    BOOL    isCorVen;
+
+@end
+
+// 日期选择
+@interface VenuesDateEntity : NSObject
+
+// 日期
+@property (strong, nonatomic)   NSString *venDate;
+
+// 详情日期
+@property (strong, nonatomic)   NSString *detailDate;
+
+// 星期
+@property (strong, nonatomic)   NSString *weekDay;
+
+// 是否有拼场
+@property (unsafe_unretained, nonatomic)    BOOL isCorper;
+
+@end

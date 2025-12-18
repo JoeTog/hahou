@@ -1,0 +1,31 @@
+//
+//  PacketHandler.m
+//  SummaryHoperun
+//
+//  Created by 程long on 14-7-30.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "PacketHandler.h"
+
+#import "SystemInfo.h"
+#import "PublicDefine.h"
+
+@implementation PacketHandler
+
+/**
+ *  返回当前网络状态
+ *
+ *  @return     NotReachable = 0,
+                ReachableViaWiFi,
+                ReachableViaWWAN
+ */
+//- (NetworkStatus)currentNetworkStatus
+//{
+//    return [[SystemInfo shareSystemInfo] currentNetworkStatus];
+//}
+
+@end
+
+
+

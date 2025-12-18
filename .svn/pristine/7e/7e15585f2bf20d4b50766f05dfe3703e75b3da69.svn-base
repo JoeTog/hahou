@@ -1,0 +1,212 @@
+//
+//  SystemInfo.h
+//  SummaryHoperun
+//
+//  Created by 程long on 14-7-30.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "SystemInfo.h"
+#import "KeychainItemWrapper.h"
+#import <objc/runtime.h>
+
+static SystemInfo *systemInfo = nil;
+
+NSString *const kSystemNetworkChangedNotification = @"kNetworkReachabilityChangedNotification";
+
+@interface SystemInfo ()
+{
+    Class               _originalClass; //用于检测代理有效性
+}
+
+@end
+
+
+@implementation SystemInfo
+
+@synthesize appId;
+@synthesize appVersion;
+@synthesize deviceId;
+@synthesize deviceType;
+@synthesize OSVersion;
+
+
+- (NSString *)appId
+{
+    if (!appId)
+    {
+        appId = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleIdentifierKey];
+    }
+    
+    return appId;
+}
+
+- (NSString *)appVersion
+{
+    if (!appVersion)
+    {
+        appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    }
+    
+    return appVersion;
+}
+
+
+- (NSString *)deviceId
+{
+    if (!deviceId)
+    {
+        NSString *result;
+        NSUserDefaults *appBox = [NSUserDefaults standardUserDefaults];
+        if ([appBox objectForKey:@"appDeviceId"])
+        {
+            result = [appBox objectForKey:@"appDeviceId"];
+        }
+        else
+        {
+            CFUUIDRef unique = CFUUIDCreate(kCFAllocatorDefault);
+            result = (NSString *)CFBridgingRelease(CFUUIDCreateString(kCFAllocatorDefault, unique));
+            CFRelease(unique);
+        }
+        
+        //存储在keychina上面
+        NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
+        KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
+        //从keychain里取出设备号
+        NSString *cfuuid = [keychain objectForKey:(id)kSecAttrAccount];
+        
+        if (cfuuid.length > 0)
+        {
+            NSString *value = cfuuid;
+            deviceId = value;
+        }
+        else
+        {
+            deviceId = result;
+            [keychain setObject:result forKey:(id)kSecAttrAccount];
+        }
+    }
+    
+    return deviceId;
+}
+
+
+- (NSString *)deviceType
+{
+    if (!deviceType)
+    {
+        deviceType = [[UIDevice currentDevice] model];
+    }
+    
+    return deviceType;
+}
+
+
+- (NSString *)OSVersion
+{
+    if (!OSVersion)
+    {
+        OSVersion = [[UIDevice currentDevice] systemVersion];
+    }
+    
+    return OSVersion;
+}
+
+
++ (SystemInfo *)shareSystemInfo
+{
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        
+        systemInfo = [SystemInfo new];
+        
+    });
+    
+    return systemInfo;
+}
+
+
+- (id)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        
+        [self registerNetWorkMonitor];
+    }
+    
+    return self;
+}
+
+- (void)registerNetWorkMonitor
+{
+//    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
+//    internetReach_ = [Reachability reachabilityForInternetConnection];
+//    
+//	[internetReach_ startNotifier];
+//	[self updateInterfaceWithReachability: internetReach_];
+}
+
+
+//- (void)updateInterfaceWithReachability: (Reachability*) curReach
+//{
+//    NetworkStatus netStatus = [curReach currentReachabilityStatus];
+//    
+//    if (netStatus !=NotReachable)
+//    {
+//        [self uploadTrackData];
+//    }
+//    
+//    switch (netStatus)
+//    {
+//        case NotReachable:
+//        {
+//            break;
+//        }
+//            
+//        case ReachableViaWWAN:
+//        {
+//            break;
+//        }
+//        case ReachableViaWiFi:
+//        {
+//            break;
+//        }
+//    }
+//}
+
+// 上传缓存的轨迹数据
+- (void)uploadTrackData
+{
+//    NSMutableArray *dataArr = [[NFGpsStepManager shareManager] getlocationGpsData];
+//    if (dataArr.count == 0)
+//    {
+//        // 没有需要上传的数据
+//    }else
+//    {
+//        // 上传轨迹数据
+//        [[NFGpsStepManager shareManager] uploadTrackDataToServerOfData:dataArr WithBlock:NULL];
+//    }
+}
+
+
+
+//Called by Reachability whenever status changes.
+//- (void)reachabilityChanged: (NSNotification* )note
+//{
+//	Reachability* curReach = [note object];
+//	NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
+//	[self updateInterfaceWithReachability: curReach];
+//}
+//
+//
+//- (NetworkStatus)currentNetworkStatus
+//{
+//    NetworkStatus netStatus = [internetReach_ currentReachabilityStatus];
+//    
+//    return netStatus;
+//}
+
+@end

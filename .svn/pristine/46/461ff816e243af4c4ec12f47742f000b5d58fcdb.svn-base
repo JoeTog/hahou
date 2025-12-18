@@ -1,0 +1,396 @@
+//
+//  NFActivityManager.h
+//  nationalFitness
+//
+//  Created by 程long on 14-11-8.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFBaseManager.h"
+#import "NFActivityRequest.h"
+#import "NFActivityParser.h"
+#import "NFActivityData.h"
+
+@interface NFActivityManager : NFBaseManager
+
+//用户预定场馆的列表
+- (void)allBookVenueListManager;
+
+//获取动态信息
+- (void)getDynamicInfoManager;
+
+//排序类型列表
+- (void)sortTypeListManager;
+
+//我的卡包
+- (void)myCardManager;
+
+//俱乐部创建活动列表
+- (void)clubActivityListManager;
+
+//场馆焦点图
+- (void)focusVenueListManager;
+
+//获取场馆列表
+- (void)getVenuesListManager;
+
+//上传徽章
+-(void) uploadClubBadgeManager;
+
+//俱乐部焦点图
+- (void)focusClubListManager;
+
+//教练焦点图
+- (void)focusCoachListManager;
+
+//同意或拒绝加入俱乐部接口
+
+- (void)agreeOrUnagreeClubManager;
+
+//活动焦点图接口
+- (void)focusActivityListManager;
+
+//创建俱乐部接口
+- (void)creatClubManager;
+
+//创建活动接口
+- (void)creatActivityManager;
+
+//活动列表
+- (void)activityListManager;
+
+//活动类型列表
+- (void)codemxListManager;
+
+//获取活动相册列表
+- (void)albumListManager;
+
+//获取活动计划
+- (void)activityPlanManager;
+
+//加入活动
+- (void)jionActivityManager;
+
+//是否同意加入活动社团
+- (void)checkJoinActManager;
+
+//获取活动报名成员
+- (void)activityMemberManager;
+
+//获取未审核报名成员
+- (void)activityUncheckMemberManager;
+
+//点击焦点图查看活动详情
+- (void)activityInfoManager;
+
+//咨询教练
+- (void)consultCoachManager;
+
+//新版获取场地列表
+- (void)czGetBookSpaceListManager;
+
+//首页之预定的场馆
+- (void)bookVenueListManager;
+
+//获取活动相关信息
+- (void)activityExtendInfoManager;
+
+//查询最近的评论
+- (void)maxCommentManager;
+
+//默认相册列表
+- (void)defaultAlbumListManager;
+
+//获取教练详情信息
+- (void)getCoachDetailInfoManager;
+
+//创建关注
+- (void)createAttentManager;
+
+//取消关注
+- (void)deleteAttentManager;
+
+//评论列表
+- (void)commentListManager;
+
+//发表评论
+- (void)createCommentManager;
+
+//取消评论
+- (void)deleteCommentManager;
+
+//创建相册点赞
+- (void)createAlbumPraiseManager;
+
+//取消相册点赞
+- (void)deleteAlbumPraiseManager;
+
+//删除相册
+- (void)deleteAlbumManager;
+
+//相册图片
+- (void)albumPhotoListManager;
+
+//发布相册
+- (void)createAlbumManager;
+
+//发布相册之前上传单张照片
+-(void) uploadAlbumManager;
+
+//推到热点
+- (void)pushToHotManager;
+
+//同意或拒绝加入活动接口
+- (void)agreeOrUnagreeActivityManager;
+
+//主题秀瀑布流
+- (void)queryShowListManager;
+
+//赞列表
+- (void)praiseListManager;
+
+//查看详情
+- (void)seeDetailInfoManager;
+
+//个人主页信息
+- (void)personalHomePageManager;
+
+//首页焦点图列表
+- (void)homeFocusListManager;
+
+//编辑活动
+- (void)editActivityManager;
+
+//退出活动
+- (void)exitActivityManager;
+
+//删除活动
+- (void)deleteActivityManager;
+
+//查询俱乐部列表
+-(void)getClubListManager;
+
+//查询与用户相关的社团列表
+-(void)getUserRelClubList;
+
+//申请创建社团
+- (void)appClubManager;
+
+//点击俱乐部图片或焦点图查看俱乐部详情
+-(void)clubInfoManager;
+
+//查看场馆详情
+-(void)venuesInfoManager;
+
+//获取分场馆列表
+- (void)getSubVenuesListManager;
+
+//主场馆最近预定人
+-(void)venueBookUserManager;
+
+//主分场馆惠卡
+- (void)otherVenueListManager;
+
+//查看子场馆详情
+- (void)subVenueInfoManager;
+
+//预定场地
+-(void)sellOrderMxEntityManager;
+
+//预定场次最新版
+- (void)bookVenuesManager;
+
+////预订场次
+//- (void)bookPlaceManager;
+
+//支付生成订单
+- (void)createOrderInfoManager;
+
+//开始支付
+- (void)paymentOrderManager;
+
+- (void)createActOrderInfoManager;
+
+//支付倒计时
+- (void)payTimeOrderManager;
+
+//获取教练列表
+-(void)getCoachListManager;
+
+//获取CITY列表
+-(void)getCityListManager;
+
+//获取预订场地列表
+- (void)getBookSpaceListManager;
+
+//首页新闻热点列表
+- (void)queryHotListManager;
+
+//推荐热点
+- (void)queryReferralHotListManager;
+
+//公告动态列表
+-(void)clubAnnounceListManager;
+
+//发表公共
+-(void)createAnnounceManager;
+
+//新俱乐部成员列表
+- (void)clubMembListManager;
+
+//查看可拼场地列表
+- (void)getCanPCListManager;
+
+//发布拼场
+- (void)creatPCManager;
+
+//获取所有拼场列表
+- (void)getAllPcListManager;
+
+//获取所有片场
+- (void)getAllVenueSellsManager;
+
+//自测列表
+- (void)selfTestManager;
+
+//删除动态
+- (void)deleteDynamicManager;
+
+//常州赛事焦点图
+- (void)getEventFocusManager;
+
+//常州赛事列表
+- (void)getEventListManager;
+
+//常州赛务列表
+- (void)getServiceListManager;
+
+//常州培训列表
+- (void)getTrainListManager;
+
+//常州培训焦点图
+- (void)getTrainFouceManager;
+
+//常州培训详情
+- (void)getTrainDetailManager;
+
+//培训班列表
+- (void)getClassListManager;
+
+//常州培训教练列表
+- (void)getTrainCoachListManager;
+
+//我的培训
+- (void)getMyClassListManager;
+
+//常州赛事详情接口
+- (void)getEventDetailInfoManager;
+
+//常州赛事榜单排名
+- (void)getRankingListManager;
+
+//常州志愿者报名
+- (void)signUpManager;
+
+//常州报名人社团列表
+- (void)getCZClubListManager;
+
+//全局搜索
+- (void)searchAllManager;
+
+//热门搜索
+- (void)hotSearchManager;
+
+// 生成订单 新版
+- (void)submitoOrdersManager;
+
+//场地公告列表
+- (void)VenueAnnounceManager;
+
+//场馆活动列表
+- (void)VenueActivityManager;
+
+//认证
+- (void)authManager;
+
+//热门组织
+- (void)hotOrgManager;
+
+//组织搜索
+- (void)searchOrgManager;
+
+#pragma mark - new
+
+//获取用户权限
+- (void)UserRolesManager;
+
+#pragma mark - 以下是新版活动列表
+//新版活动列表
+- (void)newActListManager;
+
+//关联活动列表
+- (void)relationActListManager;
+
+//加入活动
+- (void)xinJoinActManager;
+
+//有兴趣
+- (void)hasIntristingManager;
+
+//取消兴趣
+- (void)cancelIntristingManager;
+
+//退出活动
+- (void)exitActManager;
+
+//举报上传图片
+- (void)reportPicManager;
+
+//保存邀请记录
+- (void)saveInviteManager;
+
+/**
+ 
+ *新版场馆
+ 
+ **/
+
+//场馆订单
+- (void)allVenOrderManager;
+
+//去打球首页接口
+- (void)playBallManager;
+
+/**
+ 
+ *新版首页
+ 
+ **/
+
+//首页
+- (void)homeShowInfoManager;
+
+
+//获取用户类型
+- (void)userTypeManager;
+
+
+/**
+ 
+ *公众号
+ 
+ **/
+
+//公众号主页信息
+- (void)publicNoInfoManager;
+
+//公众号收藏夹
+- (void)publicNoCollectionManager;
+
+//公众号隶属社团列表
+- (void)publicNoClubListManager;
+
+//公众号赞助活动
+- (void)publicNoActListManager;
+
+@end

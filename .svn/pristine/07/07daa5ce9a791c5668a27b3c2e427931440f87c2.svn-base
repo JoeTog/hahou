@@ -1,0 +1,299 @@
+//
+//  ScrollVChanged.m
+//  BigWheat
+//
+//  Created by bwfstu on 16/7/2.
+//  Copyright © 2016年 Joe. All rights reserved.
+//
+
+#import "ScrollVChanged.h"
+#import "NFbaseViewController.h"
+//#import "JoeFirstViewController.h"
+#define labelW 50
+#define labelH 2
+@implementation ScrollVChanged{
+    CGFloat _height;
+    CGFloat _width;
+    UIButton *_button;
+    NSArray *_array;
+    NSInteger _marker;
+    UIButton *_selectedBtn;
+    UIButton *_selectedSecBtn;
+}
+//本地推荐和全国热点变换 如果有两个 这个是第一个
+-(instancetype)initWithCreateScrollerWithFrame:(CGRect)frame andChange:(NSArray *)array{
+    _array = [NSArray arrayWithArray:array];
+    _height = frame.size.height;
+    //是否需要各个按钮之间的线 默认为YES
+    self.isNeedLine = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(indexChange:) name:@"sendScrollChange" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(indexChange:) name:@"indexChange" object:nil];
+    if (self = [super initWithFrame:frame]) {
+        CGFloat width = (JOESIZE.width - 2*GAP)/array.count;
+        _width = width;
+        //循环创建array里的按钮
+        for (int i=0; i<array.count; i++) {
+            _button = [UIButton new];
+            _button.frame = CGRectMake(GAP+width*i, 0, width, self.frame.size.height);
+            [_button setTitle:array[i] forState:UIControlStateNormal];
+            //字体颜色
+            [_button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            //字体大小
+            _button.titleLabel.font = [UIFont systemFontOfSize:15];
+            if (i == 0) {
+                [_button setTitleColor:MainColor forState:UIControlStateNormal];
+                _selectedBtn = _button;
+            }
+            if (i==0) {
+                _button.selected = YES;
+            }
+            [_button addTarget:self action:@selector(ScrollerChangeClick:) forControlEvents:UIControlEventTouchDown];
+            _button.tag = i+1;
+            [self addSubview:_button];
+            if (self.isNeedLine) {
+                //循环创建 各个按钮之间的线条
+                UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(GAP+width*i, 5, 1, _height - 10)];
+                line.backgroundColor = SecondGray;
+                [self addSubview:line];
+            }
+        }
+        _label = [[UILabel alloc] initWithFrame:CGRectMake((width - labelW)/2+GAP + self.index * width, self.frame.size.height-labelH, labelW, labelH)];
+        _label.backgroundColor = MainColor;
+        [self addSubview:_label];
+//        UIButton *button = [self viewWithTag:1];
+        
+    }
+    return self;
+}
+
+//当按钮被点击之后
+-(void)ScrollerChangeClick:(UIButton *)sender{
+    [_selectedBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [sender setTitleColor:MainColor forState:(UIControlStateNormal)];
+    _selectedBtn = sender;
+    self.index = (int)sender.tag - 1;
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelay:0.1];
+    [UIView setAnimationDuration:0.5];
+    _label.frame = CGRectMake((_width - labelW)/2+GAP + self.index * _width, _height-labelH, labelW, labelH);
+    [UIView commitAnimations];
+    //代理通知界面中的scrollerView改变 位置
+    [self.delegate ScrollChangeClick:sender];
+}
+
+-(void)indexChange:(NSNotification *)nsnotification{
+    NSDictionary *dict = [nsnotification userInfo];
+    NSString *str = dict[@"indexChange"];
+    CGFloat index = [str floatValue];
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelay:0.1];
+    [UIView setAnimationDuration:0.5];
+    _label.frame = CGRectMake((_width - labelW)/2+GAP + index * _width, _height-labelH, labelW, labelH);
+    [UIView commitAnimations];
+}
+
+//本地推荐和全国热点变换 如果有两个 这个是第二个
+-(instancetype)initWithCreateSecondScrollerWithFrame:(CGRect)frame andChange:(NSArray *)array{
+    _array = [NSArray arrayWithArray:array];
+    _height = frame.size.height;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendSecondScrollChange:) name:@"sendSecondScrollChange" object:nil];
+    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(indexChange:) name:@"indexChange" object:nil];
+    if (self = [super initWithFrame:frame]) {
+        CGFloat width = (JOESIZE.width - 2*GAP)/array.count;
+        _width = width;
+        //循环创建array里的按钮
+        for (int i=0; i<array.count; i++) {
+            _button = [UIButton new];
+            _button.frame = CGRectMake(GAP+width*i, 0, width, self.frame.size.height);
+            [_button setTitle:array[i] forState:UIControlStateNormal];
+            [_button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            if (i == 0) {
+                [_button setTitleColor:MainColor forState:UIControlStateNormal];
+                _selectedSecBtn = _button;
+            }
+            if (i==0) {
+                _button.selected = YES;
+            }
+            [_button addTarget:self action:@selector(ScrollerSecondChangeClick:) forControlEvents:UIControlEventTouchDown];
+            _button.tag = i+1;
+            [self addSubview:_button];
+            if (self.isNeedLineSec) {
+                //循环创建 各个按钮之间的线条
+                UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(GAP+width*i, 5, 1, _height - 10)];
+                line.backgroundColor = SecondGray;
+                [self addSubview:line];
+            }
+        }
+        _label = [[UILabel alloc] initWithFrame:CGRectMake((width - labelW)/2+GAP + self.index * width, self.frame.size.height-labelH, labelW, labelH)];
+        _label.backgroundColor = [UIColor redColor];
+        [self addSubview:_label];
+        //        UIButton *button = [self viewWithTag:1];
+        
+    }
+    return self;
+}
+
+-(void)ScrollerSecondChangeClick:(UIButton *)sender{
+    [_selectedSecBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [sender setTitleColor:MainColor forState:(UIControlStateNormal)];
+    _selectedSecBtn = sender;
+    self.index = (int)sender.tag - 1;
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelay:0.1];
+    [UIView setAnimationDuration:0.5];
+    _label.frame = CGRectMake((_width - labelW)/2+GAP + self.index * _width, _height-labelH, labelW, labelH);
+    [UIView commitAnimations];
+    //代理通知界面中的scrollerView改变 位置
+    [self.delegate ScrollSecondChangeClick:sender];
+}
+
+-(void)sendSecondScrollChange:(NSNotification *)nsnotification{
+    NSDictionary *dict = [nsnotification userInfo];
+    NSString *str = dict[@"indexChange"];
+    CGFloat index = [str floatValue];
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelay:0.1];
+    [UIView setAnimationDuration:0.5];
+    _label.frame = CGRectMake((_width - labelW)/2+GAP + index * _width, _height-labelH, labelW, labelH);
+    [UIView commitAnimations];
+}
+
+
+//scrollV的滑动
+
+#pragma mark - scrollV 封装
+-(UIScrollView *)createScrollViewWithImageArr:(NSArray *)imageArray andFrame:(CGRect)frame contentSizeWidth:(CGFloat)width{
+    UIScrollView *scrollV = [[UIScrollView alloc] initWithFrame:frame];
+    scrollV.delegate = self;
+    scrollV.contentSize = CGSizeMake(width, frame.size.height);
+    scrollV.bounces = NO;
+    scrollV.pagingEnabled = YES;
+    for (int i=0; i<imageArray.count; i++) {
+        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(JOESIZE.width*i, 0, frame.size.width, frame.size.height)];
+        
+        [imageV sd_setImageWithURL:[NSURL URLWithString:imageArray[i]] placeholderImage:[UIImage imageNamed:placeHolderImage]];
+        imageV.userInteractionEnabled = YES;
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = imageV.bounds;
+        button.tag = i+1;
+        
+        [button addTarget:self action:@selector(JoeScrollViewImageClick:) forControlEvents:(UIControlEventTouchUpInside)];
+        [imageV addSubview:button];
+        [scrollV addSubview:imageV];
+        if (_timer) {
+            
+        }else{
+            _timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timeRun) userInfo:nil repeats:YES];
+        }
+    }
+    return scrollV;
+}
+
+
+
+-(void)JoeScrollViewImageClick:(UIButton *)sender{}
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    if (scrollView.contentOffset.x/JOESIZE.width == _countOfImage+1) {
+        scrollView.contentOffset = CGPointMake(JOESIZE.width, 0);
+        _pageControl.currentPage = 0;
+    }else if (scrollView.contentOffset.x/JOESIZE.width == 0){
+        scrollView.contentOffset = CGPointMake(JOESIZE.width*_countOfImage+1, 0);
+        _pageControl.currentPage = _countOfImage-1;
+    }else{
+        _pageControl.currentPage = scrollView.contentOffset.x/JOESIZE.width-1;
+    }
+}
+
+
+#pragma mark - pageControl
+-(UIView *)decreatePageControlWithFrame:(CGRect)frame{
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    _pageControl = [[UIPageControl alloc]init];
+    _pageControl.frame = CGRectMake(0, 0, JOESIZE.width, 50);
+    _pageControl.backgroundColor = [UIColor lightGrayColor];
+    _pageControl.tintColor = [UIColor blueColor];
+    
+    _pageControl.pageIndicatorTintColor = [UIColor yellowColor];
+    _pageControl.tintColor = [UIColor blueColor];
+    _pageControl.numberOfPages = _countOfImage;
+    _pageControl.currentPage = 1;
+    [_pageControl addTarget:self action:@selector(pageControlChange:) forControlEvents:UIControlEventValueChanged];
+    [view addSubview:_pageControl];
+    if (_timer) {
+        
+    }else{
+    _timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timeRun) userInfo:nil repeats:YES];
+    }
+    return view;
+}
+
+
+
+-(void)timeRun{
+    if (_scrollView.contentOffset.x/JOESIZE.width == _countOfImage+1) {
+        _scrollView.contentOffset = CGPointMake(JOESIZE.width, 0);
+    }
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelay:0.1];
+    [UIView setAnimationDuration:0.5];
+    _scrollView.contentOffset = CGPointMake(_scrollView.contentOffset.x+JOESIZE.width, 0);
+    if (_scrollView.contentOffset.x == 0) {
+        _pageControl.currentPage = _countOfImage-1;
+    }else if (_scrollView.contentOffset.x/JOESIZE.width == _countOfImage+1){
+        _pageControl.currentPage = 0;
+    }else{
+        _pageControl.currentPage = _scrollView.contentOffset.x/JOESIZE.width-1;
+    }
+    [UIView commitAnimations];
+}
+
+-(void)pageControlChange:(UIPageControl *)pageControl{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.5];
+    _scrollView.contentOffset = CGPointMake(JOESIZE.width*(pageControl.currentPage+1), 0);
+    [UIView commitAnimations];
+}
+
+#pragma mark - 头上scrollV（多个label）的封装
+-(UIScrollView *)createScrollViewWithTextArr:(NSArray *)textArr andFrame:(CGRect)frame{
+    
+    UIScrollView *scrollV = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, JOESIZE.width, JOESIZE.width/10)];
+    scrollV.showsHorizontalScrollIndicator = NO;
+    scrollV.delegate = self;
+    scrollV.userInteractionEnabled = YES;
+    scrollV.contentSize = CGSizeMake(JOESIZE.width/5 * textArr.count, JOESIZE.width/10);
+    scrollV.backgroundColor = [UIColor whiteColor];
+    _bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(_marker*JOESIZE.width/5, JOESIZE.width/10-4, JOESIZE.width/5.0, 3)];
+    _bottomLabel.tag = 99;
+    _bottomLabel.backgroundColor = [UIColor orangeColor];
+    [scrollV addSubview:_bottomLabel];
+    for (int i=0; i<textArr.count; i++) {
+        
+//        UIImageView *imageV = [self JoeImageViewWithImage:imageArr[i] andFrame:CGRectMake(21.4 + 82.8*i, 5, 40, 40) tag:i];
+//        [self.scrollV addSubview:imageV];
+        
+        
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i*JOESIZE.width/5, 0, JOESIZE.width/5, JOESIZE.width/10)];
+        [button setTitle:textArr[i] forState:(UIControlStateNormal)];
+        [button setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+        button.tag = i+1;
+        [button addTarget:self action:@selector(scrollVButtonClick:) forControlEvents:UIControlEventTouchDown];
+        UILabel *label = [[UILabel alloc] init];
+        label.frame = CGRectMake(82+ 82.8*i, 3, 1, 44);
+        label.layer.borderWidth = 1;
+        label.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+        [scrollV addSubview:button];
+        [scrollV addSubview:label];
+    }
+    return scrollV;
+}
+
+-(void)scrollVButtonClick:(UIButton *)sender{
+    _bottomLabel.frame = CGRectMake(JOESIZE.width/5*(sender.tag-1), JOESIZE.width/10-4, JOESIZE.width/5, 3);
+    
+}
+
+
+
+@end

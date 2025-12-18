@@ -1,0 +1,16 @@
+//
+//  UserRegistViewController.h
+//  newTestUe
+//
+//  Created by 林向阳 on 15/12/2.
+//  Copyright © 2015年 程龙. All rights reserved.
+//
+
+#import "NFbaseViewController.h"
+
+@interface UserRegistViewController : NFbaseViewController
+
+//忘记密码 or 注册
+@property (nonatomic, assign)BOOL isForgetPsw;
+
+@end

@@ -1,0 +1,21 @@
+//
+//  NFMineParser.h
+//  nationalFitness
+//
+//  Created by 程long on 14-12-17.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFBaseParser.h"
+#import "NFMineEntity.h"
+
+@interface NFMineParser : NFBaseParser
+
+//查看历史记录
++ (id)GetRequestParser:(NSData *)data;
+
+
+
+
+
+@end

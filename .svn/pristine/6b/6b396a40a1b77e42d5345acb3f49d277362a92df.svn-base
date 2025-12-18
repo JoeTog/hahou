@@ -1,0 +1,655 @@
+//
+//  NFMatchParser.m
+//  nationalFitness
+//
+//  Created by 林向阳 on 16/2/29.
+//  Copyright © 2016年 chenglong. All rights reserved.
+//
+
+#import "NFMatchParser.h"
+
+@implementation NFMatchParser
+
+
+//赛事首页
++ (id)matchInfoParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        NSMutableDictionary * muDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+        NSMutableArray * comTypeArr = [[NSMutableArray alloc]initWithCapacity:0];
+        NSArray * comTypeListArr = [bodyDic objectForKey:@"competitionTypeList"];
+        for (NSDictionary * comDic in comTypeListArr) {
+            CompetitionEntity * entity = [[CompetitionEntity alloc]init];
+            entity.ctypeId = [[comDic objectForKey:@"ctypeId"]description];
+            entity.ctypeCode = [[comDic objectForKey:@"ctypeCode"]description];
+            entity.ctypeName = [[comDic objectForKey:@"ctypeName"]description];
+            entity.isOpen = [[comDic objectForKey:@"isOpen"]description];
+            entity.belLevel = [[comDic objectForKey:@"belLevel"]description];
+            entity.continNum = [[comDic objectForKey:@"continNum"]description];
+            entity.clevelRank = [[comDic objectForKey:@"clevelRank"]description];
+            entity.complexWinn = [[comDic objectForKey:@"complexWinn"]description];
+            entity.levelRank = [[comDic objectForKey:@"levelRank"]description];
+            entity.entryRate = [[comDic objectForKey:@"entryRate"]description];
+            entity.realScore = [[comDic objectForKey:@"realScore"]description];
+            entity.isJoin   = [[comDic objectForKey:@"isJoin"]description];
+            
+            entity.remindArr = [[NSMutableArray alloc]initWithCapacity:0];
+            NSArray * comRemindArr = [bodyDic objectForKey:@"competionRemindList"];
+            for (NSDictionary * comRemindDic in comRemindArr) {
+                CompetionRemindEntity * remEntity = [[CompetionRemindEntity alloc]init];
+                remEntity.isOverdue = [[comRemindDic objectForKey:@"isOverdue"]description];
+                remEntity.joinFlag = [[comRemindDic objectForKey:@"joinFlag"]description];
+                remEntity.competDate = [[comRemindDic objectForKey:@"competDate"]description];
+                [entity.remindArr addObject:entity];
+            }
+            
+            [comTypeArr addObject:entity];
+        }
+        [muDic setObject:comTypeArr forKey:@"competitionTypeList"];
+        
+//        NSMutableArray * muComRemindArr = [[NSMutableArray alloc]initWithCapacity:0];
+//        NSArray * comRemindArr = [bodyDic objectForKey:@"competionRemindList"];
+//        for (NSDictionary * comRemindDic in comRemindArr) {
+//            CompetionRemindEntity * entity = [[CompetionRemindEntity alloc]init];
+//            entity.isOverdue = [[comRemindDic objectForKey:@"isOverdue"]description];
+//            entity.joinFlag = [[comRemindDic objectForKey:@"joinFlag"]description];
+//            entity.competDate = [[comRemindDic objectForKey:@"competDate"]description];
+//            [muComRemindArr addObject:entity];
+//        }
+//        
+//        [muDic setObject:muComRemindArr forKey:@"competionRemindList"];
+        
+        NSMutableArray * muAdArr = [[NSMutableArray alloc]initWithCapacity:0];
+        NSArray * adArr = [bodyDic objectForKey:@"advertList"];
+        for (NSDictionary * adDic in adArr) {
+            AdvertEntity * entity = [[AdvertEntity alloc]init];
+            entity.hotId = [[adDic objectForKey:@"hotId"]description];
+            entity.imgBigUrl = [[adDic objectForKey:@"imgBigUrl"]description];
+            entity.imgSmallUrl = [[adDic objectForKey:@"imgSmallUrl"]description];
+            entity.htmlUrl = [[adDic objectForKey:@"htmlUrl"]description];
+            [muAdArr addObject:entity];
+        }
+        
+        [muDic setObject:muAdArr forKey:@"advertList"];
+        
+        return muDic;
+        
+    }
+    return nil;
+}
+
+//队伍列表
++ (id)teamListParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        NSMutableArray * muRetArr = [[NSMutableArray alloc]initWithCapacity:0];
+        NSArray * teamArr = [bodyDic objectForKey:@"contingentList"];
+        for (NSDictionary * teamDic in teamArr) {
+            ContingentEntity * entity = [[ContingentEntity alloc]init];
+            entity.continId = [[teamDic objectForKey:@"continId"]description];
+            entity.continCode = [[teamDic objectForKey:@"continCode"]description];
+            entity.belLevel = [[teamDic objectForKey:@"belLevel"]description];
+            entity.memberNum = [[teamDic objectForKey:@"memberNum"]description];
+            entity.maxNum = [[teamDic objectForKey:@"maxNum"]description];
+            entity.createDate = [[teamDic objectForKey:@"createDate"]description];
+            [muRetArr addObject:entity];
+        }
+        return muRetArr;
+    }
+    return nil;
+}
+
+//赛事列表
++ (id)matchListParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        NSMutableArray * muArr = [[NSMutableArray alloc]initWithCapacity:0];
+        
+        NSArray * comListArr = [bodyDic objectForKey:@"competitionList"];
+        
+        for (NSDictionary * dic in comListArr) {
+            CompetitionEntity * entity = [[CompetitionEntity alloc]init];
+            entity.remindArr = [[NSMutableArray alloc]initWithCapacity:0];
+            
+            NSArray * remindArr = [dic objectForKey:@"competitionRemindList"];
+            for (NSDictionary * reDic in remindArr) {
+                CompetionRemindEntity * reEntity = [[CompetionRemindEntity alloc]init];
+                reEntity.creleaId = [[reDic objectForKey:@"creleaId"]description];
+                reEntity.startDate = [[reDic objectForKey:@"startDate"]description];
+                reEntity.contingentNum = [[reDic objectForKey:@"contingentNum"]description];
+                [entity.remindArr addObject:reEntity];
+            }
+            
+            entity.thePlace = [dic objectForKey:@"thePlace"];
+            
+            [muArr addObject:entity];
+        }
+        
+        return muArr;
+    }
+    return nil;
+}
+
+//待审核成员列表
++ (id)waitApplyParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        
+        NSMutableArray * muArr = [[NSMutableArray alloc]initWithCapacity:0];
+        NSArray * applyArr = [bodyDic objectForKey:@"contingentMembers"];
+        
+        for (NSDictionary * dic in applyArr) {
+            ContingentMemberEntity * entity = [[ContingentMemberEntity alloc]init];
+            entity.signUserId = [[dic objectForKey:@"signUserId"]description];
+            entity.nickName = [[dic objectForKey:@"nickName"]description];
+            entity.bigPicPath = [[dic objectForKey:@"bigPicPath"]description];
+            entity.smallPicPath = [[dic objectForKey:@"smallPicPath"]description];
+            entity.ctypeCode = [[dic objectForKey:@"ctypeCode"]description];
+            entity.ctypeName = [[dic objectForKey:@"ctypeName"]description];
+            entity.maxNum = [[dic objectForKey:@"maxNum"]description];
+            entity.memberNum = [[dic objectForKey:@"memberNum"]description];
+            [muArr addObject:entity];
+        }
+        
+        
+        return muArr;
+    }
+    return nil;
+}
+
+//审核成员
++ (id)checkApplyParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        
+        return bodyDic;
+    }
+    return nil;
+}
+
+//我的队伍
++ (id)myTeamParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        NSMutableArray * muArr = [[NSMutableArray alloc]initWithCapacity:0];
+        NSArray * myTeamArr = [bodyDic objectForKey:@"contingentList"];
+        for (NSDictionary * dic in myTeamArr) {
+            ContingentEntity * entity = [[ContingentEntity alloc]init];
+            entity.continId = [[dic objectForKey:@"continId"]description];
+            
+            entity.ctypeId = [[dic objectForKey:@"ctypeId"]description];
+            entity.ctypeCode = [[dic objectForKey:@"ctypeCode"]description];
+            
+            entity.ctypeName = [[dic objectForKey:@"ctypeName"]description];
+            entity.continCode = [[dic objectForKey:@"continCode"]description];
+            entity.belLevel = [[dic objectForKey:@"belLevel"]description];
+            entity.continNum = [[dic objectForKey:@"continNum"]description];
+            entity.clevelRank = [[dic objectForKey:@"clevelRank"]description];
+            entity.complexWinn = [[dic objectForKey:@"complexWinn"]description];
+            entity.levelRank = [[dic objectForKey:@"levelRank"]description];
+            entity.medalSum = [[dic objectForKey:@"medalSum"]description];
+            entity.levelMedal = [[dic objectForKey:@"levelMedal"]description];
+            entity.honorMedal = [[dic objectForKey:@"honorMedal"]description];
+            
+            entity.kempMedal = [[dic objectForKey:@"kempMedal"]description];
+            entity.courageMedal = [[dic objectForKey:@"courageMedal"]description];
+            entity.conquerMedal = [[dic objectForKey:@"conquerMedal"]description];
+            entity.maxNum = [[dic objectForKey:@"maxNum"]description];
+            entity.memberNum = [[dic objectForKey:@"memberNum"]description];
+            
+            entity.createUser = [[dic objectForKey:@"createUser"]description];
+            
+            entity.noticeNum = [[dic objectForKey:@"noticeNum"]description];
+            
+            entity.contingentMembers = [[NSMutableArray alloc]initWithCapacity:0];
+            NSArray * meArr = [dic objectForKey:@"contingentMemberList"];
+            for (NSDictionary * meDic in meArr) {
+                ContingentMemberEntity * meEntity = [[ContingentMemberEntity alloc]init];
+                meEntity.signUserId = [[meDic objectForKey:@"signUserId"]description];
+                meEntity.nickName = [[meDic objectForKey:@"nickName"]description];
+                meEntity.smallPicPath = [[meDic objectForKey:@"smallPicPath"]description];
+                meEntity.bigPicPath = [[meDic objectForKey:@"bigPicPath"]description];
+                [entity.contingentMembers addObject:meEntity];
+            }
+            
+            [muArr addObject:entity];
+        }
+        
+        return muArr;
+    }
+    return nil;
+}
+
+//赛事类型
++ (id)matchTypeParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        NSMutableArray * muArr = [[NSMutableArray alloc]initWithCapacity:0];
+        NSArray * typeArr = [bodyDic objectForKey:@"competitionType"];
+        for (NSDictionary * typeDic in typeArr) {
+            CompetitionTypeEntity * entity = [[CompetitionTypeEntity alloc]init];
+            entity.ctypeId = [[typeDic objectForKey:@"ctypeId"]description];
+            entity.ctypeCode = [[typeDic objectForKey:@"ctypeCode"]description];
+            entity.ctypeName = [[typeDic objectForKey:@"ctypeName"]description];
+            entity.maxNum = [[typeDic objectForKey:@"maxNum"]description];
+            entity.proName = [[typeDic objectForKey:@"proName"]description];
+            entity.sprojectId = [[typeDic objectForKey:@"sprojectId"]description];
+            [muArr addObject:entity];
+        }
+        return muArr;
+    }
+    return nil;
+}
+
+
+//排位排名列表
++ (id)pwRankListParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        NSMutableArray * muArr = [[NSMutableArray alloc]initWithCapacity:0];
+        
+        NSArray * rankArr = [bodyDic objectForKey:@"contingentRanking"];
+        
+        for (NSDictionary * dic in rankArr) {
+            CompetitionCountingEntity * entity = [[CompetitionCountingEntity alloc]init];
+            entity.continId = [[dic objectForKey:@"continId"]description];
+            entity.continCode = [[dic objectForKey:@"continCode"]description];
+            entity.belLevel = [[dic objectForKey:@"belLevel"]description];
+            entity.realScore = [[dic objectForKey:@"realScore"]description];
+            entity.isSelf = [[dic objectForKey:@"isSelf"]description];
+            entity.rankNum = [[dic objectForKey:@"rankNum"]description];
+            [muArr addObject:entity];
+        }
+        
+        return muArr;
+    }
+    return nil;
+}
+
+//创建队伍
++ (id)creatMyTeamParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        
+        return bodyDic;
+    }
+    return nil;
+}
+
+//参赛历史
++ (id)matchHistoryParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        
+        NSMutableArray * muArr = [[NSMutableArray alloc]initWithCapacity:0];
+        NSArray * historyArr = [bodyDic objectForKey:@"competitionHistory"];
+        for (NSDictionary * dic in historyArr) {
+            CompetitionHistoryEntity * entity = [[CompetitionHistoryEntity alloc]init];
+            entity.winScore = [[dic objectForKey:@"winScore"]description];
+            entity.failureContinId = [[dic objectForKey:@"failureContinId"]description];
+            entity.failureName = [[dic objectForKey:@"failureName"]description];
+            entity.failureScore = [[dic objectForKey:@"failureScore"]description];
+            entity.ctypeName = [[dic objectForKey:@"ctypeName"]description];
+            entity.result = [[dic objectForKey:@"result"]description];
+            entity.competDate = [[dic objectForKey:@"competDate"]description];
+            [muArr addObject:entity];
+        }
+        
+        return muArr;
+    }
+    return nil;
+}
+
+//赛事统计
++ (id)matchCountParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        
+        NSMutableArray * muArr = [[NSMutableArray alloc]initWithCapacity:0];
+        NSArray * countArr = [bodyDic objectForKey:@"competitionCounting"];
+        for (NSDictionary * dic in countArr) {
+            CompetitionCountingEntity * entity = [[CompetitionCountingEntity alloc]init];
+            entity.ctypeName = [[dic objectForKey:@"ctypeName"]description];
+            entity.currCompWinPercent = [[dic objectForKey:@"currCompWinPercent"]description];
+            entity.currCompSum = [[dic objectForKey:@"currCompSum"]description];
+            entity.currCompWinSum = [[dic objectForKey:@"currCompWinSum"]description];
+            entity.currCompLoseSum = [[dic objectForKey:@"currCompLoseSum"]description];
+            entity.allCompWinPercent = [[dic objectForKey:@"allCompWinPercent"]description];
+            entity.allCompSum = [[dic objectForKey:@"allCompSum"]description];
+            entity.allCompWinSum = [[dic objectForKey:@"allCompWinSum"]description];
+            entity.allCompLoseSum = [[dic objectForKey:@"allCompLoseSum"]description];
+            [muArr addObject:entity];
+        }
+        
+        return muArr;
+    }
+    return nil;
+}
+
+//加入队伍
++ (id)joinTeamParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        
+        return bodyDic;
+    }
+    return nil;
+}
+
+//退出队伍
++ (id)exitTeamParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        
+        return bodyDic;
+    }
+    return nil;
+}
+
+//解散队伍
++ (id)deleteTeamParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        
+        return bodyDic;
+    }
+    return nil;
+}
+
+//赛事提醒
++ (id)matchRemindParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        NSMutableArray * muArr = [[NSMutableArray alloc]initWithCapacity:0];
+        NSArray * remindArr = [bodyDic objectForKey:@"competionRemindList"];
+        
+        for (NSDictionary * dic in remindArr) {
+            CompetionRemindEntity * entity = [[CompetionRemindEntity alloc]init];
+            entity.isOverdue = [[dic objectForKey:@"isOverdue"]description];
+            entity.joinFlag = [[dic objectForKey:@"joinFlag"]description];
+            entity.competDate = [[dic objectForKey:@"competDate"]description];
+            [muArr addObject:entity];
+        }
+        
+        return muArr;
+    }
+    return nil;
+}
+
+//赛事详情
++ (id)matchDetailParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+       NSDictionary * dic = [bodyDic objectForKey:@"competition"];
+        CompetitionEntity * entity = [[CompetitionEntity alloc]init];
+        entity.creleaId = [[dic objectForKey:@"creleaId"]description];
+        entity.proName = [[dic objectForKey:@"proName"]description];
+        entity.ctypeId = [[dic objectForKey:@"ctypeId"]description];
+        entity.ctypeCode = [[dic objectForKey:@"ctypeCode"]description];
+        entity.ctypeName = [[dic objectForKey:@"ctypeName"]description];
+        entity.continSystem = [[dic objectForKey:@"continSystem"]description];
+        entity.thePlace = [[dic objectForKey:@"thePlace"]description];
+        entity.startDate = [[dic objectForKey:@"startDate"]description];
+        entity.cutDate = [[dic objectForKey:@"cutDate"]description];
+        entity.averCost = [[dic objectForKey:@"averCost"]description];
+        entity.explain = [[dic objectForKey:@"explain"]description];
+        entity.relType = [[dic objectForKey:@"relType"]description];
+        
+        return entity;
+    }
+    return nil;
+}
+
+//赛事结果
++ (id)matchResultParser:(NSData *)data
+{
+    
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        
+        NSMutableArray * muArr = [@[] mutableCopy];
+        
+        NSArray * resultArr = [bodyDic objectForKey:@"competitionResultList"];
+        
+        for (NSDictionary * dic in resultArr) {
+            CompetitionResultEntity * entity = [[CompetitionResultEntity alloc]init];
+            entity.thePlace = [[dic objectForKey:@"thePlace"] description];
+            entity.resultArr = [[NSMutableArray alloc]initWithCapacity:0];
+            
+            NSArray * reArr = [dic objectForKey:@"competitionResultBList"];
+            
+            for (NSDictionary * reDic in reArr) {
+                CompetitionResultEntity * reEntity = [[CompetitionResultEntity alloc]init];
+                reEntity.startDate = [reDic objectForKey:@"startDate"];
+                reEntity.resultArr = [[NSMutableArray alloc]initWithCapacity:0];
+                NSArray * aArr = [reDic objectForKey:@"resultList"];
+                for (NSDictionary * aDic in aArr) {
+                    CompetitionEntity * aEntity = [[CompetitionEntity alloc]init];
+                    aEntity.creleaId = [[aDic objectForKey:@"creleaId"]description];
+                    aEntity.winContinId = [[aDic objectForKey:@"winContinId"]description];
+                    aEntity.winName = [[aDic objectForKey:@"winName"]description];
+                    aEntity.winScore = [[aDic objectForKey:@"winScore"]description];
+                    aEntity.failureContinId = [[aDic objectForKey:@"failureContinId"]description];
+                    aEntity.failureName = [[aDic objectForKey:@"failureName"]description];
+                    [reEntity.resultArr addObject:aEntity];
+                }
+                [entity.resultArr addObject:reEntity];
+            }
+            [muArr addObject:entity];
+        }
+        
+        return muArr;
+    }
+    return nil;
+}
+
+//报名赛事
++ (id)joinMatchParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        if ([bodyDic objectForKey:kWrongDlog])
+        {
+            return bodyDic;
+        }
+        else
+        {
+            NSDictionary *retMuDic = [[NSMutableDictionary alloc] initWithCapacity:5];
+            
+            NSMutableArray *payTypeArr = [[NSMutableArray alloc] initWithCapacity:5];
+            
+            NSArray *payArr = [bodyDic objectForKey:@"payTypeList"];
+            for (NSDictionary *typeDic in payArr)
+            {
+                SportsPaymentTypeEntity *entity = [[SportsPaymentTypeEntity alloc] init];
+                //支付id
+                entity.typeId = [[typeDic objectForKey:@"paytypeId"] description];
+                // 支付方式名称
+                entity.name = [[typeDic objectForKey:@"payName"] description];
+                // 服务器端被动通知 URL
+                entity.backendURL = [[typeDic objectForKey:@"backendUrl"] description];
+                
+                entity.picPath = [[typeDic objectForKey:@"picPath"] description];
+                entity.remark = [[typeDic objectForKey:@"remark"] description];
+                entity.type = [[typeDic objectForKey:@"payType"] description];
+                
+                [payTypeArr addObject:entity];
+            }
+            
+            [retMuDic setValue:payTypeArr forKey:@"payTypeList"];
+            [retMuDic setValue:[[bodyDic objectForKey:@"bookNumber"] description] forKey:@"bookNumber"];
+            [retMuDic setValue:[[bodyDic objectForKey:@"totalAmount"] description]forKey:@"totalAmount"];
+            return retMuDic;
+        }
+
+        
+    }
+    return nil;
+}
+
+//队伍详情
++ (id)teamInfoParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        NSMutableDictionary  * muDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+        
+        NSDictionary * teamInfoDic = [bodyDic objectForKey:@"contingent"];
+        ContingentEntity * entity = [[ContingentEntity alloc]init];
+        
+        entity.continId = [[teamInfoDic objectForKey:@"continId"]description];
+        
+        entity.ctypeId = [[teamInfoDic objectForKey:@"ctypeId"]description];
+        entity.continCode = [[teamInfoDic objectForKey:@"continCode"]description];
+        entity.joinSwitch = [[teamInfoDic objectForKey:@"joinSwitch"]description];
+        entity.belLevel = [[teamInfoDic objectForKey:@"belLevel"]description];
+        entity.continNum = [[teamInfoDic objectForKey:@"continNum"]description];
+        entity.clevelRank = [[teamInfoDic objectForKey:@"clevelRank"]description];
+        entity.medalSum = [[teamInfoDic objectForKey:@"medalSum"]description];
+        entity.levelMedal = [[teamInfoDic objectForKey:@"levelMedal"]description];
+        entity.honorMedal = [[teamInfoDic objectForKey:@"honorMedal"]description];
+        entity.kempMedal = [[teamInfoDic objectForKey:@"kempMedal"]description];
+        entity.courageMedal = [[teamInfoDic objectForKey:@"courageMedal"]description];
+        entity.conquerMedal = [[teamInfoDic objectForKey:@"conquerMedal"]description];
+        
+        entity.maxNum = [[teamInfoDic objectForKey:@"maxNum"]description];
+        entity.memberNum = [[teamInfoDic objectForKey:@"memberNum"]description];
+        entity.joinFlag = [[teamInfoDic objectForKey:@"joinFlag"]description];
+        entity.createUser = [[teamInfoDic objectForKey:@"createUser"]description];
+        
+//        entity.contingentMembers = [[NSMutableArray alloc]initWithCapacity:0];
+        
+        [muDic setObject:entity forKey:@"contingent"];
+        
+        NSMutableArray * muArr = [@[] mutableCopy];
+        
+        NSArray * memberArr = [bodyDic objectForKey:@"contingentMembers"];
+        
+        for (NSDictionary * dic in memberArr) {
+            ContingentMemberEntity * meEntity = [[ContingentMemberEntity alloc]init];
+            meEntity.signUserId = [[dic objectForKey:@"signUserId"]description];
+            meEntity.nickName = [[dic objectForKey:@"nickName"]description];
+            meEntity.bigPicPath = [[dic objectForKey:@"bigPicPath"]description];
+            meEntity.smallPicPath = [[dic objectForKey:@"smallPicPath"]description];
+            [muArr addObject:meEntity];
+        }
+        
+        [muDic setObject:muArr forKey:@"contingentMembers"];
+        
+        return muDic;
+    }
+    return nil;
+}
+
+//邀请好友
++ (id)inviteParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic) {
+        return bodyDic;
+    }
+    return nil;
+}
+
+//赛事列表实体
++ (id)competitionListParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic)
+    {
+        NSMutableArray *muArr = [[NSMutableArray alloc]initWithCapacity:10];
+        NSArray * remindArr = [bodyDic objectForKey:@"competitionMapList"];
+        
+        for (NSDictionary * dic in remindArr)
+        {
+            competitionEntity * entity = [[competitionEntity alloc]init];
+            entity.eventId = [[dic objectForKey:@"eventId"] description];
+            entity.eventName = [[dic objectForKey:@"eventName"] description];
+            entity.eventTime = [[dic objectForKey:@"eventTime"] description];
+            entity.areaAddress = [[dic objectForKey:@"areaAddress"] description];
+            entity.explain = [[dic objectForKey:@"explain"] description];
+            if (entity.explain.length == 0)
+            {
+                entity.explain = @"  ";
+            }
+            entity.projectName = [[dic objectForKey:@"projectName"] description];
+            entity.eventStatus = [[dic objectForKey:@"eventStatus"] description];
+            entity.picPath = [[dic objectForKey:@"picPath"] description];
+            entity.orgName = [[dic objectForKey:@"orgName"] description];
+            [muArr addObject:entity];
+        }
+        
+        return muArr;
+    }
+    return nil;
+}
+
+//我的赛事
++ (id)mineCompetitionParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic)
+    {
+        NSMutableArray *muArr = [[NSMutableArray alloc]initWithCapacity:10];
+        NSArray * remindArr = [bodyDic objectForKey:@"myComMapList"];
+        
+        for (NSDictionary * dic in remindArr)
+        {
+            competitionEntity * entity = [[competitionEntity alloc]init];
+            entity.eventId = [[dic objectForKey:@"eventId"] description];
+            entity.eventName = [[dic objectForKey:@"eventName"] description];
+            entity.eventStatus = [[dic objectForKey:@"eventStatus"] description];
+            entity.picPath = [[dic objectForKey:@"picPath"] description];
+            entity.eventTime = [[dic objectForKey:@"startDate"] description];
+            [muArr addObject:entity];
+        }
+        
+        return muArr;
+    }
+    return nil;
+}
+
+//赛事列表详情
++ (id)competitionInfoParser:(NSData *)data
+{
+    NSDictionary * bodyDic = [self gotDataParser:data];
+    if (bodyDic)
+    {
+        NSDictionary * dic = [bodyDic objectForKey:@"competitionMap"];
+        competitionEntity * entity = [[competitionEntity alloc]init];
+        if (dic)
+        {
+            entity.eventId = [[dic objectForKey:@"eventId"] description];
+            entity.eventName = [[dic objectForKey:@"eventName"] description];
+            entity.eventTime = [[dic objectForKey:@"eventTime"] description];
+            entity.areaAddress = [[dic objectForKey:@"areaAddress"] description];
+            entity.explain = [[dic objectForKey:@"explain"] description];
+            entity.projectName = [[dic objectForKey:@"projectName"] description];
+            entity.eventStatus = [[dic objectForKey:@"eventStatus"] description];
+            entity.photoMapList = [bodyDic objectForKey:@"photoMapList"];
+            entity.longitude = [[dic objectForKey:@"longitude"] description];
+            entity.latitude = [[dic objectForKey:@"latitude"] description];
+        }
+        
+        return entity;
+    }
+    return nil;
+}
+
+@end

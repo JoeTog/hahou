@@ -1,0 +1,313 @@
+//
+//  PopView.m
+//  nationalFitness
+//
+//  Created by 童杰 on 2016/12/19.
+//  Copyright © 2016年 chenglong. All rights reserved.
+//
+
+#import "PopView.h"
+#import "Masonry.h"
+
+
+@implementation PopView{
+    
+    //带图片
+    NSString *_imageName;
+    NSString *_message;
+    BOOL isNeedCancel_;
+    UILabel *messageLabel;
+    UIButton *sureButton;
+    UIButton *cancelButton;
+    
+    //不带图片
+    BOOL isNeedCancell_;
+    NSString *messageSec_;
+    UILabel *messageSecLabel_;
+    UIButton *sureSecButton;
+    UIButton *cancelSecButton;
+    CGFloat secAlertVHeight_;
+    
+}
+
+#pragma markmark - 带图片弹出框
+-(instancetype)initWithFrame:(CGRect)frame imageName:(NSString *)name message:(NSString *)message isNeedCancel:(BOOL)isNeedCancel sureBlock:(void(^)(BOOL sureBlock))sureBlock{
+    if (self) {
+        self = [super initWithFrame:frame];
+        isNeedCancel_ = isNeedCancel;
+        if (_sure != sureBlock) {
+            _sure = nil;
+            _sure = sureBlock;
+        }
+        _imageName = name;
+        _message = message;
+        
+        [self costomView];
+        
+    }
+    return self;
+}
+
+-(void)costomView{
+    UIView *backV = [[UIView alloc] initWithFrame:self.viewForLastBaselineLayout.bounds];
+    backV.backgroundColor = [UIColor blackColor];
+    backV.alpha = 0.5;
+    [self addSubview:backV];
+    
+    UIView *alertV = [[UIView alloc] init];
+    alertV.backgroundColor = [UIColor whiteColor];
+    alertV.alpha = 1.0;
+    ViewRadius(alertV, 20);
+    [self addSubview:alertV];
+    [alertV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(self.mas_centerX);
+        make.centerY.mas_equalTo(self.mas_centerY);
+        make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH - kPLUS_SCALE_X(30), SCREEN_WIDTH - kPLUS_SCALE_X(30)));
+        
+    }];
+    
+    UIImageView *imageV = [[UIImageView alloc] init];
+    imageV.image = [UIImage imageNamed:_imageName];
+    [alertV addSubview:imageV];
+    [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(alertV.mas_centerX);
+        make.top.mas_equalTo(alertV.mas_top).offset(GAPB * 5);
+        make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH/4, SCREEN_WIDTH/4));
+    }];
+    
+#pragma mark - //message label
+    messageLabel = [UILabel new];
+    messageLabel.text = _message;
+//    label.textAlignment = NSTextAlignmentCenter;
+    messageLabel.font = [UIFont systemFontOfSize:18];
+    messageLabel.numberOfLines = 0;
+    //让message居中
+//    if (isNeedCancel_) {
+//        label.textAlignment = NSTextAlignmentCenter;
+//    }else{
+        messageLabel.textAlignment = NSTextAlignmentCenter;
+//    }
+    [alertV addSubview:messageLabel];
+    [messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(imageV.mas_bottom).offset(10);
+        make.centerX.mas_equalTo(imageV.mas_centerX);
+        make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH - kPLUS_SCALE_X(50), (SCREEN_WIDTH)/4));
+        
+    }];
+    
+    if (isNeedCancel_) {
+        //需要cancel按钮
+        sureButton = [UIButton new];
+        sureButton.backgroundColor = MainColor;
+        [self addSubview:sureButton];
+        [sureButton setTitle:@"确定" forState:(UIControlStateNormal)];
+        [sureButton setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
+        [sureButton addTarget:self action:@selector(mySignBtnClick) forControlEvents:(UIControlEventTouchDown)];
+        ViewRadius(sureButton, 5);
+        [sureButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(messageLabel.mas_bottom).offset(GAPB * 2);
+            make.right.mas_equalTo(messageLabel.mas_centerX).offset(-GAPB);
+            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH/3, 35));
+            
+        }];
+        
+        cancelButton = [UIButton new];
+        cancelButton.backgroundColor = FirstGray;
+        [self addSubview:cancelButton];
+        [cancelButton setTitle:@"取消" forState:(UIControlStateNormal)];
+        [cancelButton setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
+        [cancelButton addTarget:self action:@selector(mySignBtnCancelClick) forControlEvents:(UIControlEventTouchDown)];
+        ViewRadius(cancelButton, 5);
+        [cancelButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(messageLabel.mas_bottom).offset(GAPB * 2);
+            make.left.mas_equalTo(messageLabel.mas_centerX).offset(GAPB);
+            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH/3, 35));
+            
+        }];
+    }else{
+        //不需要cancel按钮
+        sureButton = [UIButton new];
+        sureButton.backgroundColor = MainColor;
+        [self addSubview:sureButton];
+        [sureButton setTitle:@"确定" forState:(UIControlStateNormal)];
+        [sureButton setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
+        [sureButton addTarget:self action:@selector(mySignBtnClick) forControlEvents:(UIControlEventTouchDown)];
+        ViewRadius(sureButton, 5);
+        [sureButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(messageLabel.mas_bottom).offset(GAPB * 2);
+            make.centerX.mas_equalTo(messageLabel.mas_centerX);
+            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH/3*2, 35));
+            
+        }];
+    }
+    
+}
+
+
+-(void)mySignBtnClick{
+    __weak PopView *ws=self;
+    [self removeFromSuperview];
+    if (ws.sure) {
+        ws.sure(YES);
+    }
+}
+
+-(void)mySignBtnCancelClick{
+    __weak PopView *ws=self;
+    [self removeFromSuperview];
+    if (ws.sure) {
+        ws.sure(NO);
+    }
+}
+
+//-(instancetype)initWithFrame:(CGRect)frame imageName:(NSString *)name message:(NSString *)message isNeedCancel:(BOOL)isNeedCancel sureBlock:(void(^)(BOOL sureBlock))sureBlock{
+
+#pragma markmark - 不带图片弹出框
+-(instancetype)initWithFrame:(CGRect)frame message:(NSString *)message isNeedCancel:(BOOL)isNeedCancel isSureBlock:(void(^)(BOOL sureBlock))sureBlock{
+    if (self) {
+        self = [super initWithFrame:frame];
+        isNeedCancell_ = isNeedCancel;
+        if (_sureSec != sureBlock) {
+            _sureSec = nil;
+            _sureSec = sureBlock;
+        }
+        messageSec_ = message;
+        secAlertVHeight_ = SCREEN_WIDTH/3*2;
+        [self customView];
+    }
+    return self;
+}
+
+-(void)customView{
+    UIView *backV = [[UIView alloc] initWithFrame:self.viewForLastBaselineLayout.bounds];
+    backV.backgroundColor = [UIColor blackColor];
+    backV.alpha = 0.5;
+    [self addSubview:backV];
+    
+    UIView *alertV = [[UIView alloc] init];
+    alertV.backgroundColor = [UIColor whiteColor];
+    alertV.alpha = 1.0;
+    ViewRadius(alertV, 20);
+    [self addSubview:alertV];
+    [alertV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(self.mas_centerX);
+        make.centerY.mas_equalTo(self.mas_centerY);
+        make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH - kPLUS_SCALE_X(30), secAlertVHeight_));
+        
+    }];
+    
+#pragma mark - //message label
+    
+    messageSecLabel_ = [UILabel new];
+    messageSecLabel_.text = messageSec_;
+    //    label.textAlignment = NSTextAlignmentCenter;
+    messageSecLabel_.font = [UIFont systemFontOfSize:18];
+    messageSecLabel_.numberOfLines = 0;
+    //让message居中
+    //    if (isNeedCancel_) {
+    //        label.textAlignment = NSTextAlignmentCenter;
+    //    }else{
+    messageSecLabel_.textAlignment = NSTextAlignmentCenter;
+    //    }
+    [alertV addSubview:messageSecLabel_];
+    [messageSecLabel_ mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(alertV.mas_top).offset(30);
+        make.centerX.mas_equalTo(alertV.mas_centerX);
+        make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH - kPLUS_SCALE_X(50), (SCREEN_WIDTH)/3));
+        
+    }];
+    
+    if (isNeedCancell_) {
+        //需要cancel按钮
+        sureSecButton = [UIButton new];
+        sureSecButton.backgroundColor = MainColor;
+        [self addSubview:sureSecButton];
+        [sureSecButton setTitle:@"确定" forState:(UIControlStateNormal)];
+        [sureSecButton setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
+        [sureSecButton addTarget:self action:@selector(SignBtnClick) forControlEvents:(UIControlEventTouchDown)];
+        ViewRadius(sureSecButton, 5);
+        [sureSecButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(messageSecLabel_.mas_bottom).offset(GAPB * 2);
+            make.right.mas_equalTo(messageSecLabel_.mas_centerX).offset(-GAPB);
+            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH/3, 35));
+            
+        }];
+        
+        cancelSecButton = [UIButton new];
+        cancelSecButton.backgroundColor = FirstGray;
+        [self addSubview:cancelSecButton];
+        [cancelSecButton setTitle:@"取消" forState:(UIControlStateNormal)];
+        [cancelSecButton setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
+        [cancelSecButton addTarget:self action:@selector(SignBtnCancelClick) forControlEvents:(UIControlEventTouchDown)];
+        ViewRadius(cancelSecButton, 5);
+        [cancelSecButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(messageSecLabel_.mas_bottom).offset(GAPB * 2);
+            make.left.mas_equalTo(messageSecLabel_.mas_centerX).offset(GAPB);
+            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH/3, 35));
+            
+        }];
+    }else{
+        //不需要cancel按钮
+        sureSecButton = [UIButton new];
+        sureSecButton.backgroundColor = MainColor;
+        [self addSubview:sureSecButton];
+        [sureSecButton setTitle:@"确定" forState:(UIControlStateNormal)];
+        [sureSecButton setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
+        [sureSecButton addTarget:self action:@selector(SignBtnClick) forControlEvents:(UIControlEventTouchDown)];
+        ViewRadius(sureSecButton, 5);
+        [sureSecButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(messageSecLabel_.mas_bottom).offset(GAPB * 2);
+            make.centerX.mas_equalTo(messageSecLabel_.mas_centerX);
+            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH/3*2, 35));
+            
+        }];
+    }
+}
+
+-(void)SignBtnClick{
+    __weak PopView *ws=self;
+    [self removeFromSuperview];
+    if (ws.sureSec) {
+        ws.sureSec(YES);
+    }
+}
+
+-(void)SignBtnCancelClick{
+    __weak PopView *ws=self;
+    [self removeFromSuperview];
+    if (ws.sureSec) {
+        ws.sureSec(NO);
+    }
+}
+
+#pragma mark - 带图片 属性设置
+-(void)setMessageColor:(UIColor *)messageColor{
+    messageLabel.textColor = messageColor;
+}
+
+-(void)setSureColor:(UIColor *)sureColor{
+    [sureButton setBackgroundColor:sureColor];
+}
+
+-(void)setCancelColor:(UIColor *)cancelColor{
+    [cancelButton setBackgroundColor:cancelColor];
+}
+
+#pragma mark - 不带图片 属性设置
+-(void)setSecMessageColor:(UIColor *)messageColor{
+    messageSecLabel_.textColor = messageColor;
+}
+
+-(void)setSecSureColor:(UIColor *)sureColor{
+    [sureSecButton setBackgroundColor:sureColor];
+}
+
+-(void)setSecCancelColor:(UIColor *)cancelColor{
+    [cancelSecButton setBackgroundColor:cancelColor];
+}
+
+-(void)setSecAlertViewHeight:(CGFloat)SecAlertViewHeight{
+    secAlertVHeight_ = SecAlertViewHeight;
+}
+
+@end

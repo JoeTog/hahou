@@ -1,0 +1,19 @@
+//
+//  NFShareMoodEntity.m
+//  nationalFitness
+//
+//  Created by wangping on 15/4/7.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import "NFKCEntity.h"
+
+@implementation NFKCEntity
+
+@end
+
+
+@implementation KCEntity
+
+@end
+

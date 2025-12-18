@@ -1,0 +1,110 @@
+//
+//  NFParser.m
+//  nationalFitness
+//
+//  Created by 程long on 14-10-28.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFBaseParser.h"
+#import "NFPacketHandler.h"
+#import "JSON.h"
+#import "NSData+Encrypt.h"
+
+
+@implementation NFBaseParser
+
+
++ (id)gotDataParser : (NSData *)data
+{
+    NSString *dataStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    NSData *keyData = [NFPacketHandler hexStringToNSData:dataStr];
+    
+    NSData *decdata = [keyData AES256DecryptWithKey:[NSString stringWithFormat:@"%@%@",AES_KEY,[SystemInfo shareSystemInfo].deviceId] keyEncoding:NSUTF8StringEncoding];
+    NSString *aStr = [[NSString alloc] initWithData:decdata encoding:NSUTF8StringEncoding];
+    
+//    NSLog(@"%@",aStr);
+    
+    if (!decdata)
+    {
+        return @{kWrongDlog:kWrongMessage};
+    }
+    
+//    NSString *aStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//    
+//    if (!data)
+//    {
+//        return @{kWrongDlog:kWrongMessage};
+//    }
+    
+    NSError __autoreleasing *error = nil;
+    
+    SBJsonParser *parser = [[SBJsonParser alloc] init];
+    NSDictionary *parserDict = [parser objectWithString:aStr];
+    
+    if (!error)
+    {
+        if (parserDict == nil ||  ![[[parserDict objectForKey:@"header"] objectForKey:@"retStatus"] isEqualToString:@"0"])
+        {
+            NSString *wrong = [[parserDict objectForKey:@"header"] objectForKey:@"retMessage"];
+            if (wrong && wrong.length > 0)
+            {
+                return @{kWrongDlog:wrong};
+            }
+            else
+            {
+                return @{kWrongDlog:kWrongMessage};
+            }
+        }
+        
+        //正确的接口会返回用户BODY报文
+//        DLog(@"正确的报文--%@", [parserDict objectForKey:@"body"]);
+        
+        return [parserDict objectForKey:@"body"];
+    }
+    
+    return @{kWrongDlog:kWrongMessage};
+}
+
++ (id)gotDataNoKeyParser : (NSData *)data
+{
+    NSString *aStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+    if (!data)
+    {
+        return @{kWrongDlog:kWrongMessage};
+    }
+    
+//    NSLog(@"%@",aStr);
+    
+    NSError __autoreleasing *error = nil;
+    
+    SBJsonParser *parser = [[SBJsonParser alloc] init];
+    NSDictionary *parserDict = [parser objectWithString:aStr];
+    
+    if (!error)
+    {
+        if (parserDict == nil ||  ![[[parserDict objectForKey:@"header"] objectForKey:@"retStatus"] isEqualToString:@"0"])
+        {
+            NSString *wrong = [[parserDict objectForKey:@"header"] objectForKey:@"retMessage"];
+            if (wrong && wrong.length > 0)
+            {
+                return @{kWrongDlog:wrong};
+            }
+            else
+            {
+                return @{kWrongDlog:kWrongMessage};
+            }
+        }
+        
+        //正确的接口会返回用户BODY报文
+//        DLog(@"正确的报文--%@", [parserDict objectForKey:@"body"]);
+        
+        return [parserDict objectForKey:@"body"];
+    }
+    
+    return @{kWrongDlog:kWrongMessage};
+}
+
+@end

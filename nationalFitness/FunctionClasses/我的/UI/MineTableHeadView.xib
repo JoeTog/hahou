@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="MineTableHeadView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="320"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="我的设置头像背景" translatesAutoresizingMaskIntoConstraints="NO" id="d5P-GD-fbI">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="210"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Zt-Rm-b9R" customClass="NFHeadImageView">
+                    <rect key="frame" x="137.5" y="140" width="100" height="100"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="etS-35-HQj"/>
+                        <constraint firstAttribute="height" constant="100" id="g07-ZB-Wz0"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昵称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GJc-CH-LMA">
+                    <rect key="frame" x="172" y="260" width="31" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="150" id="Yr4-RL-Pjc"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rQn-3F-iIE">
+                    <rect key="frame" x="208" y="256" width="14" height="22"/>
+                    <state key="normal" image="我的设置编辑"/>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="个性签名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oOU-u0-7l2">
+                    <rect key="frame" x="165" y="293" width="45" height="13.5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="S9L-Jj-k9C"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="oOU-u0-7l2" firstAttribute="top" secondItem="GJc-CH-LMA" secondAttribute="bottom" constant="15" id="5TT-C4-Gpk"/>
+                <constraint firstItem="GJc-CH-LMA" firstAttribute="centerX" secondItem="9Zt-Rm-b9R" secondAttribute="centerX" id="6Pc-Yj-E6m"/>
+                <constraint firstItem="9Zt-Rm-b9R" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Abu-4g-a8Y"/>
+                <constraint firstItem="rQn-3F-iIE" firstAttribute="leading" secondItem="GJc-CH-LMA" secondAttribute="trailing" constant="5" id="Stq-7G-ZNy"/>
+                <constraint firstAttribute="trailing" secondItem="d5P-GD-fbI" secondAttribute="trailing" id="XLx-iL-8Us"/>
+                <constraint firstItem="9Zt-Rm-b9R" firstAttribute="bottom" secondItem="d5P-GD-fbI" secondAttribute="bottom" constant="30" id="Xsx-gk-Le9"/>
+                <constraint firstItem="d5P-GD-fbI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="lUO-uw-VtB"/>
+                <constraint firstItem="rQn-3F-iIE" firstAttribute="bottom" secondItem="GJc-CH-LMA" secondAttribute="bottom" id="oFZ-vK-z8J"/>
+                <constraint firstItem="GJc-CH-LMA" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ruG-hR-wx5"/>
+                <constraint firstItem="GJc-CH-LMA" firstAttribute="top" secondItem="9Zt-Rm-b9R" secondAttribute="bottom" constant="20" id="trr-N7-0OG"/>
+                <constraint firstItem="oOU-u0-7l2" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="val-oc-R1Z"/>
+                <constraint firstItem="d5P-GD-fbI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="y9g-Ue-QOo"/>
+                <constraint firstAttribute="bottom" secondItem="d5P-GD-fbI" secondAttribute="bottom" constant="110" id="yMb-kp-CmH"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="headImageView" destination="9Zt-Rm-b9R" id="DSL-LN-UWU"/>
+                <outlet property="nickNameLabel" destination="GJc-CH-LMA" id="Av4-0T-5Fd"/>
+                <outlet property="nickNameWidthConstaint" destination="Yr4-RL-Pjc" id="7p2-JP-i90"/>
+                <outlet property="signLabel" destination="oOU-u0-7l2" id="VjX-XF-Ptc"/>
+                <outlet property="signWidthConstaint" destination="S9L-Jj-k9C" id="tlp-Z8-YqB"/>
+                <outlet property="tapGestureClick" destination="xum-mV-78B" id="P41-p0-kw3"/>
+                <outletCollection property="gestureRecognizers" destination="xum-mV-78B" appends="YES" id="7EW-tR-Udt"/>
+            </connections>
+        </view>
+        <tapGestureRecognizer id="xum-mV-78B"/>
+    </objects>
+    <resources>
+        <image name="我的设置头像背景" width="375" height="250"/>
+        <image name="我的设置编辑" width="14" height="14"/>
+    </resources>
+</document>

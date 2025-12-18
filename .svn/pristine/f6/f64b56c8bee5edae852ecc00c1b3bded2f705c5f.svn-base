@@ -1,0 +1,247 @@
+//
+//  NFActivityEntity.m
+//  nationalFitness
+//
+//  Created by 程long on 14-11-8.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFActivityEntity.h"
+
+@implementation NFActivityEntity
+
+@end
+
+@implementation ActivitySponsorEntity
+
+@end
+
+@implementation ActMemberEntity
+
+@end
+
+@implementation focusActivityEntity
+
+@end
+
+
+@implementation monitEntity
+
+@end
+
+
+@implementation activityEntity
+
+@end
+
+
+@implementation codemxEntity
+
+@end
+
+@implementation announceEntity
+
+@end
+
+@implementation activityMemberEntity
+
+@end
+
+
+@implementation activityExtendInfoEntity
+
+@end
+
+
+@implementation visitorPersonalInfoEntity
+
+@end
+
+
+@implementation homeFocusEntity
+
+@end
+
+
+@implementation clubEntity
+
+@end
+
+
+@implementation clubCreaterEntity
+
+@end
+
+
+@implementation clubMemberEntity
+
+@end
+
+@implementation venueEntity
+
+
+@end
+
+
+@implementation focusVenueEntity
+
+
+@end
+
+@implementation venueCardEntity
+@end
+
+
+@implementation areaEntity
+
+@end
+
+
+@implementation venueSellOrderMxEntity
+
+@end
+
+
+@implementation coachEntity
+
+@end
+
+
+@implementation focusCoachEntity
+
+@end
+
+
+@implementation cityEntity
+
+@end
+
+@implementation orgEntity
+
+@end
+
+
+@implementation PayOrderMxEntity
+
+@end
+
+
+@implementation PayOrderEntity
+
+
+@end
+
+
+@implementation SellOrderEntity
+
+@end
+
+
+@implementation newsEntity
+
+@end
+
+
+@implementation newsImageEntity
+
+@end
+
+@implementation ClubPhotoEntity
+
+
+
+@end
+
+
+@implementation ClubMemAnalysisEntity
+
+@end
+
+
+@implementation SelfTesEntity
+
+@end
+
+@implementation PayOrderVenueEntity
+
+
+
+@end
+
+@implementation FightEntity
+
+
+
+@end
+
+@implementation czServiceEntity
+
+
+
+@end
+
+@implementation czEventEntity
+
+
+
+@end
+
+@implementation eventFocusEntity
+
+
+
+@end
+
+@implementation czTrainEntity
+
+
+
+@end
+
+@implementation czTrainFouceEntity
+
+
+
+@end
+
+@implementation czCompetitionMemberEntity
+
+
+
+@end
+
+@implementation addEntity
+
+
+
+@end
+
+@implementation ClassEntity
+
+
+
+@end
+
+@implementation culPeriodEntity
+
+
+
+@end
+
+@implementation TimeEntity
+
+
+
+@end
+
+@implementation saleVenueBookEntity
+
+
+@end
+
+@implementation venueTicketbookEntity
+
+
+@end
+
+

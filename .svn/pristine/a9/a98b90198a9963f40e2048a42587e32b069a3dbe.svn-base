@@ -1,0 +1,26 @@
+//
+//  ReturnPYSort.h
+//  nationalFitness
+//
+//  Created by liumac on 15-3-24.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+//#import "NFActivityEntity.h"
+
+@interface ReturnPYSort : NSObject
+
+
++ (NSMutableDictionary *)fromDataSource:(NSMutableArray *)stringsToSort;
+
+// 将城市信息按拼音分类
++ (NSMutableDictionary *)fromCitySource:(NSMutableArray *)stringsToSort;
+// 为城市添加一个拼音属性
+//+ (cityEntity *)fromCity:(cityEntity *)city;
+// 将组织信息按拼音分类
++ (NSMutableDictionary *)fromOrgSource:(NSMutableArray *)stringsToSort;
+
++ (NSArray *)sortArray:(NSArray *)sortArray;
+
+@end

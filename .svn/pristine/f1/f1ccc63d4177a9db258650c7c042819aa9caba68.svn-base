@@ -1,0 +1,41 @@
+//
+//  NFLoginParser.h
+//  nationalFitness
+//
+//  Created by 程long on 14-10-28.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFBaseParser.h"
+#import "NFLoginEntity.h"
+
+@interface NFLoginParser : NFBaseParser
+
+//自动升级
++ (id)checkLastVersionParser:(NSData*)data;
+
+//上传图片
++ (id)uploadPicParser:(NSData*)data;
+
+//验证码校验
++ (id)gotVerificationParser:(NSData*)data;
+
+//找回密码
++ (id)findPassParser:(NSData*)data;
+
+//注册信息填写
++ (id)registerInfoParser:(NSData*)data;
+
+//用户登录
++ (id)loginRequestParser:(NSData*)data;
+
+//验证码校验
++ (id)checkVerificationParser:(NSData*)data;
+
+//第三方登陆
++ (id)loginThirdParser:(NSData*)data;
+
+//广告
++ (id)adsListParser:(NSData*)data;
+
+@end

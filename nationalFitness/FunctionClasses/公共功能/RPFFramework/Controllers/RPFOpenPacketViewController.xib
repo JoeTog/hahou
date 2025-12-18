@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RPFOpenPacketViewController">
+            <connections>
+                <outlet property="bgImgView" destination="BGU-Si-BAK" id="vsg-OI-fLV"/>
+                <outlet property="checkResultBtn" destination="KFi-o6-4Ce" id="cDm-Dy-noX"/>
+                <outlet property="closeBtn" destination="Aqt-w2-2Je" id="SVf-9M-0Ge"/>
+                <outlet property="faleyigehongbaoLabel" destination="GeU-Gs-VUd" id="9bC-sp-cY2"/>
+                <outlet property="headImgView" destination="Z93-a6-rTK" id="OKA-UG-jwb"/>
+                <outlet property="nameBtn" destination="tNh-aD-BBb" id="sFy-aq-h6t"/>
+                <outlet property="nameBtnNone" destination="wfx-Gh-0kR" id="0mp-ia-W61"/>
+                <outlet property="openBtn" destination="hjF-SH-SZA" id="cbp-Fa-ZOm"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="wishContentLabel" destination="t6W-aE-G2A" id="7js-bP-eGg"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fri-5u-4bJ">
+                    <rect key="frame" x="50" y="153.5" width="275" height="360"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pck_openBG.png" translatesAutoresizingMaskIntoConstraints="NO" id="BGU-Si-BAK">
+                            <rect key="frame" x="0.0" y="0.0" width="275" height="360"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hjF-SH-SZA">
+                            <rect key="frame" x="93" y="217" width="90" height="90"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.96078431369999995" green="0.79607843140000001" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" backgroundImage="pck_openBtn.png"/>
+                            <connections>
+                                <action selector="openBtnClick:" destination="-1" eventType="touchUpInside" id="1Nm-2H-Ei1"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="恭喜发财，大吉大利！" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t6W-aE-G2A">
+                            <rect key="frame" x="8" y="154" width="259" height="53"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="发了一个红包" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GeU-Gs-VUd">
+                            <rect key="frame" x="8" y="124" width="259" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.68627450980000004" green="0.68627450980000004" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tNh-aD-BBb">
+                            <rect key="frame" x="8" y="94" width="259" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="name">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="avatar_user.png" translatesAutoresizingMaskIntoConstraints="NO" id="Z93-a6-rTK">
+                            <rect key="frame" x="107" y="36" width="60" height="60"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aqt-w2-2Je">
+                            <rect key="frame" x="3" y="3" width="40" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="pck_openExit.png"/>
+                            <connections>
+                                <action selector="closeBtnClick:" destination="-1" eventType="touchUpInside" id="d0k-c1-Usv"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KFi-o6-4Ce">
+                            <rect key="frame" x="8" y="330" width="259" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="查看大家手气">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="checkResultBtnClick:" destination="-1" eventType="touchUpInside" id="9Ls-7Z-WMA"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wfx-Gh-0kR">
+                            <rect key="frame" x="9" y="292" width="259" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="name">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="360" id="7T0-Pe-y7B"/>
+                        <constraint firstAttribute="width" constant="275" id="YME-yW-ygC"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Fri-5u-4bJ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="CdJ-Ru-clk"/>
+                <constraint firstItem="Fri-5u-4bJ" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="NlN-SJ-GF8"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <point key="canvasLocation" x="153" y="120"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="avatar_user.png" width="108" height="108"/>
+        <image name="pck_openBG.png" width="310" height="410"/>
+        <image name="pck_openBtn.png" width="99" height="99"/>
+        <image name="pck_openExit.png" width="40" height="40"/>
+    </resources>
+</document>

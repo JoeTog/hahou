@@ -1,0 +1,261 @@
+//
+//  UserHeightViewController.m
+//  Demo
+//
+//  Created by Ares on 14/10/28.
+//  Copyright (c) 2014年 Ares. All rights reserved.
+//
+
+#import "UserHeightViewController.h"
+
+#import "IZValueSelectorView.h"
+#import "UserWeightViewController.h"
+//#import "SetUserInfoManager.h"
+
+// test by ares
+@interface UserHeightViewController () <IZValueSelectorViewDataSource, IZValueSelectorViewDelegate>
+{
+    UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
+    UISwipeGestureRecognizer *rightSwipeGestureRecognizer;
+    NSString *heightStr_;
+}
+
+// height picker view
+@property (nonatomic, retain) IBOutlet IZValueSelectorView *heightPickerView;
+
+// height ruler indicator
+@property (nonatomic, retain) IBOutlet UIImageView *heightRulerIndicator;
+
+@end
+
+@implementation UserHeightViewController
+
+@synthesize heightPickerView = _heightPickerView;
+
+@synthesize heightRulerIndicator = _heightRulerIndicator;
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // set its view background color if needed
+        if (!nibNameOrNil) {
+            self.view.backgroundColor = [UIColor whiteColor];
+        }
+    }
+    return self;
+}
+
+- (void)loadView {
+    [super loadView];
+    
+    //
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    // set the user height picker view data source and delegate
+    [_heightPickerView setDataSource:self];
+    [_heightPickerView setDelegate:self];
+    
+//    if (![NFUserEntity shareInstance].userHeight || [NFUserEntity shareInstance].userHeight.length == 0)
+//    {
+        heightStr_ = @"175";
+//        [NFUserEntity shareInstance].userHeight = @"175";
+//    }
+    
+    if (_isFromSet)
+    {
+        self.title = @"修改身高";
+        [self setNavBarButton];
+    }
+    else
+    {
+        self.title = @"设置身高";
+        [self setNavBarButton];
+        leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
+        rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
+        
+        leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+        rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+        
+        [self.view addGestureRecognizer:leftSwipeGestureRecognizer];
+        [self.view addGestureRecognizer:rightSwipeGestureRecognizer];
+    }
+}
+
+- (void)handleSwipes:(UISwipeGestureRecognizer *)sender
+{
+    if (sender.direction == UISwipeGestureRecognizerDirectionLeft)
+    {
+        UserWeightViewController *weiCtrol = [[UserWeightViewController alloc] initWithNibName:@"UserWeightView" bundle:nil];
+        [self.navigationController pushViewController:weiCtrol animated:YES];
+    }
+    
+    if (sender.direction == UISwipeGestureRecognizerDirectionRight)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (_isFromSet)
+    {
+        self.navigationController.navigationBar.alpha = 0.6;
+    }
+    else
+    {
+        self.navigationController.navigationBar.alpha = 0.6;
+        self.navigationController.navigationBarHidden = NO;
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    if (_isFromSet)
+    {
+        self.navigationController.navigationBar.alpha = 1.0;
+    }
+    else
+    {
+        self.navigationController.navigationBar.alpha = 1.0;
+        self.navigationController.navigationBarHidden = YES;
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+//    [_heightPickerView selectRow:220 - [[NFUserEntity shareInstance].userHeight integerValue] animated:NO];
+//    [(id<IZValueSelectorViewDelegate>)_heightPickerView.delegate selector:_heightPickerView didSelectRowAtIndex:220 - [[NFUserEntity shareInstance].userHeight integerValue]];
+
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+// test by ares
+#pragma mark - IZ value selector data source
+
+- (NSInteger)numberOfRowsInSelector:(IZValueSelectorView *)valueSelector {
+    //
+    return 111;
+}
+
+- (CGFloat)rowHeightInSelector:(IZValueSelectorView *)valueSelector {
+    //
+    return 97.0f;
+}
+
+- (CGFloat)rowWidthInSelector:(IZValueSelectorView *)valueSelector {
+    return 0;
+}
+
+- (UIView *)selector:(IZValueSelectorView *)valueSelector viewForRowAtIndex:(NSInteger)index {
+    UILabel *_rowView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, _heightPickerView.frame.size.width, 97.0f)];
+    
+    // set the row label view background color clear
+    [_rowView setBackgroundColor:[UIColor clearColor]];
+    
+    // set row view text, text size, text color and text alignment
+    [_rowView setText:[NSString stringWithFormat:@"%@", @(220 - index)]];
+    [_rowView setTextColor:NFBlueColor];
+    [_rowView setFont:[UIFont boldSystemFontOfSize:68.0f]];
+    [_rowView setTextAlignment:NSTextAlignmentCenter];
+    
+    return _rowView;
+}
+
+- (CGRect)rectForSelectionInSelector:(IZValueSelectorView *)valueSelector {
+    //
+    return CGRectMake(0, (_heightPickerView.frame.size.height - 97.0f) / 2, _heightPickerView.frame.size.width, 97.0f);
+    
+}
+
+#pragma mark - IZ value selector delegate
+
+- (void)selector:(IZValueSelectorView *)valueSelector didSelectRowAtIndex:(NSInteger)index {
+    if (!_isFromSet)
+    {
+//        [NFUserEntity shareInstance].userHeight = [NSString stringWithFormat:@"%@",@(220 - index)];
+        heightStr_ = [NSString stringWithFormat:@"%@",@(220 - index)];
+    }
+    else
+    {
+        heightStr_ = [NSString stringWithFormat:@"%@",@(220 - index)];
+    }
+//    DLog(@"%@",[NFUserEntity shareInstance].userHeight);
+    
+    // get height changed scroll step
+    CGFloat _step = (_heightRulerIndicator.superview.bounds.size.height - _heightRulerIndicator.bounds.size.height) / 110;
+    
+    // begin the height changed scroll animation
+    [UIView beginAnimations:@"heightChangedScrollAnim" context:nil];
+    
+    // set animation duration and curver
+    [UIView setAnimationDuration:0.45f];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    
+    // change height ruler indicator center
+    _heightRulerIndicator.center= CGPointMake(_heightRulerIndicator.center.x, _heightRulerIndicator.bounds.size.height / 2 + index * _step);
+    
+    // commit the animation
+    [UIView commitAnimations];
+}
+
+#pragma mark - 右侧保存
+
+- (void)setNavBarButton
+{
+    // 设置 navigation bar 右侧按钮
+    UIButton * leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 27)];
+    leftBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
+    
+    [leftBtn setTitle:@"保存" forState:UIControlStateNormal];
+    [leftBtn addTarget:self action:@selector(handleRightBtn) forControlEvents:UIControlEventTouchUpInside];
+    [leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    leftBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    ViewRadius(leftBtn, 2);
+    
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
+    self.navigationItem.rightBarButtonItem = leftButtonItem;
+}
+
+- (void)handleRightBtn
+{
+//    SetUserInfoManager *setUserInfo_ = [[SetUserInfoManager alloc] init];
+    
+    if (_isFromSet) {
+//        [setUserInfo_ setUserInfoWithType:SetStringTypeHeight withInfo:heightStr_ result:^(BOOL success, NSString *wrongStr) {
+//            if (success)
+//            {
+//                [NFUserEntity shareInstance].userHeight = heightStr_;
+//                [KeepAppBox keepVale:[NFUserEntity shareInstance].userHeight forKey:@"height"];
+//                [self.navigationController popViewControllerAnimated:YES];
+//            }
+//            else
+//            {
+//                [SVProgressHUD showErrorWithStatus:wrongStr];
+//            }
+//        }];
+    }
+    else
+    {
+//        [NFUserEntity shareInstance].userHeight = heightStr_;
+//        [KeepAppBox keepVale:[NFUserEntity shareInstance].userHeight forKey:@"height"];
+        NSUserDefaults *defaultGet  = [NSUserDefaults standardUserDefaults];
+         [defaultGet setObject:heightStr_ forKey:@"heightStr_"];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+    
+}
+
+@end

@@ -1,0 +1,210 @@
+//
+//  NFLoginManger.m
+//  nationalFitness
+//
+//  Created by 程long on 14-10-28.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFLoginManger.h"
+
+
+@implementation NFLoginManger
+
+//检查版本升级
+- (void)checkLastVersionManager {
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFLoginRequest gotRequest:infoDic andURL:updateVersionURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFLoginParser checkLastVersionParser:data];
+        return bizData;
+    };
+}
+
+//获取验证码
+- (void)gotVerificationManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //取数据
+//    bizDataGetter = ^ {
+//        id bizData = 从数据库取出 handler 内部相同格式的数据直接返回给界面先显示（缓存）
+//        return bizData;
+//    };
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request;
+        if ([KeepAppBox checkValueForkey:kMessageUrl])
+        {
+            request = [NFLoginRequest gotRequest:infoDic andURL:[KeepAppBox checkValueForkey:kMessageUrl]];
+        }
+        else
+        {
+            request = [NFLoginRequest gotRequest:infoDic andURL:gotVerificationURL];
+        }
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFLoginParser gotVerificationParser:data];
+        return bizData;
+    };
+    
+//    updateDatabaseSetter = ^(id data) {
+//        BOOL success;
+//        if (data)
+//        {
+//            success = 将解析出来的数据 按照 handler 内部相同格式存入数据库，视为最新缓存
+//        }
+//        return success;
+//    };
+}
+
+//密码找回
+- (void)findPassWordManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFLoginRequest gotRequest:infoDic andURL:findPassWordURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFLoginParser findPassParser:data];
+        return bizData;
+    };
+}
+
+//注册信息填写
+- (void)registerInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFLoginRequest gotRequest:infoDic andURL:registerInfoURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFLoginParser registerInfoParser:data];
+        return bizData;
+    };
+}
+
+
+//用户登录
+- (void)loginRequestManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFLoginRequest gotRequest:infoDic andURL:loginRequestURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFLoginParser loginRequestParser:data];
+        return bizData;
+    };
+}
+
+//验证码校验
+- (void)checkVerificationManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFLoginRequest gotRequest:infoDic andURL:checkVerificationURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFLoginParser checkVerificationParser:data];
+        return bizData;
+    };
+}
+
+
+//第三方登陆
+- (void)loginThirdManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFLoginRequest gotRequest:infoDic andURL:loginThirdURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFLoginParser loginThirdParser:data];
+        return bizData;
+    };
+}
+
+//上传图片
+- (void)uploadPicManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    __strong NSData *imageData = [_argList objectAtIndex:1];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFLoginRequest uploadPicRequestWithParams:infoDic imageData:imageData];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFLoginParser uploadPicParser:data];
+        return bizData;
+    };
+}
+
+//广告
+- (void)adsListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFLoginRequest gotRequest:infoDic andURL:adsListURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFLoginParser adsListParser:data];
+        return bizData;
+    };
+}
+
+@end

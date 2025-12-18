@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E0DF9F66-846F-486F-BBBB-16C7F02CD7D7</string>
+	<key>IDESourceControlProjectName</key>
+	<string>project</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>d81a480e-662d-314a-bc37-d5abc83c7ca3++1636</key>
+		<string>https://192.168.0.113:90/svn/qmjs/%25252525E9%25252525A1%25252525B9%25252525E7%252525259B%25252525AE%25252525E6%25252525BA%2525252590%25252525E7%25252525A0%2525252581/ios/nationalFitness</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>nationalFitness.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>d81a480e-662d-314a-bc37-d5abc83c7ca3++1636</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>d81a480e-662d-314a-bc37-d5abc83c7ca3++1636</key>
+		<string>https://192.168.0.113:90/svn/qmjs</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://192.168.0.113:90/svn/qmjs/%25252525E9%25252525A1%25252525B9%25252525E7%252525259B%25252525AE%25252525E6%25252525BA%2525252590%25252525E7%25252525A0%2525252581/ios/nationalFitness/nationalFitness.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>d81a480e-662d-314a-bc37-d5abc83c7ca3++1636</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>d81a480e-662d-314a-bc37-d5abc83c7ca3++1636</string>
+			<key>IDESourceControlWCCName</key>
+			<string>nationalFitness</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,302 @@
+//
+//  PublicDefine.h
+//  SummaryHoperun
+//
+//  Created by 程long on 14-7-30.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+#import "KeepAppBox.h"
+
+#ifdef DEBUG
+#   define DLog(format, ...) NSLog((@"%s [Line %d]:\n %s = " format), __PRETTY_FUNCTION__, __LINE__, #__VA_ARGS__, ##__VA_ARGS__);
+#else
+#   define DLog(...)
+#endif
+
+
+//回传下载图片结果
+typedef void (^ResultDown)(BOOL success, UIImage *image);
+
+//the status bar of the window after removing highly when equipment vertical screen
+#define SCREEN_HEIGHT                   [[UIScreen mainScreen] bounds].size.height
+//width of window when equipment vertical screen
+#define SCREEN_WIDTH                    [[UIScreen mainScreen] bounds].size.width
+
+//适配的宽度跟xib宽带的比例
+#define kPLUS_SCALE_X(x)                 (x * (SCREEN_WIDTH/320))
+
+#define kPLUSIX_SCALE_X(x)                 (x * (SCREEN_WIDTH/375))
+
+//切换日历通知
+#define CHANGEDATE   @"changeMatchDate"
+
+
+// View 圆角
+#define ViewRadius(View, Radius)\
+\
+[View.layer setCornerRadius:(Radius)];\
+[View.layer setMasksToBounds:YES]
+
+// add by 约走
+#define TABLEBG_COLOR      [UIColor colorWithRed:242.0/255 green:242.0/255 blue:242.0/255 alpha:1]
+#define NFGraycolor        [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1]
+
+
+// 13 89 167 字体默认的RGB颜色值
+#define NFBlueColor        [UIColor colorWithRed:13/255.0 green:86/255.0 blue:167/255.0 alpha:1.0]
+#define NFLightBlueColor   [UIColor colorWithRed:13/255.0 green:86/255.0 blue:167/255.0 alpha:0.4]
+#define NFLightGrayColor   [UIColor colorWithRed:95/255.0 green:94/255.0 blue:95/255.0 alpha:1.0]
+#define NFGreenColor       [UIColor colorWithRed:61/255.0 green:149/255.0 blue:229/255.0 alpha:1.0]
+#define NFRedColor         [UIColor colorWithRed:44/255.0 green:121/255.0 blue:209/255.0 alpha:1.0]
+#define NFYellowColor      [UIColor colorWithRed:240/255.0 green:168/255.0 blue:33/255.0 alpha:1.0]
+#define NFLightGreenColor  [UIColor colorWithRed:0/255.0 green:136/255.0 blue:0/255.0 alpha:1.0]
+#define NFDarkGreenColor   [UIColor  colorWithRed:82/255.0 green:110/155.0 blue:29/255.0 alpha:1.0]
+#define NFEdgeBgColor  [UIColor colorWithRed:199/255.0 green:197/255.0 blue:199/255.0 alpha:1.0]
+
+//通用cell,透明灰色描边
+//#define NFClearGrayColor   [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1]
+#define NFClearGrayColor  UIColorFromRGB(0xdddddd)
+
+
+//我的主页背景色调
+#define NFMineHomeBlueColor      [UIColor colorWithRed:0/255.0 green:160/255.0 blue:233/255.0 alpha:1.0]
+
+//发布主题秀界面蓝色
+#define NFSendBlueColor   [UIColor colorWithRed:0/255.0 green:160/255.0 blue:232/255.0 alpha:1.0]
+
+//导航栏颜色
+#define NFNavBackColor   [UIColor colorWithRed:44/255.0 green:121/255.0 blue:209/255.0 alpha:1.0]
+
+//晒心情界面名字等统一字体颜色
+#define NFShareMoodFontColor   [UIColor colorWithRed:118/255.0 green:177/255.0 blue:211/255.0 alpha:1.0]
+
+//约运动，男女颜色
+//#define kManBackColor       [UIColor colorWithRed:52/255.0 green:153/255.0 blue:231/255.0 alpha:1.0]
+//#define kWoManBackColor     [UIColor colorWithRed:230/255.0 green:105/255.0 blue:105/255.0 alpha:1.0]
+
+#define kManBackColor    UIColorFromRGB(0x349ae7)
+#define kWoManBackColor  UIColorFromRGB(0xe66a68)
+
+// 最新版 红色主题色
+#define knewMainColor [UIColor colorWithRed:202/255.0 green:52/255.0 blue:55/255.0 alpha:1.0]
+
+// View 圆角和加边框
+#define ViewBorderRadius(View, Radius, Width, Color)\
+\
+[View.layer setCornerRadius:(Radius)];\
+[View.layer setMasksToBounds:YES];\
+[View.layer setBorderWidth:(Width)];\
+[View.layer setBorderColor:[Color CGColor]]
+
+#define kCircleImageRadiu           12
+
+#define kRequestTimeout             30
+#define kAlertShowTime              1.5
+
+/**
+ *  提示用户的文字提示
+ */
+#define kWrongDlog                   @"kWrong_Dlog"
+
+#define kWrongMessage                @"系统正在开小差,请稍后再试!"
+
+/**
+ *  数据库在缓存文件里面的名字
+ */
+#define kFMDBFilename               @"NFSystemfmdb.db"
+
+#define kDeviceTokenKey             @"kDeviceTokenKeyForPush"
+
+//登陆用户名密码
+//#define kLoginUserName                       @"kLoginUserName"
+//#define kLoginPassWord                       @"kLoginPassWord"
+//用户逆地理位置城市名称和地址
+#define kLoginCityName                       @"kLoginCityName"
+#define kLoginCityCode                       @"kLoginCityCode"
+
+/**
+ *  NOTI NAME AND USE
+ */
+//在手机号码填写完毕， 或者资料填写完毕之后返回登陆界面
+#define kGoto_Login_Rootview                    @"kGoto_Login_Rootview"
+//跳转信息完善界面
+#define kGoto_Login_Rootview_infomation         @"kGoto_Login_Rootview_infomation"
+//跳转到APP首页
+#define kGoto_Login_Rootview_SportHome          @"kGoto_Login_Rootview_SportHome"
+//不跳转直接到登陆首页
+#define kGoto_Login_Rootview_LgoinHome          @"kGoto_Login_Rootview_LgoinHome"
+//跟新界面系统消息
+#define kRefurbish_System_Message               @"kRefurbish_System_Message"
+//获取走跑点赞的系统消息
+#define kZanRefurbish_Message                   @"kZanRefurbish_Message"
+//活动支付成功之后界面跳转到首页
+#define kGoto_Home_afterActSuccess              @"kGoto_Home_afterActSuccess"
+
+#define kDefaultMsg        @"服务器忙，请稍候再试!"
+
+#define StrongQuit [[NSNotificationCenter defaultCenter] postNotificationName:kGoto_Login_Rootview object:kGoto_Login_Rootview_LgoinHome];
+
+/*
+ 支付相关
+ */
+// tn: 交易流水号
+// mode: 接入模式 00(正式版本), 01(测试版本)
+#define kUPPayMode              @"01"
+#define kUPPayResultSuccess     @"success"
+#define kUPPayResultFail        @"fail"
+#define kUPPayResultCancel      @"cancel"
+#define kAppScheme              @"myluoyang"
+
+
+//wtx
+
+#define myNavgationBarHeight 44.f
+
+#define  SCREEN_BOUNDS  ([[UIScreen mainScreen]bounds])
+
+//设置界面的尺寸
+#define  RECT_CTR_POINT(id,X,Y,W,H) [id setFrame: CGRectMake(X, Y, W, H)]
+/*
+ 系统设置界面存的全局变量
+*/
+// 加好友需不需要验证
+#define kNeedValidation         @"kNeedValidation"
+// 是否让陌生人查看十条动态
+#define kCanCheckTenInfo        @"kCanCheckTenInfo"
+// 新消息通知是否开启
+#define kNewMessagePush         @"kNewMessagePush"
+//服务器下发的服务器地址
+#define kServiceUrl             @"kServiceUrl"
+//服务器下发的message服务器地址
+#define kMessageUrl             @"kMessageUrl"
+
+
+// HealthKit 是否打开提醒
+#define kHealthKitAlertIsEnable  @"kHealthKitAlertIsEnable"
+#define kNotificationHealthKitNoData  @"kNotificationHealthKitNoData"
+
+// 计步相关通知
+#define kRingViewAtNewStepCountRightBarItemTapNotification   @"kRingViewAtNewStepCountRightBarItemTapNotification"
+#define kStepCountUserDidTakeAnPictureNotification  @"kStepCountUserDidTakeAnPictureNotification"
+
+//是否提醒找到计步邀约
+#define kAlertViewType_AlertNever @"runAlertNever"
+
+// 计步类型atittatableViewpage
+//RunType
+//typedef NS_ENUM(NSInteger, StepCountRunType) {
+//    kRunType_Walk = 1,
+//    kRunType_Run,
+//    kRunType_Bike,
+//    kRunType_Car
+//};
+//
+//typedef enum : NSUInteger {
+//    //可能认识的人
+//    ShowTypePeople = 0,
+//    //约
+//    ShowTypeYue,
+//} ShowTypes;
+
+
+// Font Manage
+#define FONT_SIZE(size)           [UIFont systemFontOfSize:size]
+#define BOLD_FONT_SIZE(size)      [UIFont boldSystemFontOfSize:size]
+#define UIDeviceCurrentDevice     [[[UIDevice currentDevice] systemVersion] floatValue]
+
+// Color Manage
+#define COLOR_RGB(r, g, b)        [UIColor colorWithRed:r/255.f green:g/255.f blue:b/255.f alpha:1.0]
+#define COLOR_RGBA(r, g, b, a)    [UIColor colorWithRed:r/255.f green:g/255.f blue:b/255.f alpha:a]
+
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
+
+#define MainColor [UIColor colorWithRed:208/255.0 green:17/255.0 blue:27/255.0 alpha:1.0]
+
+
+//培训详情中的星星用到的kPLUS_SCALE_X(x)
+#define GAP kPLUS_SCALE_X(3.5)
+#define GAPB kPLUS_SCALE_X(7)
+
+#define DISCOUNT 0.95
+
+//封装的星星后用到
+//#define starViewWidth(gap,starWH) (gap + starWH)*10
+//
+#define starViewCenter(father,son) (father-son)/2
+//星星的高度或者宽度
+//#define starHeight 10.0
+//星星之间的间距
+//#define starGAP 2.5*JOESIZESCALE
+//
+//#define starGAPB 5*JOESIZESCALE
+//深灰
+#define FirstGray UIColorFromRGB(0x98999A)
+
+#define SecondGray UIColorFromRGB(0xDCDDDE)
+
+#define SsecondGray UIColorFromRGB(0xF1F2F3)
+
+#define ThirdGray UIColorFromRGB(0xF9FAFB)
+
+#define CellMainBackGroundPic @"我的票卡背景图"
+
+//调试开关 0为关闭 1为打开 2为只进行网络请求
+
+//调试开关 0为如果没有返回数据就不显示 1为如果没有返回数据就崩溃 [一般都是0]
+#define DATASWITCH @"0"
+
+//解析开关 0为插入假数据 1为用真数据
+#define PARSERSWITCH @"1"
+
+//正常假数据展示 PARSERSWITCH 为0 DATASWITCH 0或1
+
+//测试找对接口 PARSERSWITCH 为1 DATASWITCH 为 1
+
+//不崩溃展示真数据 PARSERSWITCH 为1 DATASWITCH 为 0
+
+
+// 0为不要 1位需要
+#define isNEEDData @"0"
+
+// 推送环境
+//#define APNSEnvironmental @"False"
+#define APNSEnvironmental @"True"
+
+#define ZJContactEntityKeyCount 19 //联系人【好友】    ZJContant
+
+#define ChatEntityKeyCount 31 //消息实体字段数量 MessageChatEntity
+
+#define ChatListEntityKeyCount 22   //会话列表实体字段数量    MessageChatListEntity
+
+#define GroupDetailliebiaoCount 17  //群组详情实体字段数量 GroupCreateSuccessEntity
+
+#define GroupMemberliebiaoCount 16  //群组成员实体字段数量 FriendListEntity
+
+#define QunzuliebiaoCount 6 //消息实体字段数量 GroupListEntity
+
+
+#define ShenqingliebiaoCount 14     //申请列表实体字段数量 FriendAddListEntity
+
+
+
+#ifdef __OBJC__
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <Availability.h>
+#import "ChatDemoUIDefine.h"
+//#import "EMAlertView.h"
+//#import "TTGlobalUICommon.h"
+
+#define NSEaseLocalizedString(key, comment) [[NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"EaseUIResource" withExtension:@"bundle"]] localizedStringForKey:(key) value:@"" table:nil]
+
+#endif
+
+#define TICK   NSDate *startTime = [NSDate date] 
+#define TOCK   NSLog(@"Time: %f", -[startTime timeIntervalSinceNow])
+
+
+
+
+

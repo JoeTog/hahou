@@ -1,0 +1,299 @@
+//
+//  NFMatchEntity.h
+//  nationalFitness
+//
+//  Created by 林向阳 on 16/2/29.
+//  Copyright © 2016年 chenglong. All rights reserved.
+//
+
+#import "NFBaseEntity.h"
+
+@interface NFMatchEntity : NFBaseEntity
+
+@end
+
+
+//赛事实体
+@interface CompetitionEntity : NSObject
+
+//类型主键
+@property (nonatomic, strong)NSString * ctypeId;
+//赛事类型编码
+@property (nonatomic, strong)NSString * ctypeCode;
+//赛事类型名称
+@property (nonatomic, strong)NSString * ctypeName;
+//是否有改队伍 0:有 1：没有
+@property (nonatomic, strong)NSString * isJoin;
+//是否开放 0:否 1：是
+@property (nonatomic, strong)NSString * isOpen;
+//用户所在队伍的段位
+@property (nonatomic, strong)NSString * belLevel;
+//比赛场次
+@property (nonatomic, strong)NSString * continNum;
+//当阶排名
+@property (nonatomic, strong)NSString * clevelRank;
+//综合胜率
+@property (nonatomic, strong)NSString * complexWinn;
+//天梯排名
+@property (nonatomic, strong)NSString * levelRank;
+//参赛比率
+@property (nonatomic, strong)NSString * entryRate;
+//积分
+@property (nonatomic, strong)NSString * realScore;
+//赛事ID
+@property (nonatomic, strong)NSString * creleaId;
+//运动类型
+@property (nonatomic, strong)NSString * proName;
+//赛制 1:周赛 2:月赛 3:年赛
+@property (nonatomic, strong)NSString * continSystem;
+//赛事地点
+@property (nonatomic, strong)NSString * thePlace;
+//开始时间
+@property (nonatomic, strong)NSString * startDate;
+//报名截止时间
+@property (nonatomic, strong)NSString * cutDate;
+//费用
+@property (nonatomic, strong)NSString * averCost;
+//比赛说明
+@property (nonatomic, strong)NSString * explain;
+//用户与赛事的关系  1：所在队伍已报名 2：所在队伍未报名 3：该用户没有队伍
+@property (nonatomic, strong)NSString * relType;
+//赛事提醒列表
+@property (nonatomic, strong)NSMutableArray * remindArr;
+//A队伍主键
+@property (nonatomic, strong)NSString * winContinId;
+//A队伍编号
+@property (nonatomic, strong)NSString * winName;
+//赛事结果
+@property (nonatomic, strong)NSString * winScore;
+//B队伍主键
+@property (nonatomic, strong)NSString * failureContinId;
+//B队伍编号
+@property (nonatomic, strong)NSString * failureName;
+
+@end
+
+
+//赛事提醒
+@interface CompetionRemindEntity : NSObject
+//是否为超时赛事 1 未超时 0：超时
+@property (nonatomic, strong)NSString * isOverdue;
+//是否为参数赛事 0：是 1：否
+@property (nonatomic, strong)NSString * joinFlag;
+//赛事时间
+@property (nonatomic, strong)NSString * competDate;
+//赛事ID
+@property (nonatomic, strong)NSString * creleaId;
+//赛事开始时间
+@property (nonatomic, strong)NSString * startDate;
+//参赛队伍数量
+@property (nonatomic, strong)NSString * contingentNum;
+
+@end
+
+//赛事首页广告实体
+@interface AdvertEntity : NSObject
+//热点id
+@property (nonatomic, strong)NSString * hotId;
+//大图url
+@property (nonatomic, strong)NSString * imgBigUrl;
+//小图url
+@property (nonatomic, strong)NSString * imgSmallUrl;
+//新闻页面url
+@property (nonatomic, strong)NSString * htmlUrl;
+
+@end
+
+//队伍实体
+@interface ContingentEntity : NSObject
+//队伍主键
+@property (nonatomic, strong)NSString * continId;
+//队伍编号
+@property (nonatomic, strong)NSString * continCode;
+//所在段位
+@property (nonatomic, strong)NSString * belLevel;
+//队伍成员人数
+@property (nonatomic, strong)NSString * memberNum;
+//队伍最大报名人数
+@property (nonatomic, strong)NSString * maxNum;
+//用于分页
+@property (nonatomic, strong)NSString * createDate;
+//比赛类别code
+@property (nonatomic, strong)NSString * ctypeCode;
+//比赛类别名称
+@property (nonatomic, strong)NSString * ctypeName;
+//比赛场次
+@property (nonatomic, strong)NSString * continNum;
+//当阶排名
+@property (nonatomic, strong)NSString * clevelRank;
+//综合胜率
+@property (nonatomic, strong)NSString * complexWinn;
+//天梯排名
+@property (nonatomic, strong)NSString * levelRank;
+//奖章总数
+@property (nonatomic, strong)NSString * medalSum;
+//天梯奖章
+@property (nonatomic, strong)NSString *levelMedal;
+//荣耀奖章
+@property (nonatomic, strong)NSString * honorMedal;
+//冠军奖章
+@property (nonatomic, strong)NSString * kempMedal;
+//勇气奖章
+@property (nonatomic, strong)NSString * courageMedal;
+//征服奖章
+@property (nonatomic, strong)NSString * conquerMedal;
+//赛事类型主键
+@property (nonatomic, strong)NSString * ctypeId;
+//加入队伍是否需要审核 0；需要审核；值为1时，不需要审核
+@property (nonatomic, strong)NSString * joinSwitch;
+//当前用户是否加入该队伍 0：加入 1：否
+@property (nonatomic, strong)NSString *joinFlag;
+//队伍创建人
+@property (nonatomic, strong)NSString *createUser;
+//成员列表
+@property (nonatomic, strong)NSMutableArray * contingentMembers;
+//待审核数量
+@property (nonatomic, strong)NSString * noticeNum;
+
+@end
+
+//待审核成员实体
+@interface ContingentMemberEntity : NSObject
+//用户ID
+@property (nonatomic, strong)NSString * signUserId;
+//昵称
+@property (nonatomic, strong)NSString * nickName;
+//大图
+@property (nonatomic, strong)NSString * bigPicPath;
+//小图
+@property (nonatomic, strong)NSString * smallPicPath;
+//比赛类别code
+@property (nonatomic, strong)NSString * ctypeCode;
+//比赛类别名称
+@property (nonatomic, strong)NSString * ctypeName;
+//队伍最大报名人数
+@property (nonatomic, strong)NSString * maxNum;
+//队伍成员人数
+@property (nonatomic, strong)NSString * memberNum;
+
+@end
+
+
+//赛事类型实体
+@interface CompetitionTypeEntity : NSObject
+//类型主键
+@property (nonatomic, strong)NSString * ctypeId;
+//赛事类型编码
+@property (nonatomic, strong)NSString * ctypeCode;
+//赛事类型名称
+@property (nonatomic, strong)NSString * ctypeName;
+//最大人数
+@property (nonatomic, strong)NSString * maxNum;
+//运动类型
+@property (nonatomic, strong)NSString * proName;
+//运动类型ID
+@property (nonatomic, strong)NSString *sprojectId;
+
+@end
+
+//排位排名实体
+@interface CompetitionCountingEntity : NSObject
+//队伍id
+@property (nonatomic, strong)NSString *continId;
+//队伍编号
+@property (nonatomic, strong)NSString * continCode;
+//所在段位
+@property (nonatomic, strong)NSString * belLevel;
+//积分
+@property (nonatomic, strong)NSString * realScore;
+//是否为用户的队伍 0：不是 1：是
+@property (nonatomic, strong)NSString * isSelf;
+//排名序号
+@property (nonatomic, strong)NSString * rankNum;
+
+//比赛类型名称
+@property (nonatomic, strong)NSString * ctypeName;
+//本赛季胜率
+@property (nonatomic, strong)NSString * currCompWinPercent;
+//本赛季场次
+@property (nonatomic, strong)NSString * currCompSum;
+//本赛季胜场
+@property (nonatomic, strong)NSString * currCompWinSum;
+//本赛季负场
+@property (nonatomic, strong)NSString * currCompLoseSum;
+//全赛季胜率
+@property (nonatomic, strong)NSString * allCompWinPercent;
+//全赛季场次
+@property (nonatomic, strong)NSString * allCompSum;
+//全赛季胜场
+@property (nonatomic, strong)NSString * allCompWinSum;
+//全赛季负场
+@property (nonatomic, strong)NSString * allCompLoseSum;
+
+@end
+
+//参赛历史实体
+@interface CompetitionHistoryEntity : NSObject
+//用户所在队伍的得分
+@property (nonatomic, strong)NSString *winScore;
+//对手队伍ID
+@property (nonatomic, strong)NSString * failureContinId;
+//对手队伍Code
+@property (nonatomic, strong)NSString * failureName;
+//对手队伍得分
+@property (nonatomic, strong)NSString * failureScore;
+//比赛类型名称
+@property (nonatomic, strong)NSString * ctypeName;
+//比赛结果 胜或者负
+@property (nonatomic, strong)NSString * result;
+//比赛时间
+@property (nonatomic, strong)NSString * competDate;
+
+@end
+
+
+//赛事结果实体
+@interface CompetitionResultEntity : NSObject
+
+//赛事地址
+@property (nonatomic, strong)NSString * thePlace;
+//比赛时间
+@property (nonatomic, strong)NSString * startDate;
+
+@property (nonatomic, strong)NSMutableArray * resultArr;
+
+@end
+
+//赛事列表实体
+@interface competitionEntity : NSObject
+
+//赛事ID
+@property (nonatomic, strong) NSString *eventId;
+//赛事名称
+@property (nonatomic, strong) NSString *eventName;
+//比赛时间
+@property (nonatomic, strong) NSString *eventTime;
+//比赛地点
+@property (nonatomic, strong) NSString *areaAddress;
+//赛事说明
+@property (nonatomic, strong) NSString *explain;
+//运动类型名称
+@property (nonatomic, strong) NSString *projectName;
+//赛事状态1:招募中 2:进行中 3:结束
+@property (nonatomic, strong) NSString *eventStatus;
+//图片地址
+@property (nonatomic, strong) NSString *picPath;
+//组织名称
+@property (nonatomic, strong) NSString *orgName;
+
+//图片节点
+@property (nonatomic, strong) NSArray *photoMapList;
+//经度
+@property (strong, nonatomic) NSString *longitude;
+//纬度
+@property (strong, nonatomic) NSString *latitude;
+
+@end
+
+
+

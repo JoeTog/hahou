@@ -1,0 +1,263 @@
+//
+//  NFMyWalletManager.m
+//  nationalFitness
+//
+//  Created by 林向阳 on 15/9/22.
+//  Copyright © 2015年 chenglong. All rights reserved.
+//
+
+#import "NFMyWalletManager.h"
+#import "NFMyWalletParser.h"
+#import "NFMyWalletRequest.h"
+
+@implementation NFMyWalletManager
+
+// 我的主页
+- (void)myHomePageManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMyWalletRequest gotRequest:infoDic andURL:queryMyHomeUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMyWalletParser myHomePageParser:data];
+        return bizData;
+    };
+}
+
+// 修改设置手势密码
+-(void)changeSetGustureManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMyWalletRequest gotRequest:infoDic andURL:changeGustPswUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMyWalletParser changeSetGustureParser:data];
+        return bizData;
+    };
+}
+
+// 验证手势密码
+- (void)checkGustureManamger
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMyWalletRequest gotRequest:infoDic andURL:checkGustPswUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMyWalletParser checkGustureParser:data];
+        return bizData;
+    };
+}
+
+//获取我的钱包余额信息
+- (void)getMyWalletInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMyWalletRequest gotRequest:infoDic andURL:getMyWalletInfoUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMyWalletParser getMyWalletInfoParser:data];
+        return bizData;
+    };
+}
+
+
+//钱包消费明细
+- (void)costDetailListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMyWalletRequest gotRequest:infoDic andURL:costDetailListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMyWalletParser costDetailListParser:data];
+        return bizData;
+    };
+    
+}
+
+- (void)myWalletInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMyWalletRequest gotRequest:infoDic andURL:myWalletInfoUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMyWalletParser myWalletParser:data];
+        return bizData;
+    };
+}
+
+//设置修改支付密码
+- (void)setPayPswManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMyWalletRequest gotRequest:infoDic andURL:setPayPswUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMyWalletParser setPayPswParser:data];
+        return bizData;
+    };
+}
+
+//验证支付密码
+- (void)checkPayPswManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMyWalletRequest gotRequest:infoDic andURL:checkPayPswUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMyWalletParser checkPayPswParser:data];
+        return bizData;
+    };
+}
+
+//获取验证码
+- (void)getYzmManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMyWalletRequest gotRequest:infoDic andURL:getYzmUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMyWalletParser getYzmParser:data];
+        return bizData;
+    };
+}
+
+//获取支付方式
+- (void)getRechargeManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMyWalletRequest gotRequest:infoDic andURL:getRechargeUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMyWalletParser getRechargeTypeParser:data];
+        return bizData;
+    };
+}
+
+//钱包支付
+- (void)walletPayManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMyWalletRequest gotRequest:infoDic andURL:walletPayUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMyWalletParser walletPayParser:data];
+        return bizData;
+    };
+}
+
+//取现
+- (void)takeMoneyManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMyWalletRequest gotRequest:infoDic andURL:takeMoneyUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMyWalletParser takeMoneyParser:data];
+        return bizData;
+    };
+}
+
+//充值
+- (void)rechargeMoneyManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMyWalletRequest gotRequest:infoDic andURL:rechargeMoneyUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMyWalletParser rechargeMoneyParser:data];
+        return bizData;
+    };
+}
+
+@end

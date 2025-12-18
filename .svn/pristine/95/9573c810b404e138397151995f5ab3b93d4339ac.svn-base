@@ -1,0 +1,25 @@
+//
+//  NFParser.h
+//  nationalFitness
+//
+//  Created by 程long on 14-10-28.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "PublicDefine.h"
+
+@interface NFBaseParser : NSObject
+
+/**
+ *  统一解析报文，解密或者是判断错误
+ *
+ *  @param data 服务器返回的DATA报文
+ *
+ *  @return ID类型数据
+ */
++ (id)gotDataParser : (NSData *)data;
+
++ (id)gotDataNoKeyParser : (NSData *)data;
+
+@end

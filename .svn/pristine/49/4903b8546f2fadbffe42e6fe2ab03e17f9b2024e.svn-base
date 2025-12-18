@@ -1,0 +1,86 @@
+//
+//  AppealDetailTableViewController.m
+//  nationalFitness
+//
+//  Created by 童杰 on 2017/2/28.
+//  Copyright © 2017年 chenglong. All rights reserved.
+//
+
+#import "AppealDetailTableViewController.h"
+
+@interface AppealDetailTableViewController ()
+
+@end
+
+
+
+@implementation AppealDetailTableViewController{
+    
+    //申诉时间
+    __weak IBOutlet UILabel *AppealTimeLabel_;
+    
+    //申诉项目
+    __weak IBOutlet UILabel *AppealProjectLabel_;
+    
+    //反馈信息
+    __weak IBOutlet UITextView *AppealInfoTextV_;
+    
+    //图片 1 2 3 4
+    __weak IBOutlet UIButton *FirstPicBtn_;
+    
+    __weak IBOutlet UIButton *SecPicBtn_;
+    
+    __weak IBOutlet UIButton *ThirdPicBtn_;
+    
+    __weak IBOutlet UIButton *ForthPicBtn_;
+    
+    
+    //反馈结果
+    __weak IBOutlet UITextView *AppealResultTextV_;
+    
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.title = @"申诉详情";
+    [self initUI];
+    
+    
+}
+
+-(void)initUI{
+    
+    AppealProjectLabel_.userInteractionEnabled = NO;
+    AppealResultTextV_.userInteractionEnabled = NO;
+    FirstPicBtn_.hidden = YES;
+    SecPicBtn_.hidden = YES;
+    ThirdPicBtn_.hidden = YES;
+    ForthPicBtn_.hidden = YES;
+    NSArray *picArr = @[@"我的08_1_06"];
+    if (picArr.count == 1) {
+        FirstPicBtn_.hidden = NO;
+        [FirstPicBtn_ setImage:[UIImage imageNamed:picArr[0]] forState:(UIControlStateNormal)];
+    }
+#pragma mark - 设置UIBarButtonItem返回
+    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 20, 34)];
+    [backBtn setImage:[UIImage imageNamed:@"everyday1_return"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithCustomView:backBtn];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+    
+}
+
+- (void)backClicked
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+
+@end

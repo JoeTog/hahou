@@ -1,0 +1,1042 @@
+//
+//  YourPacketHandler.h
+//  SummaryHoperun
+//
+//  Created by 程long on 14-7-30.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "PacketHandler.h"
+#import "NSData+Encrypt.h"
+#import "SystemInfo.h"
+
+//外网
+#define   kServiceIP   "http://ydly.lystyj.gov.cn/qmjs_FEP/"
+
+//周
+//#define   kServiceIP   "http://192.168.10.20:8088/qmjs_FEP/"
+
+//李呆逼
+//#define   kServiceIP   "http://192.168.0.122:8088/qmjs_FEP/"
+
+//内网
+//#define   kServiceIP   "http://192.168.0.104:8080/qmjs_FEP/"
+
+//标示出会被修改的url
+#define kServiceReplaceLocation    @"kServiceReplaceLocation"
+
+#define kDefinePassword   @"111111"
+
+#define kHealthReportUrl @"http://weixin.acmeway.com/healthWeb/report/web/getReportList?phoneNum=%@&userCode=160831&pwd=1"
+
+#pragma mark - xmpp host
+
+//头像的路径
+#define EMClient_User_Head_Address    @"" kServiceIP"loadpic.jsp?path=/qmjs_files/person/"
+
+//昵称
+#define EMClient_User_NickNAME(username) [NSString stringWithFormat:@"user_name_%@",username]
+
+/*********此处存放所有功能的网络请求地址********/
+//版本升级服务地址
+FOUNDATION_EXPORT                   NSString                *const updateVersionURL;
+
+//自测
+FOUNDATION_EXPORT                   NSString                *const selfTestUrl;
+
+//排序类型
+FOUNDATION_EXPORT                   NSString                *const sortTypeUrl;
+
+//创建俱乐部
+FOUNDATION_EXPORT                    NSString               *const creatClubURL;
+
+//俱乐部成员审核列表
+FOUNDATION_EXPORT   NSString *const clubWaitMemberUrl;
+
+//同意或拒绝或移除加入俱乐部接口
+FOUNDATION_EXPORT   NSString *const agreeOrRemoveClubUrl;
+
+//我的卡包
+FOUNDATION_EXPORT   NSString * const myCardUrl;
+
+//我的教练(咨询的)
+FOUNDATION_EXPORT NSString *const myConsultCoachUrl;
+
+//我的教练
+FOUNDATION_EXPORT   NSString * const attentionCoachURL;
+
+//子场馆详情
+FOUNDATION_EXPORT NSString *const subVenueInfoURL;
+
+//新场地列表信息（常州）
+FOUNDATION_EXPORT NSString *const czBookSpaceUrl;
+
+//发布拼场
+FOUNDATION_EXPORT NSString *const creatPCUrl;
+
+//发表公共
+FOUNDATION_EXPORT                           NSString            *const createAnnounceURL;
+
+//公告动态列表
+FOUNDATION_EXPORT                           NSString            *const clubAnnounceListURL;
+
+//分场馆列表
+FOUNDATION_EXPORT    NSString *const subVenuesListURL;
+
+//场馆列表
+FOUNDATION_EXPORT   NSString *const venuesListURL;
+
+//首页之预定的场馆－－new
+FOUNDATION_EXPORT                            NSString            *const bookVenueListURL;
+
+//咨询教练
+FOUNDATION_EXPORT NSString *const consultCoachUrl;
+
+//场馆焦点图
+FOUNDATION_EXPORT  NSString *const focusVneueListUrl;
+
+//教练详情信息
+FOUNDATION_EXPORT  NSString *const coachDetailInfoUrl;
+
+//认证
+FOUNDATION_EXPORT NSString *const authUrl;
+
+//重置密码
+FOUNDATION_EXPORT NSString * const resetPswUrl;
+
+//好友列表
+FOUNDATION_EXPORT                   NSString                    * const FirendsListUrl;
+
+//教练焦点图
+FOUNDATION_EXPORT   NSString *const focusCoachListUrl;
+
+//俱乐部活动列表
+FOUNDATION_EXPORT  NSString * const clubActivityURL;
+
+//场馆活动列表
+FOUNDATION_EXPORT  NSString * const VenueActivityURL;
+
+//上传徽章
+FOUNDATION_EXPORT   NSString *const uploadBadgeUrl;
+
+//加入俱乐部
+FOUNDATION_EXPORT  NSString * const joinClubURL;
+
+//退出俱乐部
+FOUNDATION_EXPORT  NSString * const exitClubURL;
+
+//常州赛事焦点图URL
+FOUNDATION_EXPORT NSString *const czEventFouceURL;
+
+//常州赛事列表url
+FOUNDATION_EXPORT NSString * const czEventListUrl;
+
+//常州赛务列表URL
+FOUNDATION_EXPORT NSString *const czServiceListUrl;
+
+//常州赛事详情Url
+FOUNDATION_EXPORT NSString *const czEventInfoUrl;
+
+//常州榜单排名
+FOUNDATION_EXPORT NSString *const czRankingListUrl;
+
+//常州报名接口
+FOUNDATION_EXPORT NSString *const czSignUpUrl;
+
+//常州报名人社团
+FOUNDATION_EXPORT NSString * const czClubListUrl;
+
+//常州培训列表url
+FOUNDATION_EXPORT NSString *const czTrainListUrl;
+
+//常州培训焦点图url
+FOUNDATION_EXPORT NSString *const czTrainFouceUrl;
+
+//常州培训详情url
+FOUNDATION_EXPORT NSString *const czTrainDetailUrl;
+
+//培训班列表
+FOUNDATION_EXPORT   NSString * const classListUrl;
+
+//常州培训教练列表
+FOUNDATION_EXPORT NSString * const czTrainCoachListUrl;
+
+//我的培训
+FOUNDATION_EXPORT  NSString * const myClassUrl;
+
+//全局搜索
+FOUNDATION_EXPORT NSString * const searchAllUrl;
+
+//热门搜索
+FOUNDATION_EXPORT NSString * const searchHotUrl;
+
+//热门组织
+FOUNDATION_EXPORT  NSString *const hotOrgUrl;
+
+//组织搜索
+FOUNDATION_EXPORT  NSString *const orgSearchUrl;
+
+//编辑俱乐部
+FOUNDATION_EXPORT                  NSString * const editClubUrl;
+
+//俱乐部焦点图
+FOUNDATION_EXPORT                     NSString *const focusClubListUrl;
+
+//上传图片
+FOUNDATION_EXPORT                   NSString                *const uploadPicURL;
+
+FOUNDATION_EXPORT                   NSString                *const uploadHeadPicURL;
+
+//我的订单
+FOUNDATION_EXPORT               NSString                * const myOrderUrl;
+
+//关闭订单
+FOUNDATION_EXPORT                       NSString                    * const closeOrderUrl;
+
+//支付方式
+FOUNDATION_EXPORT                   NSString                * const PayTypesUrl;
+
+//获取验证码
+FOUNDATION_EXPORT                   NSString                *const gotVerificationURL;
+
+//我的俱乐部
+FOUNDATION_EXPORT                      NSString             * const myClubListUrl;
+
+//可拼场地列表
+FOUNDATION_EXPORT  NSString * const canPCListUrl;
+
+//取消我发布的拼场
+FOUNDATION_EXPORT  NSString *const canleMyPubPcUrl;
+
+//我的场地
+FOUNDATION_EXPORT                      NSString             * const myVenueListURL;
+
+//验证码校验
+FOUNDATION_EXPORT                   NSString                *const checkVerificationURL;
+
+//忘记密码
+FOUNDATION_EXPORT                   NSString                *const findPassWordURL;
+
+//注册信息填写
+FOUNDATION_EXPORT                   NSString                *const registerInfoURL;
+
+//用户登录
+FOUNDATION_EXPORT                   NSString                *const loginRequestURL;
+
+//第三方登陆
+FOUNDATION_EXPORT                   NSString                *const loginThirdURL;
+
+//活动焦点图接口
+FOUNDATION_EXPORT                   NSString                *const focusActivityListURL;
+
+//创建活动接口
+FOUNDATION_EXPORT                   NSString                  *const creatActivityListURL;
+
+//常州我的赛事URL
+FOUNDATION_EXPORT NSString * const czQueryMyCompetitionURL;
+
+//活动列表
+FOUNDATION_EXPORT                   NSString                *const activityListURL;
+
+//活动类型列表 createActivityURL
+FOUNDATION_EXPORT                   NSString                *const codemxListURL;
+
+//获取活动相册列表
+FOUNDATION_EXPORT                   NSString                    *const albumListURL;
+
+//获取活动计划
+FOUNDATION_EXPORT                   NSString                    *const activityPlanURL;
+
+//加入活动
+FOUNDATION_EXPORT                     NSString                     *const jionActivityURL;
+
+//场馆详情
+FOUNDATION_EXPORT                       NSString                    *const venuesInfoURL;
+
+//是否同意加入活动社团
+FOUNDATION_EXPORT                       NSString                    *const checkJoinActURL;
+
+//主场馆最近预定人
+FOUNDATION_EXPORT                     NSString                      *const venueBookUserURL;
+
+//分场馆惠卡
+FOUNDATION_EXPORT                     NSString                      *const otherVenueURL;
+//预定场次
+FOUNDATION_EXPORT                     NSString                      *const sellOrdersURL;
+
+//预定场次最新版
+FOUNDATION_EXPORT                     NSString                      *const queryVenSellOrderURL;
+//获取活动报名成员
+FOUNDATION_EXPORT                       NSString                     *const activityMemberURL;
+
+//同意或拒绝加入活动接口
+FOUNDATION_EXPORT                      NSString                 *const agreeOrUnagreeJoinUrl;
+
+//获取所有片场
+FOUNDATION_EXPORT    NSString *const getAllVenueSellsUrl;
+
+//推到热点
+FOUNDATION_EXPORT                       NSString               *const pushToHotURL ;
+
+//删除动态
+FOUNDATION_EXPORT  NSString * const deleteDynamicUrl;
+
+//更新好友关系
+FOUNDATION_EXPORT                       NSString                            *const createFriendRelationURL;
+
+//查询好友
+FOUNDATION_EXPORT                       NSString                        *const searchFriendURL;
+
+//推荐热点
+FOUNDATION_EXPORT                       NSString                *const queryReferralHotListURL;
+
+//获取待审核成员列表
+FOUNDATION_EXPORT                     NSString                  * const activityWaitMemberURL;
+
+//点击焦点图查看活动详情
+FOUNDATION_EXPORT                   NSString                         *const activityInfoURL;
+
+//获取活动创建人信息与该活动信息
+FOUNDATION_EXPORT                       NSString                    *const activityExtendInfoURL;
+
+//查询最近的评论
+FOUNDATION_EXPORT                   NSString                            *const maxCommentURL;
+
+//默认相册列表
+FOUNDATION_EXPORT                   NSString                            *const defaultAlbumListURL;
+
+//删除活动
+FOUNDATION_EXPORT                  NSString                             *const deleteActivityURL;
+
+//用户预定场馆的列表
+FOUNDATION_EXPORT                   NSString                            *const AllBookVenueListUrl;
+
+//获取用户权限
+FOUNDATION_EXPORT                   NSString                            *const UserRolesUrl;
+
+//退出活动
+FOUNDATION_EXPORT                 NSString                              * const exitActivityURL;
+
+//创建关注
+FOUNDATION_EXPORT                   NSString                        *const createAttentURL;
+
+//发送举报
+FOUNDATION_EXPORT                       NSString                        *const sendReportUrl;
+
+//取消关注
+FOUNDATION_EXPORT                   NSString                            *const deleteAttentURL;
+
+//首页新闻热点列表
+FOUNDATION_EXPORT                   NSString                            *const queryHotListURL;
+
+//评论列表
+FOUNDATION_EXPORT                    NSString                        *const commentListURL;
+
+//发表评论
+FOUNDATION_EXPORT                    NSString                        *const createCommentURL;
+
+//取消评论
+FOUNDATION_EXPORT                    NSString                        *const deleteCommentURL;
+//新 取消评论
+FOUNDATION_EXPORT                    NSString                        *const deleteCommentNewURL;
+//创建相册点赞
+FOUNDATION_EXPORT                   NSString                        *const createAlbumPraiseURL;
+
+//取消相册点赞
+FOUNDATION_EXPORT                   NSString                        *const deleteAlbumPraiseURL;
+
+//删除相册
+FOUNDATION_EXPORT                   NSString                        *const deleteAlbumURL;
+
+//相册图片
+FOUNDATION_EXPORT                   NSString                        *const albumPhotoListURL;
+
+//发布相册
+FOUNDATION_EXPORT                     NSString                        *const createAlbumURL;
+
+//发布相册之前上传单张照片
+FOUNDATION_EXPORT                       NSString                       *const uploadAlbumURL;
+
+//设备列表
+FOUNDATION_EXPORT                       NSString                       *const devListURL;
+
+//公共设施区域详情
+FOUNDATION_EXPORT                       NSString                       *const devInfoURL;
+
+//根据设备编号查询设备信息
+FOUNDATION_EXPORT                       NSString                       *const devCodeInfoURL;
+
+//公共设施报修
+FOUNDATION_EXPORT                       NSString                       *const devBaoxiuURL;
+
+//公共设施安装
+FOUNDATION_EXPORT                       NSString                       *const devAnzhuangURL;
+
+//我的设备巡检
+FOUNDATION_EXPORT                       NSString                       *const mineDevURL;
+
+//体质监测列表
+FOUNDATION_EXPORT                       NSString                       *const healthListURL;
+
+//体质监测详情
+FOUNDATION_EXPORT                       NSString                       *const healthInfoURL;
+
+//我的体质监测预约
+FOUNDATION_EXPORT                       NSString                       *const mineHealthURL;
+
+//步道点列表
+FOUNDATION_EXPORT                       NSString                       *const roadListURL;
+
+//步道点你提交走跑数据
+FOUNDATION_EXPORT                       NSString                       *const trailRealURL;
+
+//开始智能跑
+FOUNDATION_EXPORT                       NSString                       *const trailPointsURL;
+
+//体质监测预约
+FOUNDATION_EXPORT                       NSString                       *const createHealthURL;
+
+//赞列表
+FOUNDATION_EXPORT                     NSString                          *const praiseListUrl;
+
+//编辑活动
+FOUNDATION_EXPORT                   NSString                           *const editActivityURL;
+
+//查看详情
+FOUNDATION_EXPORT                     NSString                        * const seeDetailInfoUrl;
+
+//发布主题秀
+FOUNDATION_EXPORT                       NSString                        *const createHotFocusURL;
+
+//主题秀瀑布流
+FOUNDATION_EXPORT                       NSString                        *const queryShowListURL;
+
+//更新个人信息
+FOUNDATION_EXPORT                       NSString                        *const updatePersoninfoURL;
+
+//保存体重数据
+FOUNDATION_EXPORT                       NSString                        *const saveWeightURL;
+
+//查看历史记录
+FOUNDATION_EXPORT                       NSString                        *const weightInfoListURL;
+
+//获取所有拼场成员列表
+FOUNDATION_EXPORT  NSString *const getAllPCMemberUrl;
+
+//取消拼场
+FOUNDATION_EXPORT NSString *const canclePcUrl;
+
+//更改绑定手机号
+FOUNDATION_EXPORT                   NSString                            *const changePhoneNumberURL;
+
+//我的活动
+FOUNDATION_EXPORT                       NSString                        *const myActivityListURL;
+
+//个人主页信息
+FOUNDATION_EXPORT                        NSString                         *const personalHomePageURL;
+
+//获取动态信息
+FOUNDATION_EXPORT                           NSString                        *const dynamicInfoUrl;
+
+//热点标签页
+FOUNDATION_EXPORT                           NSString                        *const HotTabsURL;
+
+//查询个人访客
+FOUNDATION_EXPORT                           NSString                            *const myVisitorListURL;
+
+//首页焦点图列表
+FOUNDATION_EXPORT                           NSString                            *const homeFocusListURL;
+
+//扫描二维码
+FOUNDATION_EXPORT                           NSString                            *const querySignOrdersURL;
+
+//确认签到信息
+FOUNDATION_EXPORT                           NSString                            *const signOrdersURL;
+
+//场地公告列表
+FOUNDATION_EXPORT                           NSString                            *const VenueAnnounceURL;
+
+//所有拼场列表
+FOUNDATION_EXPORT                           NSString                            *const allPcListUrl;
+
+//俱乐部列表
+FOUNDATION_EXPORT                           NSString                            *const findClubListURL;
+
+//查询与用户相关的社团列表
+FOUNDATION_EXPORT                           NSString                            *const userRelClubListURL;
+
+//申请创建社团
+FOUNDATION_EXPORT                           NSString                            *const appClubURL;
+
+//新俱乐部成员列表
+FOUNDATION_EXPORT                           NSString                            *const clubMemListUrl;
+
+//点击俱乐部图片或焦点图查看俱乐部详情
+FOUNDATION_EXPORT                           NSString                             *const clubInfoUrl;
+
+//教练列表
+FOUNDATION_EXPORT                           NSString                             *const coachURL;
+
+//场地列表
+FOUNDATION_EXPORT       NSString *const bookSpaceListUrl;
+//获取省市区
+FOUNDATION_EXPORT  NSString * const getAlldistrictProUrl;
+
+//确认预约
+FOUNDATION_EXPORT NSString * const sureBuyUrl;
+
+/*
+ 以下是约走要用到的网络请求地址
+ */
+
+//创建约走
+FOUNDATION_EXPORT                       NSString                        *const creatPlanURL;
+//约走信息列表
+FOUNDATION_EXPORT                       NSString                        *const planListURL;
+//约走详情
+FOUNDATION_EXPORT                       NSString                        *const planDetailURL;
+//相册列表
+FOUNDATION_EXPORT                       NSString                        *const albumsURL;
+//约走报名
+FOUNDATION_EXPORT                       NSString                        *const registratURL;
+//约走搜索
+FOUNDATION_EXPORT                       NSString                        *const planSearchURL;
+//参加约走人员列表
+FOUNDATION_EXPORT                       NSString                        *const planMemListURL;
+//约走结束
+FOUNDATION_EXPORT                       NSString                        *const planFinishURL;
+
+//正在约走中的人员列表
+FOUNDATION_EXPORT                       NSString                        *const planningMemURL;
+
+//开始约走
+FOUNDATION_EXPORT                       NSString                        *const startPlanURL;
+
+//退出约走
+FOUNDATION_EXPORT                       NSString                        *const quitPlanURL;
+
+//约走更新
+FOUNDATION_EXPORT                       NSString                        *const updatePlanURL;
+
+//广告
+FOUNDATION_EXPORT                       NSString                        *const adsListURL;
+
+//删除订单
+FOUNDATION_EXPORT   NSString * const deleteOrderUrl;
+
+/*
+ 支付相关
+ */
+//我的钱包
+FOUNDATION_EXPORT                      NSString                      * const getMyWalletInfoUrl;
+
+//获取支付方式
+FOUNDATION_EXPORT  NSString *const getRechargeUrl;
+
+//获取验证码接口
+FOUNDATION_EXPORT                    NSString                  *const getYzmUrl;
+
+//设置修改支付密码
+FOUNDATION_EXPORT                     NSString                      *  const setPayPswUrl;
+
+//验证支付密码
+FOUNDATION_EXPORT                      NSString                       *const checkPayPswUrl;
+
+//消费明细
+FOUNDATION_EXPORT                      NSString                        * const costDetailListUrl;
+
+// 提交订单  新版
+FOUNDATION_EXPORT                       NSString                       *const submitoOrderURL;
+
+//支付生成订单
+FOUNDATION_EXPORT                       NSString                        *const createOrderInfoURL;
+
+//支付生成订单
+FOUNDATION_EXPORT                       NSString                        *const createActOrderInfoURL;
+
+//开始支付
+FOUNDATION_EXPORT                       NSString                        *const paymentOrderURL;
+
+//支付倒计时
+FOUNDATION_EXPORT                       NSString                        *const payTimeOrderURL;
+
+/*
+ 以下是计步要用到的网络请求地址
+ */
+
+//计步开始
+FOUNDATION_EXPORT                       NSString                        *const startSepURL;
+
+//计步更新
+FOUNDATION_EXPORT                       NSString                        *const updateSepURL;
+
+//计步结束
+FOUNDATION_EXPORT                       NSString                        *const finishSepURL;
+
+//计步附近的人
+FOUNDATION_EXPORT                       NSString                        *const aroundSepURL;
+
+//保存运动轨迹
+FOUNDATION_EXPORT                       NSString                        *const createSportTrackURL;
+
+//后台自己上传运动轨迹
+FOUNDATION_EXPORT                       NSString                        *const backGroundSaveGpsDataURL;
+
+//上传运动中图片
+FOUNDATION_EXPORT                       NSString                        *const createSportImgURL;
+
+//查询运动轨迹
+FOUNDATION_EXPORT                       NSString                        *const querySportTrackURL;
+
+//查询运动轨迹详细
+FOUNDATION_EXPORT                       NSString                        *const querySportTrackDetailURL;
+
+/*
+ 以下是查看成就要用到的网络请求地址
+ */
+
+// 当天成就查询
+FOUNDATION_EXPORT                       NSString                        *const todayAchURL;
+
+// 历史成就查询
+FOUNDATION_EXPORT                       NSString                        *const achieveHisURL;
+
+// 历史成就统计查询
+FOUNDATION_EXPORT                       NSString                        *const achieveStaURL;
+
+// 好友排行榜查询
+FOUNDATION_EXPORT                       NSString                        *const friendRankURL;
+
+//城市列表
+FOUNDATION_EXPORT                       NSString                        *const cityListURL;
+
+/*
+ 以下是查看健康计步要用到的网络请求地址
+ */
+FOUNDATION_EXPORT                       NSString                        *const healthStepURL;
+
+/*
+ 以下是查看晒心情相关接口
+ */
+
+//发布心情秀
+FOUNDATION_EXPORT                       NSString                        *const createHotShowURL;
+// 热点标签
+FOUNDATION_EXPORT                       NSString                        *const hotFocusURL;
+// 匿名
+FOUNDATION_EXPORT                       NSString                        *const hotAnonyInfoURL;
+
+
+/*
+ 以下是约运动相关接口
+ */
+
+//获取约运动列表
+FOUNDATION_EXPORT                       NSString                        *const querySportListURL;
+//发布约运动
+FOUNDATION_EXPORT                       NSString                        *const createSportURL;
+//评论模版
+FOUNDATION_EXPORT                       NSString                        *const queryAnonyCommentURL;
+//结束约运动
+FOUNDATION_EXPORT                       NSString                        *const updateCloseSportURL;
+//心情详情
+FOUNDATION_EXPORT                       NSString                        *const queryShowInfoURL;
+//约运动详情
+FOUNDATION_EXPORT                       NSString                        *const querySportInfoURL;
+
+/*
+ 以下是手环要用到的网络请求地址
+ */
+
+// 绑定手环
+FOUNDATION_EXPORT                      NSString                         *const ringBindURL;
+
+// 绑定手环uuid
+FOUNDATION_EXPORT                      NSString                         *const ringUuidBindURL;
+
+// 解除绑定
+FOUNDATION_EXPORT                      NSString                         *const ringUnBindURL;
+
+// 提交运动信息到服务器
+FOUNDATION_EXPORT                      NSString                         *const ringSubmitSportInfoURL;
+
+// 提交运动数据到服务器
+FOUNDATION_EXPORT                      NSString                         *const ringSubmitSportDataURL;
+
+// 提交睡眠信息到服务器
+FOUNDATION_EXPORT                      NSString                         *const ringSubmitSleepInfoURL;
+
+// 排行榜
+FOUNDATION_EXPORT                      NSString                         *const ringRankURL;
+
+// 历史
+FOUNDATION_EXPORT                      NSString                         *const ringHistoryURL;
+
+// 设置闹钟
+FOUNDATION_EXPORT                      NSString                         *const ringSetAlarmURL;
+
+// 设置目标步数
+FOUNDATION_EXPORT                      NSString                         *const ringSetGoalStepsURL;
+
+// 设置久坐
+FOUNDATION_EXPORT                      NSString                         *const ringSetRemoteURL;
+
+// 获取手环用户信息
+FOUNDATION_EXPORT                      NSString                         *const ringUserInfoURL;
+
+// 获取服务器时间
+FOUNDATION_EXPORT                      NSString                         *const ringGetServerTimeURL;
+
+// 获取睡眠数据
+FOUNDATION_EXPORT                      NSString                         *const ringGetSleepDataURL;
+
+// 获取当前的天气
+FOUNDATION_EXPORT                      NSString                         *const todayWeatherURL;
+
+// 聚乐部内部排名
+FOUNDATION_EXPORT                      NSString                         *const detailClubURL;
+
+//获取俱乐部排名
+FOUNDATION_EXPORT                      NSString                         *const clubRankListUrl;
+
+//查询跑标信息列表
+FOUNDATION_EXPORT                      NSString                         *const queryTeamPersonalByUserIdURL;
+
+/*
+ 以下是我的钱包相关接口
+ */
+
+//充值
+FOUNDATION_EXPORT  NSString *const rechargeMoneyUrl;
+
+//钱包支付
+FOUNDATION_EXPORT         NSString *const walletPayUrl;
+
+//钱包支付
+FOUNDATION_EXPORT         NSString *const walletPayUrl;
+
+//我的主页
+FOUNDATION_EXPORT                      NSString                         *const queryMyHomeUrl;
+
+//修改设置手势密码
+FOUNDATION_EXPORT                      NSString                         *const changeGustPswUrl;
+
+//验证手势密码
+FOUNDATION_EXPORT                      NSString                         *const checkGustPswUrl;
+
+//我的钱包信息
+FOUNDATION_EXPORT                      NSString                         *const myWalletInfoUrl;
+
+//取现
+FOUNDATION_EXPORT    NSString *const takeMoneyUrl;
+
+//我的主页
+FOUNDATION_EXPORT                      NSString                         *const queryMyHomeUrl;
+
+//修改设置手势密码
+FOUNDATION_EXPORT                      NSString                         *const changeGustPswUrl;
+
+//验证手势密码
+FOUNDATION_EXPORT                      NSString                         *const checkGustPswUrl;
+
+//我的钱包信息
+FOUNDATION_EXPORT                      NSString                         *const myWalletInfoUrl;
+
+/*
+ 以下是最新版轨迹相关接口
+ */
+
+//同意约跑的跑友列表
+FOUNDATION_EXPORT                      NSString                         *const runFriendsUrl;
+
+//对跑友的点赞进行推送
+FOUNDATION_EXPORT                      NSString                         *const pushZanMsgUrl;
+
+//随即获取拍照心情和口号
+FOUNDATION_EXPORT                      NSString                         *const randomSloganUrl;
+
+//开始跑步发邀约
+FOUNDATION_EXPORT                      NSString                         *const runningPkUrl;
+
+//设置是否推荐给陌生人开关
+FOUNDATION_EXPORT                      NSString                         *const switchToStrangerUrl;
+
+//赴约
+FOUNDATION_EXPORT                      NSString                         *const answerAppointUrl;
+
+//更多语音列表
+FOUNDATION_EXPORT                       NSString                        *const voiceListUrl;
+
+//约跑纪录
+FOUNDATION_EXPORT                      NSString                         *const runHistoryUrl;
+
+//推荐陌生人列表
+FOUNDATION_EXPORT                      NSString                         *const recommendStrangerUrl;
+
+//我的好友列表
+FOUNDATION_EXPORT                      NSString                         *const recommendFriendUrl;
+
+//跑步成就
+FOUNDATION_EXPORT                      NSString                         *const runAchieveUrl;
+
+//跑步分享界面
+FOUNDATION_EXPORT                      NSString                         *const runShreUrl;
+
+//跑步分享的鞋款
+FOUNDATION_EXPORT                      NSString                         *const runShoeTypeUrl;
+
+/*
+ 以下是动态相关接口
+ */
+
+//发布动态
+FOUNDATION_EXPORT                      NSString                         *const publishNoteUrl;
+
+//动态列表
+FOUNDATION_EXPORT                      NSString                         *const noteListUrl;
+
+//活动帖子列表
+FOUNDATION_EXPORT                      NSString                         *const actNoteListUrl;
+
+//帖子详情页
+FOUNDATION_EXPORT                      NSString                         *const noteDetailUrl;
+
+//发布动态关联的活动和社团
+FOUNDATION_EXPORT                      NSString                         *const connectNoteListUrl;
+
+//评论
+FOUNDATION_EXPORT                      NSString                         *const commentNoteUrl;
+
+//评论列表
+FOUNDATION_EXPORT                      NSString                         *const noteCommentListUrl;
+
+//评论回复列表
+FOUNDATION_EXPORT                      NSString                         *const commentRelyUrl;
+
+//删除帖子
+FOUNDATION_EXPORT                      NSString                         *const deleteNoteUrl;
+
+//点赞
+FOUNDATION_EXPORT                      NSString                         *const parseNoteUrl;
+
+//取消点赞
+FOUNDATION_EXPORT                      NSString                         *const cancelParseNoteUrl;
+
+//删除评论
+FOUNDATION_EXPORT                      NSString                         *const deleteCommentUrl;
+
+//动态插入推荐
+FOUNDATION_EXPORT                      NSString                         *const recommendUrl;
+
+//可能认识的人
+FOUNDATION_EXPORT                      NSString                         *const mayKonwPeoUrl;
+
+/*
+ 我的一天接口
+ **/
+
+//我的一天
+FOUNDATION_EXPORT NSString          * const myDayUrl;
+
+//增加运动记录
+FOUNDATION_EXPORT NSString * const addSpRecordUrl;
+
+//子运动类
+FOUNDATION_EXPORT  NSString * const sunSportUrl;
+
+//删除运动项
+FOUNDATION_EXPORT NSString * const deleteSpEventUrl;
+
+//获取运动记录
+FOUNDATION_EXPORT NSString * const spRecordUrl;
+
+//删除运动记录
+FOUNDATION_EXPORT NSString * const deleteRecordUrl;
+
+
+#pragma mark - 新版活动列表
+//活动列表
+FOUNDATION_EXPORT NSString * const newActListUrl;
+
+//近期活动列表
+FOUNDATION_EXPORT NSString * const relationActListUrl;
+
+//新版加入活动
+FOUNDATION_EXPORT NSString * const xinJoinActUrl;
+
+//有兴趣接口
+FOUNDATION_EXPORT NSString * const hasIntristingUrl;
+
+//取消兴趣
+FOUNDATION_EXPORT NSString * const cancelIntristingUrl;
+
+//退出活动
+FOUNDATION_EXPORT NSString * const exitActUrl;
+
+//举报图片上传
+FOUNDATION_EXPORT NSString * const reportPicUrl;
+
+//举报接口
+FOUNDATION_EXPORT NSString * const reportUrl;
+
+//保存邀请记录
+FOUNDATION_EXPORT NSString * const saveInviteUrl;
+
+
+#pragma mark - 排名接口
+//所有排名信息
+FOUNDATION_EXPORT NSString * const allRankInfoUrl;
+
+//社团下排名信息
+FOUNDATION_EXPORT NSString * const clubInsideRankUrl;
+
+//排名点赞
+FOUNDATION_EXPORT NSString * const praiseRankUrl;
+
+#pragma mark -新版场馆
+FOUNDATION_EXPORT NSString * const allVenOrderUrl;
+
+//打球首页
+FOUNDATION_EXPORT               NSString            *const     playBallHomeUrl;
+
+#pragma mark - 新版首页
+//首页部分信息
+FOUNDATION_EXPORT  NSString * const homeNewInfoUrl;
+
+//用户类型
+//获取用户类型
+FOUNDATION_EXPORT NSString * const userTypeUrl;
+
+//公众号主页信息
+FOUNDATION_EXPORT NSString * const publicNoInfoUrl;
+
+//公众号收藏夹
+FOUNDATION_EXPORT NSString * const publicNoCollUrl;
+
+//收藏公众号
+FOUNDATION_EXPORT NSString * const collPublicNoUrl;
+
+//取消收藏
+FOUNDATION_EXPORT NSString * const cancelCollPublicNoUrl;
+
+//公众号隶属社团
+FOUNDATION_EXPORT NSString * const publicNoClubListUrl;
+
+//公众号赞助活动
+FOUNDATION_EXPORT NSString * const publicNoActListUrl;
+
+
+/****
+ *
+  赛事
+ *
+ 
+ ****/
+
+//赛事首页
+FOUNDATION_EXPORT NSString * const matchInfoUrl;
+
+//队伍列表
+FOUNDATION_EXPORT NSString * const teamListUrl;
+
+//赛事列表
+FOUNDATION_EXPORT NSString * const matchListUrl;
+
+//待审核成员列表
+FOUNDATION_EXPORT NSString * const waitApplyUrl;
+
+//审核成员
+FOUNDATION_EXPORT NSString * const checkApplyUrl;
+
+//我的队伍
+FOUNDATION_EXPORT NSString * const myTeamUrl;
+
+//赛事类型
+FOUNDATION_EXPORT NSString * const matchTypeUrl;
+
+//排名列表
+FOUNDATION_EXPORT NSString * const pwRankListUrl;
+
+//创建队伍
+FOUNDATION_EXPORT NSString * const creatMyTeamUrl;
+
+//参赛历史
+FOUNDATION_EXPORT NSString * const historyMatchUrl;
+
+//赛事统计
+FOUNDATION_EXPORT NSString * const matchCountUrl;
+
+//加入队伍
+FOUNDATION_EXPORT NSString * const joinTeamUrl;
+
+//退出队伍
+FOUNDATION_EXPORT NSString * const exitTeamUrl;
+
+//解散队伍
+FOUNDATION_EXPORT NSString * const deleteTeamUrl;
+
+//赛事提醒
+FOUNDATION_EXPORT NSString * const matchRemindUrl;
+
+//赛事详情
+FOUNDATION_EXPORT NSString * const matchDetailUrl;
+
+//赛事结果
+FOUNDATION_EXPORT NSString * const matchResultUrl;
+
+//报名赛事
+FOUNDATION_EXPORT NSString * const joinMatchUrl;
+
+////队伍详情
+FOUNDATION_EXPORT NSString * const teamInfoUrl;
+
+//邀请好友
+FOUNDATION_EXPORT NSString * const inviteFriendUrl;
+
+//赛事列表实体
+FOUNDATION_EXPORT               NSString            *const competitionListUrl;
+
+//赛事列表详情
+FOUNDATION_EXPORT               NSString            *const competitionInfoUrl;
+
+//我的赛事
+FOUNDATION_EXPORT               NSString            *const mineCompetitionUrl;
+
+//课程列表
+FOUNDATION_EXPORT               NSString            *const CourseListUrl;
+
+//课程详情
+FOUNDATION_EXPORT               NSString            *const CourseInfoUrl;
+
+//报名课程
+FOUNDATION_EXPORT               NSString            *const CourseOrderUrl;
+
+//我的课程
+FOUNDATION_EXPORT               NSString            *const MyCourseListUrl;
+
+/*********此处存放所有功能的网络请求地址********/
+
+static NSString *TWITTERFON_FORM_BOUNDARY = @"0xKhTmLbOuNdArY";
+
+static NSString * const FORM_FLE_INPUT = @"image";
+
+static NSString * const AES_KEY = @"www.wowsport.cn";
+
+@interface NFPacketHandler : PacketHandler
+
+
++ (NSData *)appendingPostDataWithBodyDictionary:(NSDictionary *)body;
+
+
++ (NSData *)postFormRequestParams: (NSDictionary *)postParems // IN
+                        imageData: (NSData *)data  // IN
+                        imageName: (NSString *)picFileName; // IN
+
+//NSData转换16进制字符
++ (NSString *)stringWithHexBytes :(NSData *)data;
+
+//16进制字符转换为NSData
++ (NSData *) hexStringToNSData :(NSString *)keyStr;
+
+
+@end

@@ -1,0 +1,1234 @@
+//
+//  YourPacketHandler.m
+//  SummaryHoperun
+//
+//  Created by 程long on 14-7-30.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFPacketHandler.h"
+#import "NFUserEntity.h"
+#import "KeepAppBox.h"
+
+/*********此处存放所有功能的网络请求地址********/
+
+#pragma mark - 登陆和注册接口
+
+//广告
+NSString *const adsListURL = @"" kServiceIP"home/queryAdsList.action";
+
+//版本升级服务地址
+NSString *const updateVersionURL = @"" kServiceReplaceLocation"ticketSale/queryMembershipCardList.action";
+
+
+
+
+
+//上传图片
+NSString *const uploadPicURL = @"" kServiceReplaceLocation"commons/uploadPhoto.action";
+
+//上传个人头像
+NSString *const uploadHeadPicURL = @"" kServiceReplaceLocation"commons/upload.action";
+
+//获取验证码
+NSString *const gotVerificationURL = @"http://211.142.203.122:9001/qmjs_FEP/commons/sendMessage.action";
+
+//验证码校验
+NSString *const checkVerificationURL = @"" kServiceReplaceLocation"user/checkVailCode.action";
+
+//忘记密码
+NSString *const findPassWordURL = @"" kServiceReplaceLocation"user/createRegisterUser.action";
+
+//注册信息填写
+NSString *const registerInfoURL = @"" kServiceReplaceLocation"user/registerUserAndLogin.action";
+
+//用户登录
+NSString *const loginRequestURL = @"" kServiceReplaceLocation"user/queryLoginInfo.action";
+
+//第三方登陆
+NSString *const loginThirdURL = @"" kServiceReplaceLocation"user/thirdPartyLoginInfo.action";
+
+//更新个人信息
+NSString *const updatePersoninfoURL = @"" kServiceReplaceLocation"user/updatePersonInfo.action";
+
+//保存体重数据
+NSString *const saveWeightURL = @"" kServiceReplaceLocation"userWeight/saveWeightInfo.action";
+
+//查看历史记录
+NSString *const weightInfoListURL = @"" kServiceReplaceLocation"userWeight/queryWeightInfoList.action";
+
+//更改绑定手机号
+NSString *const changePhoneNumberURL = @"" kServiceReplaceLocation"/user/changePhoneNumber.action";
+
+#pragma mark -
+
+#pragma mark - 活动相关接口
+
+//用户预定场馆的列表
+NSString *const AllBookVenueListUrl = @"" kServiceReplaceLocation"venueNew/queryAllBookVenueList.action";
+
+//获取用户权限
+NSString *const UserRolesUrl = @"" kServiceReplaceLocation"exercise/queryUserRoles.action";
+
+//同意或拒绝或移除加入俱乐部接口
+NSString *const agreeOrRemoveClubUrl = @"" kServiceReplaceLocation"club/auditClubMember.action";
+
+//同意或拒绝加入活动接口
+NSString *const agreeOrUnagreeJoinUrl = @"" kServiceReplaceLocation"exercise/auditActivityMember.action";
+
+//退出俱乐部
+NSString * const exitClubURL = @"" kServiceReplaceLocation"clubone/updateClubMember.action";
+
+//加入俱乐部
+NSString * const joinClubURL = @"" kServiceReplaceLocation"clubone/joinQmjsClub.action";
+
+//创建俱乐部
+NSString *const creatClubURL = @"" kServiceReplaceLocation"clubone/insertQmjsClub.action";
+
+//创建活动接口
+NSString *const creatActivityListURL = @"" kServiceReplaceLocation"exercise/createActivity.action";
+
+//活动焦点图接口
+NSString *const focusActivityListURL = @"" kServiceReplaceLocation"activity/queryFocusActivityList.action";
+
+//俱乐部活动列表
+NSString * const clubActivityURL =@"" kServiceReplaceLocation"clubone/queryClubActivity.action";
+
+//场馆活动列表
+NSString * const VenueActivityURL =@"" kServiceReplaceLocation"venueOne/queryVenueActivity.action";
+
+//我的卡包
+NSString * const myCardUrl = @"" kServiceReplaceLocation"card/queryMyCard.action";
+
+//活动列表
+NSString *const activityListURL = @"" kServiceReplaceLocation"activity/queryActivityList.action";
+
+//活动类型列表
+NSString *const codemxListURL = @"" kServiceReplaceLocation"sportProjectSet/querySportProjectSetList.action";
+
+//上传徽章
+NSString *const uploadBadgeUrl = @"" kServiceReplaceLocation"uniqueUpload/uploadClubBadge.action";
+
+//编辑活动
+NSString *const editActivityURL = @"" kServiceReplaceLocation"exercise/updateActivity.action";
+
+//退出活动
+NSString * const exitActivityURL = @"" kServiceReplaceLocation"activity/cancelJoinActivity.action";
+
+//加入活动
+NSString *const jionActivityURL = @"" kServiceReplaceLocation"activity/createActivityMember.action";
+
+//是否同意加入活动社团
+NSString *const checkJoinActURL = @"" kServiceReplaceLocation"activity/checkJoinAct.action";
+
+//删除活动
+NSString *const deleteActivityURL = @"" kServiceReplaceLocation"activity/deleteActivity.action";
+
+//获取活动报名成员
+NSString *const activityMemberURL = @"" kServiceReplaceLocation"exercise/queryActivityMember.action";
+
+//赞列表
+NSString *const praiseListUrl =@"" kServiceReplaceLocation"album/queryPraiseList.action";
+
+//获取待审核成员列表
+NSString * const activityWaitMemberURL = @"" kServiceReplaceLocation"exercise/queryActivityAuditStatusMember.action";
+                                                       
+//获取活动计划
+NSString *const activityPlanURL = @"" kServiceReplaceLocation"activity/queryActivityPlan.action";
+
+//活动详情
+NSString *const activityInfoURL = @"" kServiceReplaceLocation"exercise/queryActivityInfo.action";
+
+//获取活动相关信息
+NSString *const activityExtendInfoURL = @"" kServiceReplaceLocation"exercise/queryActivityExtendInfo.action";
+
+//查看详情
+NSString * const seeDetailInfoUrl = @"" kServiceReplaceLocation"album/queryAlbumDetail.action";
+
+//动态信息
+NSString * const dynamicInfoUrl = @"" kServiceReplaceLocation"personalVisitor/queryUserVisitorNewDynamic.action";
+
+//删除动态
+NSString * const deleteDynamicUrl = @"" kServiceReplaceLocation"personalVisitor/deleteDynamic.action";
+
+//更新好友关系
+NSString *const createFriendRelationURL = @"" kServiceReplaceLocation"imHx/createFriendRelation.action";
+
+//查询好友
+NSString *const searchFriendURL = @"" kServiceReplaceLocation"user/queryFriendsByMobile.action";
+
+#pragma mark -
+
+#pragma mark - 公共接口相关 - 评论，相册等
+
+//自测
+NSString *const selfTestUrl = @"" kServiceReplaceLocation"selfTest/querySelfTestTopicTypeList.action";
+
+//排序类型
+NSString *const sortTypeUrl = @"" kServiceReplaceLocation"code/queryCodemxList.action";
+
+//获取活动相册列表--change to new
+NSString *const albumListURL = @"" kServiceReplaceLocation"pubOperate/queryPhotoList.action";
+
+//查询最近的评论
+NSString *const maxCommentURL = @"" kServiceReplaceLocation"comment/queryMaxComment.action";
+
+//默认相册列表
+NSString *const defaultAlbumListURL = @"" kServiceReplaceLocation"album/queryDefaultAlbumList.action";
+
+//创建关注
+NSString *const createAttentURL = @"" kServiceReplaceLocation"attention/createAttent.action";
+
+//推到热点
+NSString *const pushToHotURL = @"" kServiceReplaceLocation"show/pushToHot.action";
+
+//取消关注
+NSString *const deleteAttentURL = @"" kServiceReplaceLocation"attention/deleteAttent.action";
+
+//评论列表
+NSString *const commentListURL = @"" kServiceReplaceLocation"comment/queryCommentList.action";
+
+//发表评论
+NSString *const createCommentURL = @"" kServiceReplaceLocation"comment/createComment.action";
+
+//取消评论
+NSString *const deleteCommentURL = @"" kServiceReplaceLocation"comment/deleteComment.action";
+
+//新 取消评论
+NSString *const deleteCommentNewURL = @"" kServiceReplaceLocation"pubOperate/deleteComment.action";
+
+//创建相册点赞
+NSString *const createAlbumPraiseURL = @"" kServiceReplaceLocation"album/createAlbumPraise.action";
+
+//取消相册点赞
+NSString *const deleteAlbumPraiseURL = @"" kServiceReplaceLocation"album/cancelAlbumPraise.action";
+
+//删除相册--change to new
+NSString *const deleteAlbumURL = @"" kServiceReplaceLocation"pubOperate/deletePhoto.action";
+
+//相册图片
+NSString *const albumPhotoListURL = @"" kServiceReplaceLocation"album/queryAlbumPhotoList.action";
+
+//发布相册
+NSString *const createAlbumURL = @"" kServiceReplaceLocation"album/createAlbum.action";
+
+//发布相册之前上传单张照片  to do for yaowen
+NSString *const uploadAlbumURL = @"" kServiceReplaceLocation"commons/uploadPhoto.action";
+
+
+#pragma mark - 搜索
+//全局搜索
+NSString * const searchAllUrl = @"" kServiceReplaceLocation"home/searchGlobal.action";
+//热门搜索
+NSString * const searchHotUrl = @"" kServiceReplaceLocation"home/queryHotLabels.action";
+
+//热门组织
+NSString * const hotOrgUrl = @"" kServiceReplaceLocation"home/queryHotOrgCodes.action";
+//组织搜索
+NSString * const orgSearchUrl = @"" kServiceReplaceLocation"home/queryHotOrgCodesByName.action";
+
+
+#pragma mark -
+
+
+#pragma mark - 设备设施等相关  -- 体质监测相关
+
+//设备列表
+NSString *const devListURL = @"" kServiceReplaceLocation"health/queryHealthAreaList.action";
+
+//公共设施区域详情
+NSString *const devInfoURL = @"" kServiceReplaceLocation"health/queryHealthAreaInfo.action";
+
+//根据设备编号查询设备信息
+NSString *const devCodeInfoURL = @"" kServiceReplaceLocation"health/queryHealthEquipmentByCode.action";
+
+//公共设施报修
+NSString *const devBaoxiuURL = @"" kServiceReplaceLocation"health/repairHealthEquipment.action";
+
+//公共设施安装
+NSString *const devAnzhuangURL = @"" kServiceReplaceLocation"health/updateHealthEquipmentInfo.action";
+
+//我的设备巡检
+NSString *const mineDevURL = @"" kServiceReplaceLocation"health/queryMyEquipmentList.action";
+
+//体质监测列表
+NSString *const healthListURL = @"" kServiceReplaceLocation"health/queryHealthPhysiqueList.action";
+
+//体质监测详情
+NSString *const healthInfoURL = @"" kServiceReplaceLocation"health/queryHealthPhysiqueInfo.action";
+
+//体质监测预约
+NSString *const createHealthURL = @"" kServiceReplaceLocation"health/createHealthPhysiqueReserve.action";
+
+//我的体质监测预约
+NSString *const mineHealthURL = @"" kServiceReplaceLocation"health/queryMyPhysiqueReserveList.action";
+
+//步道点列表
+NSString *const roadListURL = @"" kServiceReplaceLocation"trail/queryTrailList.action";
+
+//步道点你提交走跑数据
+NSString *const trailRealURL = @"" kServiceReplaceLocation"runSport/createTrailRealData.action";
+
+//开始智能跑
+NSString *const trailPointsURL = @"" kServiceReplaceLocation"trail/querytrailPoints.action";
+
+#pragma mark -
+
+
+#pragma mark - 热点相关接口
+
+//发布主题秀
+NSString *const createHotFocusURL = @"" kServiceReplaceLocation"show/createHotFocus.action";
+
+//主题秀瀑布流
+NSString *const queryShowListURL = @"" kServiceReplaceLocation"show/queryShowList.action";
+
+//热点标签页
+NSString *const HotTabsURL = @"" kServiceReplaceLocation"show/queryHotTabs.action";
+
+//首页新闻热点列表
+NSString *const queryHotListURL = @"" kServiceReplaceLocation"hot/queryHotList.action";
+
+//推荐热点
+NSString *const queryReferralHotListURL = @"" kServiceReplaceLocation"hot/queryReferralHotList.action";
+
+#pragma mark -
+
+#pragma mark - 我的相关接口
+
+//俱乐部成员审核列表
+NSString *const clubWaitMemberUrl = @"" kServiceReplaceLocation"club/queryClubMemberAuditStatus.action";
+
+//获取所有拼场成员列表
+NSString *const getAllPCMemberUrl = @"" kServiceReplaceLocation"myVenue/queryMyFightPersonList.action";
+
+//取消我预定的拼场
+NSString *const canclePcUrl = @"" kServiceReplaceLocation"myVenue/cancelMyVenueFight.action";
+
+//取消我发布的拼场
+NSString *const canleMyPubPcUrl = @"" kServiceReplaceLocation"myVenue/cancelVenueFight.action";
+
+//重置密码
+NSString * const resetPswUrl = @"" kServiceReplaceLocation"user/resetPassword.action";
+
+//好友列表
+NSString * const FirendsListUrl = @"" kServiceReplaceLocation"user/queryMyFirendsList.action";
+
+//我的订单
+NSString * const myOrderUrl = @"" kServiceReplaceLocation"payment/queryMyOrderList.action";
+
+//关闭订单
+NSString * const closeOrderUrl = @"" kServiceReplaceLocation"payment/closeOrder.action";
+
+//支付方式
+NSString * const PayTypesUrl = @"" kServiceReplaceLocation"payment/queryPayTypes.action";
+
+//删除订单
+NSString * const deleteOrderUrl = @"" kServiceReplaceLocation"payment/delOrder.action";
+
+//编辑俱乐部
+NSString * const editClubUrl = @"" kServiceReplaceLocation"clubone/updateQmjsClub.action";
+
+//我的俱乐部
+NSString * const myClubListUrl = @"" kServiceReplaceLocation"club/queryMyClubList.action";
+
+//我的活动
+NSString *const myActivityListURL = @"" kServiceReplaceLocation"exercise/queryMyActivityList.action";
+
+//个人主页信息
+NSString *const personalHomePageURL = @"" kServiceReplaceLocation"personalVisitor/queryPersonalHomePage.action";
+
+//查询个人访客
+NSString *const myVisitorListURL = @"" kServiceReplaceLocation"personalVisitor/queryMyVisitorList.action";
+
+//我的场地
+NSString *const myVenueListURL = @"" kServiceReplaceLocation"myVenue/queryMyVenue.action";
+
+//我的教练(关注的)
+NSString *const attentionCoachURL = @"" kServiceReplaceLocation"coach/queryAttentionCoach.action";
+
+//我的教练(咨询的)
+NSString *const myConsultCoachUrl = @"" kServiceReplaceLocation"coach/queryAdvisoryCoach.action";
+
+#pragma mark - 
+#pragma mark - 赛事
+//常州赛事焦点图URL
+NSString *const czEventFouceURL = @"" kServiceReplaceLocation"czactivity/queryCompetitianPic.action";
+
+//常州赛事列表url
+NSString * const czEventListUrl = @"" kServiceReplaceLocation"czactivity/queryCompetition.action";
+
+//常州赛务列表URL
+NSString *const czServiceListUrl = @"" kServiceReplaceLocation"czactivity/queryCompetitionRaceService.action";
+
+//常州赛事详情Url
+NSString *const czEventInfoUrl = @"" kServiceReplaceLocation"czactivity/queryCompetitionDetail.action";
+
+//常州榜单排名
+NSString *const czRankingListUrl = @"" kServiceReplaceLocation"competitionMember/queryCompetitionMemberList.action";
+
+//常州报名接口
+NSString *const czSignUpUrl = @"" kServiceReplaceLocation"czactivity/joinCompetition.action";
+
+//常州报名人社团
+NSString * const czClubListUrl = @"" kServiceReplaceLocation"czactivity/queryCompetitionClub.action";
+
+//常州我的赛事
+NSString * const czQueryMyCompetitionURL = @"" kServiceReplaceLocation"/czactivity/queryMyCompetition.action";
+
+#pragma mark -
+#pragma mark - 培训
+//常州培训列表url
+NSString *const czTrainListUrl = @"" kServiceReplaceLocation"cultivate/queryHomeSearchCultivate.action";
+
+//常州培训焦点图url
+NSString *const czTrainFouceUrl = @"" kServiceReplaceLocation"cultivate/queryCultivateFocusList.action";
+
+//常州培训详情url
+NSString *const czTrainDetailUrl = @"" kServiceReplaceLocation"cultivate/queryCultivateInfo.action";
+
+//培训班列表
+NSString * const classListUrl = @"" kServiceReplaceLocation"cultivate/queryCultivatePeriodAndClass.action";
+
+//常州培训教练列表
+NSString * const czTrainCoachListUrl = @"" kServiceReplaceLocation"cultivate/queryCultivateCoachList.action";
+
+//我的培训
+NSString * const myClassUrl = @"" kServiceReplaceLocation"cultivate/queryOrderedByUserClassInfo.action";
+
+#pragma mark -
+
+#pragma mark - 主页相关接口
+
+//首页焦点图列表
+NSString *const homeFocusListURL = @"" kServiceReplaceLocation"home/queryHomeFocusList.action";
+
+//城市列表
+NSString *const cityListURL = @"" kServiceReplaceLocation"home/queryCityList.action";
+
+//认证
+NSString *const authUrl = @"" kServiceReplaceLocation"user/createAuth.action";
+
+#pragma mark -
+
+#pragma mark - 其他相关接口
+
+//扫描二维码
+NSString *const querySignOrdersURL = @"" kServiceReplaceLocation"orders/querySignOrders.action";
+
+//确认签到信息
+NSString *const signOrdersURL = @"" kServiceReplaceLocation"orders/signOrders.action";
+
+//场地公告列表
+NSString *const VenueAnnounceURL = @"" kServiceReplaceLocation"venueOne/queryVenueAnnounceList.action";
+
+#pragma mark -
+
+#pragma mark - 俱乐部列表接口
+
+//发表公共
+NSString *const createAnnounceURL = @"" kServiceReplaceLocation"club/createAnnounce.action";
+
+//公告动态列表
+NSString *const clubAnnounceListURL = @"" kServiceReplaceLocation"clubAnnounce/queryClubAnnounceList.action";
+
+//分场馆列表
+NSString *const subVenuesListURL = @"" kServiceReplaceLocation"venueOne/queryVenueByProvince.action";
+
+//新俱乐部成员列表
+NSString *const clubMemListUrl = @"" kServiceReplaceLocation"clubone/queryClubMemberForAnalyse.action";
+
+//场馆列表－－new
+NSString *const venuesListURL = @"" kServiceReplaceLocation"venueNew/queryVenueList.action";
+
+//首页之预定的场馆－－new
+NSString *const bookVenueListURL = @"" kServiceReplaceLocation"venueNew/queryBookVenueList.action";
+
+//俱乐部列表
+NSString *const findClubListURL = @"" kServiceReplaceLocation"club/queryNewClubList.action";
+
+//查询与用户相关的社团列表
+NSString *const userRelClubListURL = @"" kServiceReplaceLocation"club/queryUserRelClubList.action";
+
+//申请创建社团
+NSString *const appClubURL = @"" kServiceReplaceLocation"club/applyClub.action";
+
+//场馆焦点图
+NSString *const focusVneueListUrl = @"" kServiceReplaceLocation"venue/queryFocusVenueList.action";
+
+//俱乐部焦点图
+NSString *const focusClubListUrl = @"" kServiceReplaceLocation"club/queryFocusClubList.action";
+
+//教练焦点图
+NSString *const focusCoachListUrl = @"" kServiceReplaceLocation"coach/queryFocusCoachList.action";
+
+//点击俱乐部图片或焦点图查看俱乐部详情
+NSString *const clubInfoUrl = @"" kServiceReplaceLocation"club/queryClubInfoById.action";
+
+//场馆详情
+NSString *const venuesInfoURL = @"" kServiceReplaceLocation"venueOne/queryVenue.action";
+
+//所有拼场列表
+NSString *const allPcListUrl = @"" kServiceReplaceLocation"venue/queryFightSellList.action";
+
+//获取所有片场
+NSString *const getAllVenueSellsUrl = @"" kServiceReplaceLocation"venue/queryVenueSells.action";
+
+//可拼场地列表
+NSString * const canPCListUrl = @"" kServiceReplaceLocation"venue/queryFightVenueList.action";
+
+//发布拼场
+NSString *const creatPCUrl = @"" kServiceReplaceLocation"venue/createVenueFight.action";
+
+//子场馆详情
+NSString *const subVenueInfoURL = @"" kServiceReplaceLocation"venueNew/queryVenueInfo.action";
+
+//主场馆最近预定人
+NSString *const venueBookUserURL  = @"" kServiceReplaceLocation"venueNew/queryBookUserList.action";
+
+//分场馆惠卡
+NSString *const otherVenueURL = @"" kServiceReplaceLocation"venueNew/queryVenueCardList.action";
+
+//预定场次                                 
+NSString *const sellOrdersURL  = @"" kServiceReplaceLocation"venue/querySellOrders.action";
+
+// 预定场次最新版
+NSString *const queryVenSellOrderURL = @"" kServiceReplaceLocation"venue/queryVenueSellOrder.action";
+
+#pragma mark - 教练列表接口
+
+//教练详情信息
+NSString *const coachDetailInfoUrl = @"" kServiceReplaceLocation"coach/queryCoachInfo.action";
+
+//咨询教练
+NSString *const consultCoachUrl = @"" kServiceReplaceLocation"coach/createCoachAdvisory.action";
+
+//教练列表
+NSString *const coachURL  = @"" kServiceReplaceLocation"coach/queryCoachList.action";
+
+//场地列表
+NSString *const bookSpaceListUrl = @"" kServiceReplaceLocation"venueOne/querySellOrder.action";
+
+//新场地列表信息（常州）
+NSString *const czBookSpaceUrl = @"" kServiceReplaceLocation"venue/querySellOrdersCZ.action";
+
+#pragma mark -
+#pragma mark - 约走相关接口
+
+//创建约走
+NSString *const creatPlanURL    = @"" kServiceReplaceLocation"datewalk/createDateWalk.action";
+
+//约走列表
+NSString *const planListURL     = @"" kServiceReplaceLocation"datewalk/queryDateWalkList.action";
+
+//约走详情
+NSString *const planDetailURL   = @"" kServiceReplaceLocation"datewalk/queryDateWalkInfo.action";
+
+//约走报名
+NSString *const registratURL    = @"" kServiceReplaceLocation"datewalk/createDateWalkMember.action";
+
+//约走搜索
+NSString *const planSearchURL   = @"" kServiceReplaceLocation"datewalk/queryDateWalkSearch.action";
+
+//约走人员列表
+NSString *const planMemListURL   = @"" kServiceReplaceLocation"datewalk/queryDWMembers.action";
+//约走结束
+NSString *const planFinishURL   = @"" kServiceReplaceLocation"datewalk/createDateWalkRecord.action";
+
+//约走中的人员列表
+NSString *const planningMemURL  = @"" kServiceReplaceLocation"datewalk/queryDateWalkIngMembers.action";
+
+//开始约走
+NSString *const startPlanURL    = @"" kServiceReplaceLocation"datewalk/createDateWalkIng.action";
+
+//退出约走
+NSString *const quitPlanURL     = @"" kServiceReplaceLocation"datewalk/updateDateWalkMember.action";
+
+//约走更新
+NSString *const updatePlanURL   = @"" kServiceReplaceLocation"datewalk/updateDateWalkIng.action";
+
+#pragma mark -
+#pragma mark - 支付相关
+
+// 提交订单  新版
+NSString *const submitoOrderURL = @"" kServiceReplaceLocation"payment/createMixOrder.action";
+
+//支付生成订单
+NSString *const createOrderInfoURL   = @"" kServiceReplaceLocation"payment/createOrderInfo.action";
+
+NSString *const createActOrderInfoURL   = @"" kServiceReplaceLocation"payment/createChargeActOrder.action";
+
+
+
+//开始支付
+NSString *const paymentOrderURL   = @"" kServiceReplaceLocation"payment/paymentOrder.action";
+
+//支付倒计时
+NSString *const payTimeOrderURL = @"" kServiceReplaceLocation"payment/getRemainTime.action";
+
+#pragma mark -
+#pragma mark - 计步相关接口
+
+//计步开始
+NSString *const startSepURL     = @"" kServiceReplaceLocation"datewalk/createDateWalkStep.action";
+
+//计步更新
+NSString *const updateSepURL    = @"" kServiceReplaceLocation"datewalk/updateDateWalkStep.action";
+
+//计步结束
+NSString *const finishSepURL    = @"" kServiceReplaceLocation"datewalk/createDateWalkStepHis.action";
+
+//计步附近的人
+NSString *const aroundSepURL    = @"" kServiceReplaceLocation"datewalk/querySportNearby.action";
+
+//保存运动轨迹
+NSString *const createSportTrackURL = @"" kServiceReplaceLocation"datewalk/createSportTrack.action";
+
+//后台自己上传运动轨迹
+NSString *const backGroundSaveGpsDataURL = @"" kServiceReplaceLocation"runSport/createRunSport.action";
+
+//上传运动中图片
+NSString *const createSportImgURL = @"" kServiceReplaceLocation"datewalk/createSportImg.action";
+
+//查询运动轨迹列表
+NSString *const querySportTrackURL = @"" kServiceReplaceLocation"datewalk/querySportTrack.action";
+
+//查询运动轨迹详细
+NSString *const querySportTrackDetailURL = @"" kServiceReplaceLocation"runSport/queryRunSportTrackDetail.action";
+
+#pragma mark -
+#pragma mark - 成就相关接口
+
+// 当天成就查询
+NSString *const todayAchURL     = @"" kServiceReplaceLocation"datewalk/queryDWTodayAchievement.action";
+
+// 历史成就查询
+NSString *const achieveHisURL   = @"" kServiceReplaceLocation"datewalk/queryDWAchievementHis.action";
+
+// 历史成就统计查询
+NSString *const achieveStaURL   = @"" kServiceReplaceLocation"datewalk/queryDWHisAchievement.action";
+
+// 好友排行榜查询
+NSString *const friendRankURL   = @"" kServiceReplaceLocation"datewalk/queryDWAchieveFriendRank.action";
+
+#pragma mark -
+#pragma mark - 健康计步相关接口
+
+NSString *const healthStepURL   = @"" kServiceReplaceLocation"datewalk/createHealthStep.action";
+
+#pragma mark -
+#pragma mark - 晒心情相关接口
+
+//发布心情秀
+NSString *const createHotShowURL   = @"" kServiceReplaceLocation"show/createHotShow.action";
+//热点标签
+NSString *const hotFocusURL   = @"" kServiceReplaceLocation"show/queryHotFocus.action";
+//匿名
+NSString *const hotAnonyInfoURL   = @"" kServiceReplaceLocation"show/queryHotAnonyInfo.action";
+//发送举报
+NSString *const sendReportUrl = @"" kServiceReplaceLocation"report/createReport.action";
+
+#pragma mark -
+#pragma mark - 约运动相关接口
+
+//获取约运动列表
+NSString *const querySportListURL = @"" kServiceReplaceLocation"sport/querySportList.action";
+//发布约运动
+NSString *const createSportURL   = @"" kServiceReplaceLocation"sport/createSport.action";
+//评论模版
+NSString *const queryAnonyCommentURL = @"" kServiceReplaceLocation"sport/queryAnonyCommentList.action";
+//结束约运动
+NSString *const updateCloseSportURL = @"" kServiceReplaceLocation"sport/updateCloseSport.action";
+//心情详情
+NSString *const queryShowInfoURL = @"" kServiceReplaceLocation"show/queryShowInfo.action";
+//约运动详情
+NSString *const querySportInfoURL = @"" kServiceReplaceLocation"sport/querySportInfo.action";
+
+#pragma mark -
+#pragma mark - 积分商城相关接口
+//获取省市区
+NSString * const getAlldistrictProUrl = @"" kServiceReplaceLocation"/pointsmall/queryDistrictPro.action";
+//确认预约
+NSString * const sureBuyUrl = @"" kServiceReplaceLocation"/pointsmall/addOneBraceletSchedual.action";
+
+#pragma mark - 
+#pragma mark - 我的钱包
+//钱包主页
+NSString * const getMyWalletInfoUrl = @"" kServiceReplaceLocation"myMoney/queryMyMoneyInfo.action";
+//消费明细
+NSString * const costDetailListUrl = @"" kServiceReplaceLocation"myMoney/queryMyMoneyTransDetailInfo.action";
+
+#pragma mark -
+#pragma mark - 手环相关接口
+
+// 绑定手环
+NSString *const ringBindURL   = @"" kServiceReplaceLocation"handloop/bindHandLoop.action";
+
+// 绑定手环uuid
+NSString *const ringUuidBindURL = @"" kServiceReplaceLocation"handloop/bindHandLoopUuid.action";
+
+// 解除绑定
+NSString *const ringUnBindURL = @"" kServiceReplaceLocation"handloop/unBindHandLoop.action";
+
+// 提交运动信息到服务器
+NSString *const ringSubmitSportInfoURL = @"" kServiceReplaceLocation"handloop/submitSportInfo.action";
+
+// 提交运动数据到服务器
+//NSString *const ringSubmitSportDataURL = @"" kServiceReplaceLocation"runSport/createRunHealthSport.action";
+NSString *const ringSubmitSportDataURL = @"" kServiceReplaceLocation"runNewSport/createRunHealthSport.action";
+
+// 提交睡眠信息到服务器
+NSString *const ringSubmitSleepInfoURL = @"" kServiceReplaceLocation"handloop/submitSleepInfo.action";
+
+// 排行榜
+NSString *const ringRankURL = @"" kServiceReplaceLocation"runSport/queryRunHealthSportRank.action";
+
+// 历史
+NSString *const ringHistoryURL = @"" kServiceReplaceLocation"datewalk/queryHealthSportHis.action";
+
+// 设置闹钟
+NSString *const ringSetAlarmURL = @"" kServiceReplaceLocation"handloop/setAlarmClock.action";
+
+// 设置目标步数
+NSString *const ringSetGoalStepsURL = @"" kServiceReplaceLocation"handloop/setGoalSteps.action";
+
+// 设置久坐
+NSString *const ringSetRemoteURL = @"" kServiceReplaceLocation"handloop/setLongSit.action";
+
+// 获取手环用户信息
+NSString *const ringUserInfoURL = @"" kServiceReplaceLocation"handloop/queryHandLoopInfo.action";
+
+// 获取服务器时间
+NSString *const ringGetServerTimeURL = @"" kServiceReplaceLocation"handloop/getServerTime.action";
+
+// 获取睡眠数据
+NSString *const ringGetSleepDataURL = @"" kServiceReplaceLocation"datewalk/queryHealthSportSleep.action";
+
+// 获取当前的天气
+NSString *const todayWeatherURL = @"" kServiceReplaceLocation"datewalk/queryWeather.action";
+
+// 聚乐部内部排名
+NSString *const detailClubURL = @"" kServiceReplaceLocation"runSport/queryRunClubInnerSportRank.action";
+
+//获取俱乐部排名
+NSString *const clubRankListUrl = @"" kServiceReplaceLocation"runSport/queryRunClubSportRank.action";
+
+//查询跑标信息列表
+NSString *const queryTeamPersonalByUserIdURL = @"" kServiceReplaceLocation"target/queryTeamPersonalByUserId.action";
+
+#pragma mark - 
+#pragma mark - 我的钱包相关接口
+NSString *const queryMyHomeUrl = @"" kServiceReplaceLocation"myWallet/queryMyHome.action";
+
+// 设置手势密码
+//NSString *const changeGustPswUrl = @"" kServiceReplaceLocation"myWallet/createOrModifyGusturePsw.action";
+
+NSString *const changeGustPswUrl = @"" kServiceReplaceLocation"myMoney/createOrModifyGusterGusturePsw.action";
+
+// 验证手势密码
+//NSString *const checkGustPswUrl = @"" kServiceReplaceLocation"myWallet/checkGusturePsw.action";
+
+NSString *const checkGustPswUrl = @"" kServiceReplaceLocation"myMoney/checkGusterGusturePsw.action";
+
+// 我的钱包信息
+NSString *const myWalletInfoUrl = @"" kServiceReplaceLocation"myWallet/queryMyWallet.action";
+
+//设置修改支付密码
+NSString *const setPayPswUrl = @"" kServiceReplaceLocation"myMoney/createOrModifyPayPsw.action";
+
+//验证支付密码
+NSString *const checkPayPswUrl = @"" kServiceReplaceLocation"myMoney/checkPayPsw.action";
+
+//获取验证码接口
+NSString *const getYzmUrl = @"" kServiceReplaceLocation"myMoney/sendMessage.action";
+
+//获取支付方式
+NSString *const getRechargeUrl = @"" kServiceReplaceLocation"myMoney/queryPayTypes.action";
+
+//钱包支付
+NSString *const walletPayUrl = @"" kServiceReplaceLocation"payment/walletPayResult.action";
+
+//充值
+NSString *const rechargeMoneyUrl = @"" kServiceReplaceLocation"myMoney/createRechargeMyMoney.action";
+
+//取现
+NSString *const takeMoneyUrl = @"" kServiceReplaceLocation"myMoney/takeMyMoney.action";
+
+/*
+ 以下是最新版轨迹相关接口
+ */
+
+//同意约跑的跑友列表
+NSString *const runFriendsUrl = @"" kServiceReplaceLocation"run/queryRunFriends.action";
+
+//对跑友的点赞进行推送
+NSString *const pushZanMsgUrl = @"" kServiceReplaceLocation"run/pushSysMgs.action";
+
+//随即获取拍照心情和口号
+NSString *const randomSloganUrl = @"" kServiceReplaceLocation"run/queryRandomSlogan.action";
+
+//开始跑步发邀约
+NSString *const runningPkUrl = @"" kServiceReplaceLocation"run/createRunningPk.action";
+
+//设置是否推荐给陌生人开关
+NSString *const switchToStrangerUrl = @"" kServiceReplaceLocation"run/switchToStranger.action";
+
+//赴约
+NSString *const answerAppointUrl = @"" kServiceReplaceLocation"run/answerAppointment.action";
+
+//更多语音列表
+NSString *const voiceListUrl = @"" kServiceReplaceLocation"run/queryVoiceList.action";
+
+//约跑纪录
+NSString *const runHistoryUrl = @"" kServiceReplaceLocation"run/queryRunHistory.action";
+
+//推荐陌生人列表
+NSString *const recommendStrangerUrl = @"" kServiceReplaceLocation"run/queryRecommendStrangers.action";
+
+//推荐好友列表
+NSString *const recommendFriendUrl = @"" kServiceReplaceLocation"run/queryMyFriendList.action";
+
+//跑步成就
+NSString *const runAchieveUrl = @"" kServiceReplaceLocation"runNewSport/queryAchieveInfo.action";
+
+//跑步分享界面
+NSString *const runShreUrl = @"" kServiceReplaceLocation"runNewSport/createRunShareInfo.action";
+
+//跑步分享的鞋款
+NSString *const runShoeTypeUrl = @"" kServiceReplaceLocation"run/queryShowesInfo.action";
+
+/*
+ 以下是动态相关接口
+ */
+//发布动态
+NSString *const publishNoteUrl = @"" kServiceReplaceLocation"note/createNoteInfo.action";
+
+//动态列表
+NSString *const noteListUrl = @"" kServiceReplaceLocation"note/queryNoteListInfo.action";
+
+// 活动帖子列表
+NSString *const actNoteListUrl = @"" kServiceReplaceLocation"note/queryActivityNoteListInfo.action";
+
+//帖子详情页
+NSString *const noteDetailUrl = @"" kServiceReplaceLocation"note/queryNoteInfoById.action";
+
+//删除帖子
+NSString *const deleteNoteUrl = @"" kServiceReplaceLocation"note/deleteNoteInfo.action";
+
+//发布动态关联的活动和社团
+NSString *const connectNoteListUrl = @"" kServiceReplaceLocation"note/queryRelationActivityOrClub.action";
+
+//评论
+NSString *const commentNoteUrl = @"" kServiceReplaceLocation"pubOperate/createComment.action";
+
+//评论列表
+NSString *const noteCommentListUrl = @"" kServiceReplaceLocation"pubOperate/queryCommentList.action";
+
+//评论回复列表
+NSString *const commentRelyUrl = @"" kServiceReplaceLocation"pubOperate/queryReplyList.action";
+
+//点赞
+NSString *const parseNoteUrl = @"" kServiceReplaceLocation"pubOperate/createPraise.action";
+
+//取消点赞
+NSString *const cancelParseNoteUrl = @"" kServiceReplaceLocation"pubOperate/cancelPraise.action";
+
+//删除评论
+NSString *const deleteCommentUrl = @"" kServiceReplaceLocation"pubOperate/deleteComment.action";
+
+//动态插入推荐
+NSString *const recommendUrl = @"" kServiceReplaceLocation"note/queryRecommendActivityInfo.action";
+
+//可能认识的人
+NSString *const mayKonwPeoUrl = @"" kServiceReplaceLocation"note/queryAllFriendInfo.action";
+
+
+#pragma mark - 我的一天
+//我的一天
+NSString * const myDayUrl = @"" kServiceReplaceLocation"myoneday/queryMySport.action";
+
+//子运动类
+NSString * const sunSportUrl = @"" kServiceReplaceLocation"myoneday/queryMySportListByBigSport.action";
+
+//增加运动记录
+NSString * const addSpRecordUrl = @"" kServiceReplaceLocation"myoneday/createMySportRecord.action";
+
+//删除运动项
+NSString * const deleteSpEventUrl = @"" kServiceReplaceLocation"myoneday/deleteMySportProject.action";
+
+//获取运动记录
+NSString * const spRecordUrl = @"" kServiceReplaceLocation"myoneday/queryMySportRecordListByDays.action";
+
+//删除运动记录
+NSString * const deleteRecordUrl = @"" kServiceReplaceLocation"myoneday/deleteMySportRecord.action";
+
+#pragma mark - 新版活动列表
+//活动列表
+NSString * const newActListUrl = @"" kServiceReplaceLocation"exercise/queryActivityList.action";
+//近期活动列表
+NSString * const relationActListUrl = @"" kServiceReplaceLocation"exercise/queryUserRelActivityList.action";
+
+//新版加入活动
+NSString * const xinJoinActUrl = @"" kServiceReplaceLocation"exercise/createActivityMember.action";
+
+//有兴趣接口
+NSString * const hasIntristingUrl = @"" kServiceReplaceLocation"pubOperate/createAttent.action";
+
+//取消兴趣
+NSString * const cancelIntristingUrl = @"" kServiceReplaceLocation"pubOperate/deleteAttent.action";
+
+//退出活动
+NSString * const exitActUrl = @"" kServiceReplaceLocation"exercise/cancelJoinActivity.action";
+
+//举报图片上传
+NSString * const reportPicUrl = @"" kServiceReplaceLocation"uniqueUpload/upload.action";
+
+//举报接口
+NSString * const reportUrl = @"" kServiceReplaceLocation"pubOperate/createReport.action";
+
+//保存邀请记录
+NSString * const saveInviteUrl = @"" kServiceReplaceLocation"pubOperate/createInvite.action";
+
+#pragma mark - 排名接口
+//所有排名信息
+NSString * const allRankInfoUrl = @"" kServiceReplaceLocation"runNewSport/queryRunSportRank.action";
+
+//社团下排名信息
+NSString * const clubInsideRankUrl = @"" kServiceReplaceLocation"runNewSport/queryClubMileageInnerRank.action";
+
+//排名点赞
+NSString * const praiseRankUrl = @"" kServiceReplaceLocation"runNewSport/createRankPraise.action";
+
+#pragma mark -新版场馆
+NSString * const allVenOrderUrl = @"" kServiceReplaceLocation"venueNew/queryPayOrderByVenueId.action";
+
+//打球首页
+NSString * const playBallHomeUrl = @"" kServiceReplaceLocation"home/queryPlayBallHome.action";
+
+#pragma mark - 新版首页
+NSString * const homeNewInfoUrl = @"" kServiceReplaceLocation"home/queryHomePage.action";
+
+//获取用户类型
+NSString * const userTypeUrl = @"" kServiceReplaceLocation"publicNo/queryUserType.action";
+
+//公众号主页信息
+NSString * const publicNoInfoUrl = @"" kServiceReplaceLocation"publicNo/queryPublicInfo.action";
+
+//公众号收藏夹
+NSString * const publicNoCollUrl = @"" kServiceReplaceLocation"publicNo/queryCollectPublicNoList.action";
+
+//收藏公众号
+NSString * const collPublicNoUrl = @"" kServiceReplaceLocation"pubOperate/createCollect.action";
+
+//取消收藏
+NSString * const cancelCollPublicNoUrl = @"" kServiceReplaceLocation"pubOperate/deleteCollect.action";
+
+//公众号隶属社团
+NSString * const publicNoClubListUrl = @"" kServiceReplaceLocation"publicNo/queryPublicNoClubList.action";
+
+//公众号赞助活动
+NSString * const publicNoActListUrl = @"" kServiceReplaceLocation"publicNo/queryPublicNoActList.action";
+
+#pragma mark - 赛事
+//赛事首页
+NSString * const matchInfoUrl = @"" kServiceReplaceLocation"competition/queryHomeCompetition.action";
+
+//队伍列表
+NSString * const teamListUrl = @"" kServiceReplaceLocation"competition/queryContingentList.action";
+
+//赛事列表
+NSString * const matchListUrl = @"" kServiceReplaceLocation"competition/queryCompetitionList.action";
+
+//待审核成员列表
+NSString * const waitApplyUrl = @"" kServiceReplaceLocation"competition/queryAuditContinMembers.action";
+
+//审核成员
+NSString * const checkApplyUrl = @"" kServiceReplaceLocation"competition/auditContingentMember.action";
+
+//我的队伍
+NSString * const myTeamUrl  = @"" kServiceReplaceLocation"competition/queryMyContingentList.action";
+
+//赛事类型
+NSString * const matchTypeUrl = @"" kServiceReplaceLocation"competition/queryCompetitionType.action";
+
+//排名列表
+NSString * const pwRankListUrl = @"" kServiceReplaceLocation"competition/queryContingentRanking.action";
+
+//创建队伍
+NSString * const creatMyTeamUrl = @"" kServiceReplaceLocation"competition/createContingent.action";
+
+//参赛历史
+NSString * const historyMatchUrl = @"" kServiceReplaceLocation"competition/queryCompetitionHistory.action";
+
+//赛事统计
+NSString * const matchCountUrl = @"" kServiceReplaceLocation"competition/queryCompetitionCounting.action";
+
+//加入队伍
+NSString * const joinTeamUrl = @"" kServiceReplaceLocation"competition/createContingentMember.action";
+
+//退出队伍
+NSString * const exitTeamUrl = @"" kServiceReplaceLocation"competition/quitContingent.action";
+
+//解散队伍
+NSString * const deleteTeamUrl = @"" kServiceReplaceLocation"competition/deleteContingent.action";
+
+//赛事提醒
+NSString * const matchRemindUrl = @"" kServiceReplaceLocation"competition/queryCompetitionRemind.action";
+
+//赛事详情
+NSString * const matchDetailUrl = @"" kServiceReplaceLocation"competition/queryCompetitionInfo.action";
+
+//赛事结果
+NSString * const matchResultUrl = @"" kServiceReplaceLocation"competition/queryCompetitionResult.action";
+
+//报名赛事
+NSString * const joinMatchUrl = @"" kServiceReplaceLocation"payment/createCompetitionOrder.action";
+
+//队伍详情
+NSString * const teamInfoUrl = @"" kServiceReplaceLocation"competition/queryContingentInfo.action";
+
+//邀请好友
+NSString * const inviteFriendUrl = @"" kServiceReplaceLocation"competition/pushSysMgsToFri.action";
+
+//赛事列表实体
+NSString * const competitionListUrl = @"" kServiceReplaceLocation"competition/queryAllCompetitionList.action";
+
+//赛事列表详情
+NSString * const competitionInfoUrl = @"" kServiceReplaceLocation"competition/queryNewCompetitionInfo.action";
+
+//我的赛事
+NSString * const mineCompetitionUrl = @"" kServiceReplaceLocation"competition/queryMyCompetition.action";
+
+#pragma mark - 课程
+
+//课程列表
+NSString * const CourseListUrl = @"" kServiceReplaceLocation"course/queryCourseList.action";
+
+//课程详情
+NSString * const CourseInfoUrl = @"" kServiceReplaceLocation"course/queryCourseInfo.action";
+
+//报名课程
+NSString * const CourseOrderUrl = @"" kServiceReplaceLocation"course/createCourseOrder.action";
+
+//我的课程
+NSString * const MyCourseListUrl = @"" kServiceReplaceLocation"course/queryMyCourseList.action";
+
+#pragma mark -
+
+/*********此处存放所有功能的网络请求地址********/
+
+
+@implementation NFPacketHandler
+
++ (NSData *)appendingPostDataWithBodyDictionary:(NSDictionary *)body
+{
+    SystemInfo *systemInfo = [SystemInfo shareSystemInfo];
+    NFUserEntity *userEntity = [NFUserEntity shareInstance];
+    
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithCapacity:2];
+    
+    NSMutableDictionary *header = [[NSMutableDictionary alloc] initWithCapacity:11];
+    
+    [header setObject:@"" forKey:@"retStatus"];
+    [header setObject:@"" forKey:@"retMessage"];
+    [header setObject:systemInfo.deviceId forKey:@"deviceId"];//设备ID
+    [header setObject:@"2" forKey:@"devType"];//设备类型
+    [header setObject:systemInfo.deviceType forKey:@"devModuleID"];//用户设备型号
+    [header setObject:systemInfo.appId forKey:@"appId"];//appId
+    [header setObject:@"" forKey:@"funcId"];//功能ID ********功能未知,暂填空
+    [header setObject:systemInfo.appVersion forKey:@"appVersion"];//版本，必填
+    [header setObject:systemInfo.OSVersion forKey:@"osVersion"];//osVersion
+    [header setObject:@"" forKey:@"interceptTime"];//interceptTime
+    
+    if (userEntity.userId)
+    {
+        [header setObject:userEntity.userId forKey:@"userId"];//用户ID     *******需登录后获取
+    }
+    else
+    {
+        [header setObject:@"" forKey:@"userId"];
+    }
+    
+    //版本类型verOrgCode 1 - 大众版 2 - 常州 3 - 校园
+    [header setObject:@"1" forKey:@"verOrgCode"];
+    
+    //用户的所选组织的code
+    if (userEntity.orgCode.length > 0)
+    {
+        [header setObject:userEntity.orgCode forKey:@"orgCode"];
+    }
+    else
+    {
+        [header setObject:@"" forKey:@"orgCode"];
+    }
+    
+    //系统code
+    if (userEntity.sysCode.length > 0)
+    {
+        [header setObject:userEntity.sysCode forKey:@"sysCode"];
+    }
+    else
+    {
+        [header setObject:@"" forKey:@"sysCode"];
+    }
+    
+    //PUSH TOKEN
+    NSString *tokenStr = [KeepAppBox checkValueForkey:@"kDeviceTokenKeyForPush"];
+    if (0 == tokenStr.length)
+    {
+        [header setObject:@"" forKey:@"accessToken"];//accessToken
+    }
+    else
+    {
+        [header setObject:[KeepAppBox checkValueForkey:@"kDeviceTokenKeyForPush"] forKey:@"accessToken"];//accessToken
+    }
+    
+    //所在城市code
+    NSString *lastCity = [KeepAppBox checkValueForkey:@"kLoginCityCode"];
+    if (6 == lastCity.length)
+    {
+        [header setObject:lastCity forKey:@"cityCode"];
+    }
+    else
+    {
+        [header setObject:@"410300" forKey:@"cityCode"];
+    }
+    
+    if(userEntity.currentCityCode.length > 0)
+    {
+        [header setObject:userEntity.currentCityCode forKey:@"currentCityCode"];
+    }
+    else
+    {
+        [header setObject:@"" forKey:@"currentCityCode"];
+    }
+    
+    [params setObject:header forKey:@"header"];
+    
+    /**
+     *  给BODY加密
+     */
+    NSError *parseError = nil;
+    NSData  *bodyJson = [NSJSONSerialization dataWithJSONObject:body options:NSJSONWritingPrettyPrinted error:&parseError];
+    bodyJson = [bodyJson AES256EncryptWithKey:[NSString stringWithFormat:@"%@%@",AES_KEY,systemInfo.deviceId] keyEncoding:NSUTF8StringEncoding];
+    
+    NSString *bodyStr = [self stringWithHexBytes: bodyJson];
+    
+    [params setObject:bodyStr forKey:@"body"];
+    
+//    [params setObject:body forKey:@"body"];
+    
+    __autoreleasing NSError *error = nil;
+    
+    NSData *paramsData = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:&error];
+    
+    NSString *paramsString = [[NSString alloc] initWithData:paramsData encoding:NSUTF8StringEncoding];
+    
+    NSString *postString = [NSString stringWithFormat:@"params=%@",paramsString];
+    
+    postString = CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                           (CFStringRef)postString,
+                                                                           NULL,
+                                                                           (CFStringRef)@"+&",
+                                                                           kCFStringEncodingUTF8));
+    NSLog(@"======请求 url=====%@",paramsString);
+    
+    NSData *postData = [postString dataUsingEncoding:NSUTF8StringEncoding];
+    
+    if (!error)
+    {
+        return postData;
+    }
+    
+    return nil;
+}
+
+//NSData转换16进制字符
++ (NSString *)stringWithHexBytes :(NSData *)data
+{
+    NSMutableString *stringBuffer = [NSMutableString
+                                     stringWithCapacity:([data length] * 2)];
+    const unsigned char *dataBuffer = (const unsigned char *)[data bytes];
+    NSInteger i;
+    
+    for (i = 0; i < [data length]; ++i) {
+        [stringBuffer appendFormat:@"%02lX", (unsigned long)dataBuffer[i]];
+    }
+    return stringBuffer;
+}
+
+//16进制字符转换为NSData
++ (NSData *) hexStringToNSData :(NSString *)keyStr
+{
+    NSMutableData* data = [NSMutableData data];
+    NSInteger idx;
+    for (idx = 0; idx+2 <= keyStr.length; idx += 2) {
+        NSRange range = NSMakeRange(idx, 2);
+        NSString* hexStr = [keyStr substringWithRange:range];
+        NSScanner* scanner = [NSScanner scannerWithString:hexStr];
+        uint intValue;
+        [scanner scanHexInt:&intValue];
+        [data appendBytes:&intValue length:1];
+    }
+    return data;
+}
+
++ (NSData *)postFormRequestParams: (NSDictionary *)postParems // IN
+                        imageData: (NSData *)data  // IN
+                        imageName: (NSString *)picFileName // IN
+{
+    //分界线 --AaB03x
+    NSString *MPboundary=[[NSString alloc]initWithFormat:@"--%@",TWITTERFON_FORM_BOUNDARY];
+    //结束符 AaB03x--
+    NSString *endMPboundary=[[NSString alloc]initWithFormat:@"%@--",MPboundary];
+    
+    //http body的字符串
+    NSMutableString *body=[[NSMutableString alloc]init];
+    //参数的集合的所有key的集合
+    NSArray *keys= [postParems allKeys];
+    
+    //遍历keys
+    for(NSInteger i=0;i<[keys count];i++)
+    {
+        //得到当前key
+        NSString *key=[keys objectAtIndex:i];
+        
+        //添加分界线，换行
+        [body appendFormat:@"%@\r\n",MPboundary];
+        //添加字段名称，换2行
+        [body appendFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",key];
+        //添加字段的值
+        [body appendFormat:@"%@\r\n",[postParems objectForKey:key]];
+        
+        NSLog(@"添加字段的值==%@",[postParems objectForKey:key]);
+    }
+    
+    if(data){
+        ////添加分界线，换行
+        [body appendFormat:@"%@\r\n",MPboundary];
+        
+        //声明pic字段，文件名为boris.png
+        [body appendFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n",FORM_FLE_INPUT,picFileName];
+        //声明上传文件的格式
+        [body appendFormat:@"Content-Type: image/png\r\n\r\n"];
+    }
+    
+    //声明结束符：--AaB03x--
+    NSString *end=[[NSString alloc]initWithFormat:@"\r\n%@",endMPboundary];
+    //声明myRequestData，用来放入http body
+    NSMutableData *postData=[NSMutableData data];
+    
+    //将body字符串转化为UTF8格式的二进制
+    [postData appendData:[body dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    if(data){
+        //将image的data加入
+        [postData appendData:data];
+    }
+    //加入结束符--AaB03x--
+    [postData appendData:[end dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    return postData;
+}
+
+@end

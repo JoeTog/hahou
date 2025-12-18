@@ -1,0 +1,52 @@
+//
+//  MessageFootView.m
+//  nationalFitness
+//
+//  Created by 童杰 on 2017/2/28.
+//  Copyright © 2017年 chenglong. All rights reserved.
+//
+
+#import "MessageFootView.h"
+#import "AppealTableViewController.h"
+
+
+@implementation MessageFootView{
+    
+    __weak IBOutlet UILabel *messageLabel;
+    
+    __weak IBOutlet UIButton *ShensuBtn;
+    
+    
+    
+}
+
+
+-(void)setFrame:(CGRect)frame{
+    [super setFrame:frame];
+    ViewRadius(ShensuBtn, 5);
+    ViewBorderRadius(messageLabel, 3, 1, UIColorFromRGB(0xF9AC91));
+}
+
+
+- (IBAction)shensuBtnClick:(id)sender {
+    //AppealTableViewController
+    UIStoryboard *st = [UIStoryboard storyboardWithName:@"AchieveQueryStoryboard" bundle:nil];
+    AppealTableViewController *vc = [st instantiateViewControllerWithIdentifier:@"AppealTableViewController"];
+    [[KeepAppBox viewController:self].navigationController pushViewController:vc animated:YES];
+    
+}
+
+- (UIViewController *)viewController
+{
+    for (UIView *next = [self superview]; next; next = next.superview)
+    {
+        UIResponder *nextResponder = [next nextResponder];
+        if ([nextResponder isKindOfClass:[UIViewController class]])
+        {
+            return (UIViewController *)nextResponder;
+        }
+    }
+    return nil;
+}
+
+@end

@@ -1,0 +1,51 @@
+//
+//  QRCodeManager.m
+//  nationalFitness
+//
+//  Created by 程long on 14-12-25.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "QRCodeManager.h"
+
+@implementation QRCodeManager
+
+//扫描二维码
+- (void)querySignOrdersManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [QRCodeRequest gotRequest:infoDic andURL:querySignOrdersURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [QRCodeParser querySignOrdersParser:data];
+        return bizData;
+    };
+}
+
+//确认签到信息
+- (void)signOrdersManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [QRCodeRequest gotRequest:infoDic andURL:signOrdersURL];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [QRCodeParser signOrdersParser:data];
+        return bizData;
+    };
+}
+
+@end

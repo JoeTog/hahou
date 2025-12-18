@@ -1,0 +1,106 @@
+//
+//  RegProtocolViewController.m
+//  nationalFitness
+//
+//  Created by 程long on 14-10-23.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "RegProtocolViewController.h"
+
+@interface RegProtocolViewController ()<UIWebViewDelegate>
+{
+    __weak IBOutlet UIButton *closeBtn;
+    __weak IBOutlet UIWebView *webView_;
+}
+
+@end
+
+@implementation RegProtocolViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self initUi];
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)close:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)initUi
+{
+    webView_.delegate = self;
+    
+    if (_isFromReg) {
+        closeBtn.hidden = NO;
+    }
+    else
+    {
+        closeBtn.hidden = YES;
+    }
+    
+    if (_titleStr.length > 0)
+    {
+        self.title = _titleStr;
+    }
+    else
+    {
+        self.title = @"条款与协议";
+    }
+    //协议和自定义内容的切换
+    if (_infoStr.length > 0)
+    {
+        NSString *str1 = [_infoStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSURL *url = [NSURL URLWithString:str1];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        [webView_ loadRequest:request];
+    }
+    else
+    {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"注册条款" ofType:@"doc"];
+        NSURL *url = [NSURL fileURLWithPath:path];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [webView_ loadRequest:request];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [webView_ stopLoading];
+}
+
+- (void) webViewDidStartLoad:(UIWebView *)webView
+{
+    NSLog(@"webViewDidStartLoad");
+    [SVProgressHUD show];
+}
+
+- (void) webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSLog(@"webViewDidFinishLoad");
+    [SVProgressHUD dismiss];
+}
+
+- (void) webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    NSLog(@"didFailLoadWithError:%@", error);
+    [SVProgressHUD dismiss];
+}
+
+- (void)dealloc
+{
+    webView_.delegate = nil;
+    [webView_ removeFromSuperview];
+    webView_ = nil;
+}
+
+@end

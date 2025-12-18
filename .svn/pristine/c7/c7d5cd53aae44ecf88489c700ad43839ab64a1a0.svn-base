@@ -1,0 +1,43 @@
+//
+//  NFMineParser.m
+//  nationalFitness
+//
+//  Created by 程long on 14-12-17.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFMineParser.h"
+//#import "NFActivityEntity.h"
+
+@implementation NFMineParser
+
+//查看历史记录
++ (id)GetRequestParser:(NSData *)data{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+//    if (bodyDic)
+//    {
+//        NSArray *entityListArr = [bodyDic objectForKey:@"courseList"];
+//        NSMutableArray *retMuarr = [[NSMutableArray alloc] initWithCapacity:10];
+//        
+//        for (NSDictionary *entityDic in entityListArr)
+//        {
+//            
+//            
+//        }
+//        return retMuarr;
+//    }
+    
+    if (bodyDic) {
+        
+        
+        return bodyDic;
+    }
+    
+    
+    
+    return nil;
+}
+
+
+
+@end

@@ -1,0 +1,82 @@
+//
+//  MessageDetailViewController.m
+//  nationalFitness
+//
+//  Created by 童杰 on 2017/2/27.
+//  Copyright © 2017年 chenglong. All rights reserved.
+//
+
+#import "MessageDetailViewController.h"
+
+@interface MessageDetailViewController ()
+
+@end
+
+@implementation MessageDetailViewController{
+    //确定按钮
+    __weak IBOutlet UIButton *commitBtn;
+    //textView
+    __weak IBOutlet UITextView *TextV_;
+    //下载按钮
+    __weak IBOutlet UIButton *downLoadBtn;
+    
+    
+    
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    
+    
+    [self initUI];
+    
+    
+    
+}
+
+-(void)initUI{
+    NSString *str = @"好的营销是创业公司发展非常关键的一步。而作为公司的EDM营销必备的“企业邮箱营销，也必须跟上时代的发展，作出有料，有趣，有点急甚至有病毒传播性的营销条件。好的营销是创业公司发展非常关键的一步。而作为公司的EDM营销必备的“企业邮箱营销，也必须跟上时代的发展，作出有料，有趣，有点急甚至有病毒传播性的营销条件。";
+    TextV_.text = [NSString stringWithFormat:@"先生你好:/n%@",str];
+    
+    
+}
+
+
+- (IBAction)downLoadClick:(id)sender {
+    
+    
+    
+}
+
+- (IBAction)commitClick:(id)sender {
+    
+    
+    
+    
+}
+
+
+
+
+
+
+
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

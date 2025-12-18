@@ -1,0 +1,947 @@
+//
+//  LoginHomeViewController.m
+//  newTestUe
+//
+//  Created by 林向阳 on 15/12/2.
+//  Copyright © 2015年 程龙. All rights reserved.
+//
+
+#import "LoginHomeViewController.h"
+//#import "NewHomeViewController.h"
+#import "NFTabBarViewController.h"
+//#import "UserRegistViewController.h"
+//#import <ShareSDK/ShareSDK.h>
+//#import <ShareSDK/ShareSDKEventHandlerDef.h>
+//#import "NFLoginManger.h"
+//#import "RingUserManager.h"
+//#import "RingManager.h"
+//#import "NFbaseNavViewController.h"
+//#import "AppDelegate.h"
+//#import "NFShowImageView.h"
+//#import "WXApi.h"
+//#import <TencentOpenAPI/QQApi.h>
+//#import "RegistSuccessViewController.h"
+//
+//#import "EMClient.h"
+//#import "ChatDemoHelper.h"
+//#import "UserProfileManager.h"
+#import "AppDelegate.h"
+#import "UserRegistViewController.h"
+
+
+#define kDefaultLoginClicked    1
+#define kQQLoginClicked         3
+#define kXLLoginClicked         4
+#define kRRLoginClicked         5
+#define kWXLoginClicked         6
+#define kMyNjLoginClicked       8
+
+@interface LoginHomeViewController ()<UIAlertViewDelegate,UITextFieldDelegate>
+{
+    //用户登录类型0; 普通用户 1:志愿者  2.智能门户用户  3:普通用户（代表商团） 4:QQ 5:人人 6：微信 7：新浪微博
+    NSString *userType_;
+    UILocalNotification *notification_;
+    BOOL isPswLogin_;
+    //解决聊天服务器登录delegate多次进入导致的界面混乱
+    BOOL canGoNext_;
+    AppDelegate *appDelegate;
+    //秒
+    int secTime_;
+    BOOL notFirstCome_;
+    
+    //遮罩
+//    NFShowImageView *shadowImage_;
+    NSTimer * timer_;
+    __weak IBOutlet UIImageView *backView_;
+    __weak IBOutlet UILabel *thirdLab;
+    __weak IBOutlet UIButton *XLBtn;
+    __weak IBOutlet UIButton *WXBtn;
+    __weak IBOutlet UIButton *QQBtn;
+    __weak IBOutlet UIImageView *secImage;
+    __weak IBOutlet UIImageView *firstImage;
+    __weak IBOutlet UITextField *firstTextField;
+    __weak IBOutlet UITextField *nextTextField;
+    __weak IBOutlet UIButton *forgetPswBtn;
+    __weak IBOutlet UIButton *logInBtn;
+    __weak IBOutlet UIButton *changeLoginTypeBtn;
+}
+
+@end
+
+@implementation LoginHomeViewController
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    ViewRadius(logInBtn, 5);
+    [logInBtn setBackgroundColor:NFNavBackColor];
+    [backView_ setImage:[UIImage imageNamed:@"DL_bj"]];
+    isPswLogin_ = YES;
+//    notification_ = [[UILocalNotification alloc]init];
+//    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    [firstTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+//    [nextTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    firstTextField.keyboardType = UIKeyboardTypeDefault;
+    nextTextField.keyboardType = UIKeyboardTypeDefault;
+    firstTextField.delegate = self;
+    [changeLoginTypeBtn addTarget:self action:@selector(changeLogin:) forControlEvents:UIControlEventTouchUpInside];
+    [logInBtn addTarget:self action:@selector(normalLogin:) forControlEvents:UIControlEventTouchUpInside];
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(gotoLoginRootview:)
+//                                                 name:kGoto_Login_Rootview
+//                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self
+                                            selector:@selector(changeBtnTitle:)
+                                                name:UITextFieldTextDidChangeNotification
+                                              object:nextTextField];
+    //注册登录状态监听
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(loginStateChange:)
+//                                                 name:KNOTIFICATION_LOGINCHANGE
+//                                               object:nil];
+    
+//    shadowImage_ = [[NFShowImageView alloc] initWithFrame:self.view.bounds];
+//    shadowImage_.backgroundColor = [UIColor clearColor];
+//    [self.view addSubview:shadowImage_];
+    
+//    [QQBtn addTarget:self action:@selector(loginBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [WXBtn addTarget:self action:@selector(loginBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [XLBtn addTarget:self action:@selector(loginBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+//    [self userAddress];
+    // Do any additional setup after loading the view.
+}
+
+//- (void)userAddress
+//{
+//    //初始化默认地理位置
+//    if ([[KeepAppBox checkValueForkey:kLoginCityName] length] == 0)
+//    {
+//        [KeepAppBox keepVale:@"洛阳市" forKey:kLoginCityName];
+//    }
+//    if ([[KeepAppBox checkValueForkey:kLoginCityCode] length] == 0)
+//    {
+//        [KeepAppBox keepVale:@"410300" forKey:kLoginCityCode];
+//    }
+//    
+//    [NFUserEntity shareInstance].cityName = [KeepAppBox checkValueForkey:kLoginCityName];
+//    [NFUserEntity shareInstance].cityCode = [KeepAppBox checkValueForkey:kLoginCityCode];
+//}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+//    firstTextField.text = [KeepAppBox checkValueForkey:kLoginUserName];
+//    nextTextField.text = @"";
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+//    
+//    //登录之后直接进入
+//    if (([KeepAppBox checkValueForkey:@"userId"] && [[KeepAppBox checkValueForkey:@"userId"] length] > 0) &&
+//        ([KeepAppBox checkValueForkey:@"nickname"] && [[KeepAppBox checkValueForkey:@"nickname"] length] > 0) &&
+//        !notFirstCome_)
+//    {
+//        shadowImage_.hidden = NO;
+//        shadowImage_.image = _shadowImage;
+//    }
+//    [self showThirdBtn];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+//    //登录之后直接进入
+//    if (([KeepAppBox checkValueForkey:@"userId"] && [[KeepAppBox checkValueForkey:@"userId"] length] > 0) &&
+//        ([KeepAppBox checkValueForkey:@"nickname"] && [[KeepAppBox checkValueForkey:@"nickname"] length] > 0) &&
+//        !notFirstCome_)
+//    {
+//        notFirstCome_ = YES;
+//        //直接登陆首页界面
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kGoto_Login_Rootview object:kGoto_Login_Rootview_SportHome];
+//    }
+//    else
+//    {
+//        if (shadowImage_)
+//        {
+//            _shadowImage = nil;
+//            [shadowImage_ removeFromSuperview];
+//            shadowImage_ = nil;
+//        }
+//    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+//    if (shadowImage_)
+//    {
+//        _shadowImage = nil;
+//        [shadowImage_ removeFromSuperview];
+//        shadowImage_ = nil;
+//    }
+}
+
+
+//是否隐藏第三方
+//- (void)showThirdBtn
+//{
+//    if ([WXApi isWXAppInstalled])
+//    {
+//        //判断是否有微信
+//        WXBtn.enabled = NO;
+//        
+//    }
+//    else
+//    {
+//        WXBtn.enabled = YES;
+//    }
+//    
+//    if ([QQApi isQQInstalled])
+//    {
+//        //判断是否有qq
+//        QQBtn.enabled = NO;
+//    }
+//    else
+//    {
+//        QQBtn.enabled = YES;
+//    }
+//}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
+- (void)changeBtnTitle:(NSNotification *)sender
+{
+    UITextField * textfIeld = [sender object];
+    
+    if (textfIeld == nextTextField && !isPswLogin_) {
+        if (nextTextField.text.length > 0) {
+            [logInBtn setTitle:@"登录" forState:UIControlStateNormal];
+        }
+        else
+        {
+            if (secTime_ > 0) {
+                [logInBtn setTitle:[NSString stringWithFormat:@"%dS",secTime_] forState:UIControlStateNormal];
+            }
+            else
+            {
+                [logInBtn setTitle:@"重新获取" forState:UIControlStateNormal];
+            }
+            
+        }
+    }
+    
+}
+
+//切换登录方式
+- (void)changeLogin:(id)sender
+{
+    [self.view endEditing:YES];
+//    firstTextField.text = @"";
+    nextTextField.text = @"";
+    isPswLogin_ = !isPswLogin_;
+    if (isPswLogin_) {
+        [timer_ invalidate];
+        timer_ = nil;
+        nextTextField.keyboardType = UIKeyboardTypeDefault;
+        secTime_ = 59;
+        nextTextField.secureTextEntry = YES;
+        firstTextField.placeholder = @"请输入手机号";
+        nextTextField.placeholder = @"请输入密码";
+        [changeLoginTypeBtn setTitle:@"切换验证码登录" forState:UIControlStateNormal];
+        firstImage.image = [UIImage imageNamed:@"lu_03"];
+        secImage.image = [UIImage imageNamed:@"lu_05"];
+        forgetPswBtn.hidden = NO;
+        [logInBtn setTitle:@"登录" forState:UIControlStateNormal];
+    }
+    else
+    {
+        nextTextField.secureTextEntry = NO;
+        nextTextField.keyboardType = UIKeyboardTypeNumberPad;
+        firstTextField.placeholder = @"请输入手机号";
+        nextTextField.placeholder = @"请输入验证码";
+        [changeLoginTypeBtn setTitle:@"切换密码登录" forState:UIControlStateNormal];
+        firstImage.image = [UIImage imageNamed:@"lu_03"];
+        secImage.image = [UIImage imageNamed:@"lu_05"];
+        forgetPswBtn.hidden = YES;
+        [logInBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
+    }
+}
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    //    我是这么写的
+    if (textField.text.length+string.length-range.length>11) {
+        return NO;
+    }
+    return YES;
+}
+
+//普通登录  密码 验证码
+- (void)normalLogin:(UIButton *)btn
+{
+    [self.view endEditing:YES];
+    
+    if (firstTextField.text.length == 0) {
+        [SVProgressHUD showInfoWithStatus:@"请输入手机号"];
+        return;
+    }
+//    if (![KeepAppBox isValidatePhone:firstTextField.text]) {
+//        [SVProgressHUD showInfoWithStatus:@"请输入正确手机号"];
+//        return;
+//    }
+    
+    
+//    [NFUserEntity shareInstance].orepationType = OT_LoginUseName;
+    if (!isPswLogin_) {
+        userType_ = @"0";
+//        [NFUserEntity shareInstance].mobile = firstTextField.text;
+        if ([btn.titleLabel.text isEqualToString:@"登录"]) {
+//            [self checkVerification];
+            //验证码登录
+            
+            
+        }
+        else
+        {
+            if (!timer_) {
+                //发送验证码，并且计时器开始计时
+                [self getCode];
+            }
+        }
+    }
+    else
+    {
+        if (nextTextField.text.length == 0) {
+            [SVProgressHUD showInfoWithStatus:@"请输入密码"];
+            return;
+        }
+        
+        userType_ = @"8";
+//        [self loginWithUserName];
+    }
+}
+
+//定时器
+- (void)timeBegin
+{
+    secTime_ --;
+    if (secTime_ == 0)
+    {
+        [logInBtn setTitle:@"重新获取" forState:UIControlStateNormal];
+        [timer_ invalidate];
+        timer_ = nil;
+        
+    }
+    else if(nextTextField.text.length == 0)
+    {
+        [logInBtn setTitle:[NSString stringWithFormat:@"%dS",secTime_] forState:UIControlStateNormal];
+    }
+}
+
+
+//去首页
+- (IBAction)goSportPage:(id)sender {
+    UIStoryboard * sb = [UIStoryboard storyboardWithName:@"NewHome" bundle:nil];
+    NFTabBarViewController * vc = [sb instantiateViewControllerWithIdentifier:@"MyTabBarViewController"];
+    vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+//邀请码
+- (IBAction)goRegist:(id)sender {
+    
+    [self performSegueWithIdentifier:@"goRegistPage" sender:nil];
+}
+
+//忘记密码
+- (IBAction)forgetPsw:(id)sender {
+    UserRegistViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"UserRegistViewController"];
+    vc.isForgetPsw = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+}
+
+#pragma mark - 获取验证码
+- (void)getCode
+{
+    [self.view endEditing:YES];
+    [self verificationManager];
+}
+
+#pragma mark - 接口请求
+/**
+ *  获取验证码请求
+ */
+- (void)verificationManager
+{
+//    NSMutableDictionary *userId = [[NSMutableDictionary alloc] initWithCapacity:2];
+//    [userId setObject:[NFUserEntity shareInstance].mobile forKey:@"mobileNumber"];
+//    [userId setObject:@"3" forKey:@"flag"];;
+    secTime_ = 59;
+    timer_ =  [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timeBegin) userInfo:self repeats:YES];
+    [logInBtn setTitle:[NSString stringWithFormat:@"%dS",secTime_] forState:UIControlStateNormal];
+//    [NFLoginManger execute:@selector(gotVerificationManager) target:self callback:@selector(gotVerificationCallBack:) args:userId,nil];
+}
+
+- (void)gotVerificationCallBack :(id)data
+{
+
+}
+
+/**
+ *  验证验证码和回调
+ */
+//- (void)checkVerification
+//{
+//    NSMutableDictionary *userId = [[NSMutableDictionary alloc] initWithCapacity:2];
+//    [userId setObject:firstTextField.text forKey:@"mobile"];
+//    [userId setObject:nextTextField.text forKey:@"vailCode"];
+//    
+//    [SVProgressHUD show];
+//    
+//    [NFLoginManger execute:@selector(checkVerificationManager) target:self callback:@selector(checkVerificationCallBack:) args:userId,nil];
+//}
+
+//- (void)checkVerificationCallBack :(id)data
+//{
+//    if (data)
+//    {
+//        if ([data objectForKey:kWrongDlog])
+//        {
+//            [SVProgressHUD showErrorWithStatus:[data objectForKey:kWrongDlog]];
+//        }
+//        else
+//        {
+//            [self loginAsk];
+//        }
+//    }
+//    else
+//    {
+//        [SVProgressHUD showErrorWithStatus:kWrongMessage];
+//    }
+//}
+
+#pragma mark -  各种类型的登陆
+//- (void)loginBtnClick:(UIButton *)sender
+//{
+//    [self.view endEditing:YES];
+//    
+//    UIButton *clickBtn = (UIButton *)sender;
+//    switch (clickBtn.tag)
+//    {
+//        case kQQLoginClicked:
+//        {
+//            [NFUserEntity shareInstance].orepationType = OT_LoginUseQQ;
+//            userType_ = @"4";
+//            [self loginWithShareType:ShareTypeQQSpace];
+//        }
+//            break;
+//        case kXLLoginClicked:
+//        {
+//            [NFUserEntity shareInstance].orepationType = OT_LoginUseWX;
+//            userType_ = @"7";
+//            [self loginWithShareType:ShareTypeSinaWeibo];
+//        }
+//            break;
+//        case kWXLoginClicked:
+//        {
+//            [NFUserEntity shareInstance].orepationType = OT_LoginUseWX;
+//            userType_ = @"6";
+//            [self loginWithShareType:ShareTypeWeixiTimeline];
+//        }
+//            break;
+//        default:
+//            break;
+//    }
+//}
+
+
+#pragma mark - 默认和第三方登录请求和回调
+
+//使用用户名和密码登录
+//- (void)loginWithUserName
+//{
+//    NSMutableDictionary *sendDic = [[NSMutableDictionary alloc] initWithCapacity:3];
+//    [sendDic setObject:firstTextField.text forKey:@"loginID"];
+//    [sendDic setObject:nextTextField.text forKey:@"password"];
+//    [sendDic setObject:userType_ forKey:@"userType"];
+//    
+//    [SVProgressHUD show];
+    
+//    [NFLoginManger execute:@selector(loginRequestManager) target:self callback:@selector(loginAskCallBack:) args:sendDic,nil];
+//}
+
+#pragma mark - 登陆
+- (void)loginAsk
+{
+    NSMutableDictionary *sendDic = [[NSMutableDictionary alloc] initWithCapacity:3];
+    [sendDic setObject:firstTextField.text forKey:@"loginID"];
+    if (isPswLogin_) {
+        [sendDic setObject:nextTextField.text forKey:@"password"];
+    }
+    else
+    {
+//        [sendDic setObject:kDefinePassword forKey:@"password"];
+    }
+    
+    [sendDic setObject:userType_ forKey:@"userType"];
+    
+//    [NFLoginManger execute:@selector(loginRequestManager) target:self callback:@selector(loginAskCallBack:) args:sendDic,nil];
+    
+    
+}
+
+/**
+ *  第三方登陆
+ *
+ *  @param uid          第三方唯一号(必填)
+ *  @param nickname     昵称
+ *  @param profileImage 头像路径
+ *  @param gender       0 Male； 1 Female； 2 Unknown
+ */
+//- (void)loginThird :(NSString *)uid
+//           nickname:(NSString *)nickname
+//       profileImage:(NSString *)profileImage
+//             gender:(NSInteger)gender
+//             mobile:(NSString *)mobile
+//{
+//    NSMutableDictionary *sendDic = [[NSMutableDictionary alloc] initWithCapacity:3];
+//    [sendDic setObject:uid forKey:@"thirdPartyUUID"];
+//    [sendDic setObject:userType_ forKey:@"thirdPartyType"];
+//    [sendDic setObject:nickname forKey:@"nickName"];
+//    [sendDic setObject:[NSString stringWithFormat:@"%@",@(gender + 1)] forKey:@"sex"];
+//    [sendDic setObject:@"" forKey:@"birthDay"];
+//    [sendDic setObject:profileImage forKey:@"userHeadPath"];
+//    [sendDic setObject:@"" forKey:@"userHeight"];
+//    [sendDic setObject:@"" forKey:@"userWeight"];
+//    [sendDic setObject:@"" forKey:@"realName"];
+//    [sendDic setObject:@"" forKey:@"idNumber"];
+//    [sendDic setObject:@"" forKey:@"citizenCard"];
+//    [sendDic setObject:mobile forKey:@"mobile"];
+//    [sendDic setObject:@"" forKey:@"email"];
+//    [sendDic setObject:@"" forKey:@"qqNum"];
+//    [sendDic setObject:@"" forKey:@"weixinNum"];
+//    [sendDic setObject:@"" forKey:@"renrenNum"];
+//    [sendDic setObject:@"" forKey:@"weiboNum"];
+//    if(0 < [NFUserEntity shareInstance].healthStatus.length)
+//    {
+//        [sendDic setObject:[NFUserEntity shareInstance].healthStatus forKey:@"healthStatus"];
+//    }
+//    else
+//    {
+//        [sendDic setObject:@"3" forKey:@"healthStatus"];
+//    }
+//    [SVProgressHUD show];
+//    
+//    [NFLoginManger execute:@selector(loginThirdManager) target:self callback:@selector(loginThirdCallBack:) args:sendDic,nil];
+//}
+
+
+//- (void)loginAskCallBack :(id)data
+//{
+//    if (data)
+//    {
+//        if ([data objectForKey:kWrongDlog])
+//        {
+//            [SVProgressHUD showErrorWithStatus:[data objectForKey:kWrongDlog]];
+//        }
+//        else
+//        {
+//            [SVProgressHUD dismiss];
+//            [KeepAppBox keepVale:[NFUserEntity shareInstance].mobile forKey:kLoginUserName];
+//            [KeepAppBox keepVale:kDefinePassword forKey:kLoginPassWord];
+//            [NFUserEntity shareInstance].inviteCode = nil;
+//            [self userInfoWithDic:[data objectForKey:@"loginEntity"]];
+//        }
+//    }
+//    else
+//    {
+//        [SVProgressHUD showErrorWithStatus:kWrongMessage];
+//    }
+    
+    
+    
+//}
+
+
+//- (void)loginThirdCallBack :(id)data
+//{
+//    
+//    if (data)
+//    {
+//        if ([data objectForKey:kWrongDlog])
+//        {
+//            [SVProgressHUD showErrorWithStatus:[data objectForKey:kWrongDlog]];
+//        }
+//        else
+//        {
+//            [SVProgressHUD dismiss];
+//            [self userInfoWithDic:[data objectForKey:@"loginEntity"]];
+//        }
+//    }
+//    else
+//    {
+//        [SVProgressHUD dismiss];
+//    }
+//}
+
+#pragma mark - 保存用户登录返回的数据
+//- (void)userInfoWithDic :(id)data
+//{
+//    [KeepAppBox keepVale:[[data objectForKey:@"nickname"] description] forKey:@"nickname"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"mobile"] description] forKey:@"mobile"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"hdnumber"] description] forKey:@"hdnumber"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"userId"] description] forKey:@"userId"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"sex"] description] forKey:@"sex"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"userType"] description] forKey:@"userType"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"smallpicPath"] description] forKey:@"smallpicPath"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"bigpicPath"] description] forKey:@"bigpicPath"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"age"] description] forKey:@"age"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"birthday"] description] forKey:@"birthday"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"height"] description] forKey:@"height"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"weight"] description] forKey:@"weight"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"signature"] description] forKey:@"signature"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"qrbigpicPath"] description] forKey:@"qrbigpicPath"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"qrsmallpicPath"] description] forKey:@"qrsmallpicPath"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"hobby"] description] forKey:@"hobby"];
+//    [KeepAppBox keepVale:userType_ forKey:@"userType"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"healthStatus"] description] forKey:@"healthStatus"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"sexUalityName"] description] forKey:@"sexUalityName"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"conStellName"] description] forKey:@"conStellName"];
+//    [KeepAppBox keepVale:[[data objectForKey:@"roleType"] description] forKey:@"roleType"];
+//    //没昵称不能登录，跳转到信息完善界面
+//    [NFUserEntity shareInstance].nickName = [KeepAppBox checkValueForkey:@"nickname"];
+//    [NFUserEntity shareInstance].userId = [KeepAppBox checkValueForkey:@"userId"];
+//    
+//    [RingUserManager shareManager].userEntity = data;
+//    
+//    if ([NFUserEntity shareInstance].nickName.length == 0)
+//    {
+//        RegistSuccessViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RegistSuccessViewController"];
+//        [self.navigationController pushViewController:vc animated:YES];
+//    }
+//    else
+//    {
+//        //首页界面
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kGoto_Login_Rootview object:kGoto_Login_Rootview_SportHome];
+//    }
+//    
+//    // 清除用户排行缓存
+//    NSString *kUserRank = [NSString stringWithFormat:@"%@_kYSFRanking",[NFUserEntity shareInstance].userId];
+//    [KeepAppBox deleteValueForkey:kUserRank];
+//}
+
+/**
+ *  登录APP首页
+ */
+- (void)goAppHomeViewCtrol
+{
+//    [NFUserEntity shareInstance].nickName = [KeepAppBox checkValueForkey:@"nickname"];
+//    [NFUserEntity shareInstance].mobile = [KeepAppBox checkValueForkey:@"mobile"];
+//    [NFUserEntity shareInstance].hdnumber = [KeepAppBox checkValueForkey:@"hdnumber"];
+//    [NFUserEntity shareInstance].userId = [KeepAppBox checkValueForkey:@"userId"];
+//    [NFUserEntity shareInstance].sex = (NFSex)[[KeepAppBox checkValueForkey:@"sex"] integerValue];
+//    [NFUserEntity shareInstance].userType = (NFUserPermission)[[KeepAppBox checkValueForkey:@"userType"] integerValue];
+//    [NFUserEntity shareInstance].smallpicpath = [KeepAppBox checkValueForkey:@"smallpicPath"];
+//    [NFUserEntity shareInstance].bigpicpath = [KeepAppBox checkValueForkey:@"bigpicPath"];
+//    [NFUserEntity shareInstance].userAge = [KeepAppBox checkValueForkey:@"age"];
+//    [NFUserEntity shareInstance].birthDay = [KeepAppBox checkValueForkey:@"birthday"];
+//    [NFUserEntity shareInstance].userHeight = [KeepAppBox checkValueForkey:@"height"];
+//    [NFUserEntity shareInstance].userWeight = [KeepAppBox checkValueForkey:@"weight"];
+//    [NFUserEntity shareInstance].signaTure = [KeepAppBox checkValueForkey:@"signature"];
+//    [NFUserEntity shareInstance].matrixPicUrl = [KeepAppBox checkValueForkey:@"qrbigpicPath"];
+//    [NFUserEntity shareInstance].smallMatrixPicUrl = [KeepAppBox checkValueForkey:@"qrsmallpicPath"];
+//    [NFUserEntity shareInstance].hobby = [KeepAppBox checkValueForkey:@"hobby"];
+//    userType_ = [KeepAppBox checkValueForkey:@"userType"];
+//    [NFUserEntity shareInstance].healthStatus = [KeepAppBox checkValueForkey:@"healthStatus"];
+//    [NFUserEntity shareInstance].sexUality = [KeepAppBox checkValueForkey:@"sexUalityName"];
+//    [NFUserEntity shareInstance].conStell = [KeepAppBox checkValueForkey:@"conStellName"];
+//    [NFUserEntity shareInstance].orgCode = [KeepAppBox checkValueForkey:[NSString stringWithFormat:@"%@orgCode",[NFUserEntity shareInstance].userId]];
+//    [NFUserEntity shareInstance].orgName = [KeepAppBox checkValueForkey:[NSString stringWithFormat:@"%@orgName",[NFUserEntity shareInstance].userId]];
+//    [NFUserEntity shareInstance].sysCode = [KeepAppBox checkValueForkey:[NSString stringWithFormat:@"%@sysCode",[NFUserEntity shareInstance].userId]];
+//    [NFUserEntity shareInstance].sysName = [KeepAppBox checkValueForkey:[NSString stringWithFormat:@"%@sysName",[NFUserEntity shareInstance].userId]];
+//    [NFUserEntity shareInstance].roleType = [KeepAppBox checkValueForkey:@"roleType"];
+////    [NFUserEntity shareInstance].roleType = @"1";
+//    //存储聊天昵称
+//    [KeepAppBox keepVale:[NFUserEntity shareInstance].nickName forKey:EMClient_User_NickNAME([NFUserEntity shareInstance].userId)];
+//   
+    UIStoryboard *SportBoard = [UIStoryboard storyboardWithName:@"NewHome" bundle:nil];
+    UIViewController *ViewCtrl = [SportBoard instantiateInitialViewController];
+    ViewCtrl.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//    [self presentViewController:ViewCtrl animated:YES completion:^{
+//        // 请求手环信息
+//        NSMutableDictionary *args = [@{} mutableCopy];
+//        [args setObject:[NFUserEntity shareInstance].userId forKey:@"user_id"];
+//        [RingManager execute:@selector(userInfoManager) target:self callback:@selector(achUserInfoCallBack:) args:args,nil];
+//    }];
+//    
+//    //登陆聊天系统
+//    BOOL isAutoLogin = [EMClient sharedClient].isAutoLogin;
+//    if (!isAutoLogin)
+//    {
+//        [self loginWithUsername:[NFUserEntity shareInstance].userId password:@"111111"];
+//    }
+//    else
+//    {
+//        //自动登录就直接发送登录通知
+//        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
+//    }
+}
+
+#pragma mark - 断线重连或异地登陆
+
+//点击登陆后的操作
+//- (void)loginWithUsername:(NSString *)username password:(NSString *)password
+//{
+//    //异步登陆账号
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        EMError *error = [[EMClient sharedClient] loginWithUsername:username password:password];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            
+//            if (!error) {
+//                //设置是否自动登录
+////                [[EMClient sharedClient].options setIsAutoLogin:YES];
+//                [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
+//                
+//            } else {
+//                DLog(@"%@ 登陆失败聊天",@(error.code));
+//            }
+//        });
+//    });
+//}
+
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    if (buttonIndex == 0)
+//    {
+//        // 注销登录
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kGoto_Login_Rootview object:kGoto_Login_Rootview_LgoinHome];
+//    }
+//}
+//
+//- (void)achUserInfoCallBack:(id)data {
+//    
+//    [RingUserManager shareManager].userEntity = (RingUserEntity *)data;
+//}
+//
+//-(void)rtnUserProfile:(NSMutableDictionary *)profile{
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"rtnUserProfile" object:profile];
+//}
+
+#pragma mark - 登陆成功后
+
+//登录成功回调
+//- (void)loginStateChange:(NSNotification *)notification
+//{
+//    [self hideHud];
+//    BOOL loginSuccess = [notification.object boolValue];
+//    
+//    if (loginSuccess) {
+//        //加载申请通知的数据
+//        [[ApplyViewController shareController] loadDataSourceFromLocalDB];
+//        // 环信UIdemo中有用到Parse，您的项目中不需要添加，可忽略此处
+//        [[UserProfileManager sharedInstance] initParse];
+//        
+//        [[ChatDemoHelper shareHelper] asyncGroupFromServer];
+//        [[ChatDemoHelper shareHelper] asyncConversationFromDB];
+//        [[ChatDemoHelper shareHelper] asyncPushOptions];
+//    }
+//    else{//登陆失败加载登陆页面控制器
+//        [ChatDemoHelper shareHelper].mainVC = nil;
+//        [[UserProfileManager sharedInstance] clearParse];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您的账号在其他设备上登陆!" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//    }
+//}
+
+/**
+ *  第三方认证或者登陆的按钮选择
+ *
+ *  @param shareType 登陆类型 - 第三方集合 ShareType
+ */
+//- (void)loginWithShareType:(ShareType)myShareType
+//{
+//    /**
+//     *	@brief	获取当前授权用户信息
+//     *
+//     *	@param 	shareType 	平台类型
+//     *   @param  authOptions 授权选项，用于指定接口在需要授权时的一些属性（如：是否自动授权，授权视图样式等）,传入nil表示使用默认选项
+//     *   @param  result  获取用户信息返回事件
+//     */
+//    
+//    [SVProgressHUD show];
+//    
+//    [ShareSDK getUserInfoWithType:myShareType
+//                      authOptions:nil
+//                           result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
+//                               
+//                               [SVProgressHUD dismiss];
+//                               
+//                               if (result)
+//                               {
+//                                   //QQ
+//                                   if ([userType_ isEqualToString:@"4"])
+//                                   {
+//                                       [self loginThird:userInfo.uid
+//                                               nickname:userInfo.nickname
+//                                           profileImage:[userInfo.sourceData objectForKey:@"figureurl_qq_2"]
+//                                                 gender:userInfo.gender
+//                                                 mobile:@""];
+//                                   }
+//                                   else
+//                                   {
+//                                       [self loginThird:userInfo.uid
+//                                               nickname:userInfo.nickname
+//                                           profileImage:userInfo.profileImage
+//                                                 gender:userInfo.gender
+//                                                 mobile:@""];
+//                                   }
+//                               }
+//                               else
+//                               {
+//                                   DLog(@"error  %@  _  %@",@(error.errorCode),error.errorDescription);
+//                                   if (-22003 == error.errorCode)
+//                                   {
+//                                       [SVProgressHUD showErrorWithStatus:@"检测到您未安装微信，登录失败!"];
+//                                   }
+//                                   else if (-6004 == error.errorCode)
+//                                   {
+//                                       [SVProgressHUD showErrorWithStatus:@"检测到您未安装QQ，登录失败!"];
+//                                   }
+//                                   else if (-106 == error.errorCode || -1009 == error.errorCode)
+//                                   {
+//                                       [SVProgressHUD showErrorWithStatus:@"网络未正常连接!"];
+//                                   }
+//                               }
+//                           }];
+//}
+
+#pragma mark - 返回登陆界面
+
+//递归消隐所有的模态视图
+- (void)dismissPresentedViewController:(UIViewController *)viewController
+{
+    UIViewController *subViewController = viewController.presentedViewController;
+    
+    if (subViewController)
+    {
+        [self dismissPresentedViewController:subViewController];
+    }
+    else
+    {
+        
+    }
+    if (viewController != self)
+    {
+        [viewController dismissViewControllerAnimated:NO completion:NULL];
+    }
+}
+
+/**
+ *  在用户填写资料或者其他界面操作时需要先回到主界面，然后再跳转到其他界面的时候，先返回主界面再跳转到其他界面
+ *
+ *  @param notification notification
+ 跳转到APP首页                kGoto_Login_Rootview_SportHome
+ 不跳转直接到登陆页           kGoto_Login_Rootview_LgoinHome
+ */
+- (void)gotoLoginRootview:(NSNotification *)notification
+{
+    if([notification.object isEqualToString:kGoto_Login_Rootview_SportHome])
+    {
+        [self dismissPresentedViewController:self];
+        
+//        [self goAppHomeViewCtrol];
+    }
+    else if([notification.object isEqualToString:kGoto_Login_Rootview_LgoinHome])
+    {
+//        [self loginHomeClearUserInfo];
+        
+        [self dismissPresentedViewController:self];
+        
+        //设置是否自动登录
+//        [[EMClient sharedClient].options setIsAutoLogin:NO];
+//        //退出聊天
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//            EMError *error = [[EMClient sharedClient] logout:YES];
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                
+//                [[ApplyViewController shareController] clear];
+//                if (error != nil) {
+//                    
+//                }
+//                else{
+//                }
+//            });
+//        });
+        
+        [self performSelector:@selector(clearSbView) withObject:nil afterDelay:0.2];
+    }
+}
+//
+//- (void)clearSbView
+//{
+//    //清除view最上层添加的view
+//    for(id sbView in [[[[UIApplication sharedApplication] delegate] window] viewForBaselineLayout].subviews)
+//    {
+//        UIResponder *nextResponder = [sbView nextResponder];
+//        DLog(@"%@",nextResponder);
+//        if ([nextResponder isKindOfClass:[NFbaseNavViewController class]])
+//        {
+//        }
+//        else
+//        {
+//            [sbView removeFromSuperview];
+//        }
+//    }
+//    [self.navigationController popToRootViewControllerAnimated:NO];
+//}
+//
+////返回登录界面清除用户详情的缓存
+//- (void)loginHomeClearUserInfo
+//{
+//    [KeepAppBox keepVale:@"" forKey:@"nickname"];
+//    [KeepAppBox keepVale:@"" forKey:@"mobile"];
+//    [KeepAppBox keepVale:@"" forKey:@"hdnumber"];
+//    [KeepAppBox keepVale:@"" forKey:@"userId"];
+//    [KeepAppBox keepVale:@"" forKey:@"sex"];
+//    [KeepAppBox keepVale:@"" forKey:@"userType"];
+//    [KeepAppBox keepVale:@"" forKey:@"smallpicPath"];
+//    [KeepAppBox keepVale:@"" forKey:@"bigpicPath"];
+//    [KeepAppBox keepVale:@"" forKey:@"age"];
+//    [KeepAppBox keepVale:@"" forKey:@"birthday"];
+//    [KeepAppBox keepVale:@"" forKey:@"height"];
+//    [KeepAppBox keepVale:@"" forKey:@"weight"];
+//    [KeepAppBox keepVale:@"" forKey:@"signature"];
+//    [KeepAppBox keepVale:@"" forKey:@"qrbigpicPath"];
+//    [KeepAppBox keepVale:@"" forKey:@"qrsmallpicPath"];
+//    [KeepAppBox keepVale:@"" forKey:@"hobby"];
+//    [KeepAppBox keepVale:@"" forKey:@"conStellName"];
+//    [KeepAppBox keepVale:@"" forKey:@"sexUalityName"];
+//    [KeepAppBox keepVale:@"0" forKey:@"roleType"];
+//    
+//    //注销第三方登陆信息
+//    [ShareSDK cancelAuthWithType:ShareTypeQQSpace];
+//    [ShareSDK cancelAuthWithType:ShareTypeSinaWeibo];
+//    [ShareSDK cancelAuthWithType:ShareTypeRenren];
+//    [ShareSDK cancelAuthWithType:ShareTypeWeixiTimeline];
+//    
+//    [[NSNotificationCenter defaultCenter]removeObserver:self
+//                                                   name:UIApplicationDidBecomeActiveNotification
+//                                                 object:nil];
+//}
+
+@end

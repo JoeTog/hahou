@@ -1,0 +1,346 @@
+//
+//  NewHomeViewController.m
+//  newTestUe
+//
+//  Created by 林向阳 on 15/11/17.
+//  Copyright © 2015年 程龙. All rights reserved.
+//
+
+#import "NewHomeViewController.h"
+#import "PublicDefine.h"
+#import "EGORefreshTableHeaderView.h"
+#import "NFHeadImageView.h"
+//系统消息所使用的数据库相关
+#import "NFMineData.h"
+#import "NFPacketHandler.h"
+#import "NFLoginManger.h"
+
+@interface NewHomeViewController ()<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate>
+{
+    CGFloat height_;
+    __weak IBOutlet UITableView *homeTableView;
+    
+    BOOL reloading_;
+    BOOL needReloading_;
+    //下滑到最后是否能刷新数据
+    BOOL canRefreshLash_;
+    //下滑到最后是否正在刷新
+    BOOL isRefreshLashing_;
+    
+    EGORefreshTableHeaderView * refreshHeaderView_;
+    //下发的功能按钮
+    NSArray *featureList_;
+    //首页焦点图
+    NSArray * homeFoucesArr_;
+    //个人
+    NFUserEntity * userEntity_;
+    //苹果健康数据
+    NSDictionary * setpDic_;
+    //排行
+    NSArray * rankArr_;
+    //首页新闻热点
+    NSMutableArray *newsMuArr_;
+    
+    NSURL               *_updateURL;
+}
+
+@end
+
+@implementation NewHomeViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.navigationItem.title = @"云动洛阳";
+    self.tabBarItem.title = @"首页";
+    
+    needReloading_ = YES;
+    [self setNavBarBtn];
+    needReloading_ = NO;
+    
+    homeTableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
+    
+    // 防止EGO刷新后tableview下移
+    self.tabBarController.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+
+    if (refreshHeaderView_ == nil)
+    {
+        EGORefreshTableHeaderView * refreshHeader = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0, 0 - homeTableView.bounds.size.height, homeTableView.frame.size.width, homeTableView.bounds.size.height)];
+        refreshHeader.delegate = self;
+        reloading_ = NO;
+        [homeTableView addSubview:refreshHeader];
+        refreshHeaderView_ = refreshHeader;
+    }
+    [refreshHeaderView_ refreshLastUpdatedDate];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.tabBarController.tabBar.hidden = NO;
+    
+    self.navigationController.navigationBarHidden = NO;
+    
+    self.navigationController.navigationBar.translucent = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - 更多+按钮
+
+- (void)setNavBarBtn
+{
+    UIButton * rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 26, 19)];
+//    [rightBtn setImage:[UIImage imageNamed:@"洛阳首页-+号"] forState:UIControlStateNormal];
+    [rightBtn setImage:[UIImage imageNamed:@"shouye_98"] forState:UIControlStateNormal];
+    [rightBtn addTarget:self action:@selector(handleRightBtn) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = rightButtonItem;
+}
+
+- (void)handleRightBtn
+{
+    //下拉菜单
+//    [PellTableViewSelect addPellTableViewSelectWithWindowFrame:CGRectMake(self.view.bounds.size.width-150, 64, 100, 200) selectData:@[@"扫一扫"] images:nil action:^(NSInteger index) {
+//        //点击事件
+//        if (index == 0)
+//        {
+            //扫一扫
+            //跳转扫描二维码
+//        }
+//    } animated:NO];
+}
+
+#pragma mark tableView Delegate
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+//    if (0 == section)
+//    {
+//        return 3;
+//    }
+//    return newsMuArr_.count;
+    return 0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    if (0 == indexPath.section)
+//    {
+//        if (indexPath.row == 0)
+//        {
+//            return kHomeButtonCellHeight;
+//        }
+//        else if (indexPath.row == 1)
+//        {
+//            return kHomeSportTargetCellHeight;
+//        }
+//        else if (indexPath.row == 2)
+//        {
+//            return kHomeWeightCellHeight;
+//        }
+//    }
+//    
+//    newsEntity *news = nil;
+//    if (newsMuArr_.count > 0)
+//    {
+//        news = [newsMuArr_ objectAtIndex:indexPath.row];
+//        
+//    }
+//    //热点类型（11:场馆12:俱乐部13:活动14:教练15:新闻16:焦点图式17:相册式）
+//    if(16 == [news.hotType integerValue])
+//    {
+//        return kHomeHotFocusCell;
+//    }
+//    else if (17 == [news.hotType integerValue])
+//    {
+//        return kHomeHotImageCell;
+//    }
+//    
+//    return kHomeHotNewsCell;
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    static NSString * cellIdentifier = nil;
+//    if (0 == indexPath.section)
+//    {
+//        if (indexPath.row == 0)
+//        {
+//            cellIdentifier = @"HomeButtonCell";
+//            HomeButtonCell  * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//            if (cell == nil) {
+//                cell = [[[NSBundle mainBundle]loadNibNamed:@"HomeButtonCell" owner:nil options:nil]firstObject];
+//            }
+//            [cell showViewWithInfo:featureList_];
+//            
+//            return cell;
+//        }
+//        else if (indexPath.row == 1)
+//        {
+//            cellIdentifier = @"HomeSportTargetCell";
+//            HomeSportTargetCell  * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//            if (cell == nil) {
+//                cell = [[[NSBundle mainBundle]loadNibNamed:@"HomeSportTargetCell" owner:nil options:nil]firstObject];
+//            }
+//            if (setpDic_)
+//            {
+//                cell.stepCount = [[setpDic_ objectForKey:@"steps"] description];
+//                cell.timeCount = [[setpDic_ objectForKey:@"sportDuration"] description];
+//                cell.longCount = [[setpDic_ objectForKey:@"mileAge"] description];
+//            }
+//            
+//            return cell;
+//        }
+//        else if (indexPath.row == 2)
+//        {
+//            cellIdentifier = @"HomeWeightCell";
+//            HomeWeightCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//            if (cell == nil) {
+//                cell = [[[NSBundle mainBundle]loadNibNamed:@"HomeWeightCell" owner:nil options:nil]firstObject];
+//            }
+//            
+//            [cell setWeightWith:userEntity_];
+//            [cell showRankWith:rankArr_];
+//            return cell;
+//        }
+//    }
+//    
+//    //自动加载分页信息
+//    if (canRefreshLash_ && !isRefreshLashing_ && indexPath.row == newsMuArr_.count - 1)
+//    {
+//        [self performSelector:@selector(refreshHotList) withObject:nil afterDelay:0.2];
+//    }
+//    //新闻热点
+//    newsEntity *news = nil;
+//    if (newsMuArr_.count >0)
+//    {
+//        news = [newsMuArr_ objectAtIndex:indexPath.row];
+//        
+//    }
+//    //热点类型（11:场馆12:俱乐部13:活动14:教练15:新闻16:焦点图式17:相册式）
+//    if(16 == [news.hotType integerValue])
+//    {
+//        //热点大图
+//        cellIdentifier = @"HomeHotFocusCell";
+//        HomeHotFocusCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//        if (cell == nil)
+//        {
+//            cell = [[[NSBundle mainBundle]loadNibNamed:@"HomeHotFocusCell" owner:nil options:nil]firstObject];
+//        }
+//        
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        [cell setEntity:news];
+//        return cell;
+//    }
+//    else if (17 == [news.hotType integerValue])
+//    {
+//        //热点三图
+//        cellIdentifier = @"HomeHotImageCell";
+//        HomeHotImageCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//        if (cell == nil)
+//        {
+//            cell = [[[NSBundle mainBundle]loadNibNamed:@"HomeHotImageCell" owner:nil options:nil]firstObject];
+//        }
+//        
+//        [cell setEntity:news];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        return cell;
+//    }
+//    
+//    //热点列表
+//    cellIdentifier = @"HomeHotNewsCell";
+//    HomeHotNewsCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//    if (cell == nil)
+//    {
+//        cell = [[[NSBundle mainBundle]loadNibNamed:@"HomeHotNewsCell" owner:nil options:nil]firstObject];
+//    }
+//    
+//    [cell setEntity:news];
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    return cell;
+    return nil;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+}
+
+#pragma mark - scrollView Delegate
+
+// 触摸屏幕并拖拽画面，再松开，最后停止时，触发该函数
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [refreshHeaderView_ egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [refreshHeaderView_ egoRefreshScrollViewDidScroll:scrollView];
+}
+
+#pragma mark - Data Source Loading / Reloading Methods
+
+- (void)reloadTableViewDataSource
+{
+    reloading_ = YES;
+}
+
+- (void)doneLoadingTableViewData{
+    
+    //  model should call this when its done loading
+    reloading_ = NO;
+    
+    [refreshHeaderView_ egoRefreshScrollViewDataSourceDidFinishedLoading:homeTableView];
+}
+
+#pragma mark - 下拉刷新委托回调
+
+//调用结束刷新和刷新列表
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
+{
+    [self reloadTableViewDataSource];
+    //此处刷新接口数据
+    
+}
+
+// should return if data source model is reloading
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
+{
+    return reloading_;
+}
+
+// should return date data source was last changed
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view
+{
+    return [NSDate date];
+}
+
+- (void)jiaRefresh
+{
+    [self doneLoadingTableViewData];
+}
+
+@end

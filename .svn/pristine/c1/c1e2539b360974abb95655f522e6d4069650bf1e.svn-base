@@ -1,0 +1,48 @@
+//
+//  AchieveQueryTableViewController.m
+//  nationalFitness
+//
+//  Created by 童杰 on 2017/2/28.
+//  Copyright © 2017年 chenglong. All rights reserved.
+//
+
+#import "AchieveQueryTableViewController.h"
+
+@interface AchieveQueryTableViewController ()
+
+@end
+
+@implementation AchieveQueryTableViewController{
+    
+    //headView
+    
+    __weak IBOutlet UIView *headView_;
+    
+    
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+
+
+@end

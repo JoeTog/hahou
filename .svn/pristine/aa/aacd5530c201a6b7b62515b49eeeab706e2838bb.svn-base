@@ -1,0 +1,18 @@
+//
+//  DailyAdminTableViewController.h
+//  nationalFitness
+//
+//  Created by 童杰 on 2017/2/27.
+//  Copyright © 2017年 chenglong. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface DailyAdminTableViewController : UITableViewController
+
+//判断是否需要头上的view
+// 0为需要 1位不需要 默认为0
+@property(nonatomic,assign)int isNeedView;
+
+
+@end

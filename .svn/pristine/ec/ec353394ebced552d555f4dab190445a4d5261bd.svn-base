@@ -1,0 +1,23 @@
+//
+//  NFMineManager.h
+//  nationalFitness
+//
+//  Created by 程long on 14-12-11.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFBaseManager.h"
+#import "NFMineData.h"
+#import "NFMineParser.h"
+#import "NFMineRequest.h"
+
+@interface NFMineManager : NFBaseManager
+
+-(void)RequestManager;
+
+
+
+
+
+
+@end

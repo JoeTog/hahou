@@ -1,0 +1,13 @@
+//
+//  NFMyWalletRequest.h
+//  nationalFitness
+//
+//  Created by 林向阳 on 15/9/22.
+//  Copyright © 2015年 chenglong. All rights reserved.
+//
+
+#import "NFBaseRequest.h"
+
+@interface NFMyWalletRequest : NFBaseRequest
+
+@end

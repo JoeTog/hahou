@@ -1,0 +1,138 @@
+//
+//  NFLoginParser.m
+//  nationalFitness
+//
+//  Created by 程long on 14-10-28.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFLoginParser.h"
+
+@implementation NFLoginParser
+
+//自动升级
++ (id)checkLastVersionParser:(NSData*)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        if ([bodyDic objectForKey:kWrongDlog])
+        {
+            return nil;
+        }
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+//上传图片
++ (id)uploadPicParser:(NSData*)data
+{
+    NSDictionary *bodyDic = [self gotDataNoKeyParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+
+//验证码校验
++ (id)gotVerificationParser:(NSData*)data
+
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+
+//找回密码
++ (id)findPassParser:(NSData*)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+
+//注册信息填写
++ (id)registerInfoParser:(NSData*)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+//用户登录
++ (id)loginRequestParser:(NSData*)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+//验证码校验
++ (id)checkVerificationParser:(NSData*)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+//第三方登陆
++ (id)loginThirdParser:(NSData*)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+//广告
++ (id)adsListParser:(NSData*)data;
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        return bodyDic;
+    }
+    
+    return nil;
+}
+
+@end

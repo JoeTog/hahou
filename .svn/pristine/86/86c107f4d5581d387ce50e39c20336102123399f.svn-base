@@ -1,0 +1,89 @@
+//
+//  NFActivityData.m
+//  nationalFitness
+//
+//  Created by 程long on 14-11-8.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFActivityData.h"
+#import "NFUserEntity.h"
+#import "NFActivityEntity.h"
+
+@implementation NFActivityData
+
+//插入缓存数据
++ (BOOL)insertSearchCache: (NSString *)modType searchStr:(NSString *)searchStr searchCode:(NSString *)searchCode
+{
+    if (!searchCode)
+    {
+        searchCode = @"";
+    }
+    FMDatabaseQueue *queue = [NFDatabaseQueue shareInstance];
+    
+    [queue inTransaction:^(FMDatabase *db, BOOL *rollback){
+        //重新插入数据
+        NSString *insertSql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO SearchCache_Sqlit (modType, searchStr, searchCode, addTime, userId) values (?,?,?,?,?)"];
+        [db executeUpdate:
+         insertSql,
+         modType,
+         searchStr,
+         searchCode,
+         [NSDate date],
+         [NFUserEntity shareInstance].userId];
+    }];
+    
+    return YES;
+}
+
+//取出缓存数据
++ (NSMutableArray *)selectSearchCache: (NSString *)modType
+{
+    NSMutableArray *reMuArr = [[NSMutableArray alloc] initWithCapacity:10];
+    
+    FMDatabaseQueue *queue = [NFDatabaseQueue shareInstance];
+    
+    [queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        if ([modType isEqualToString:@"ofUseOrg"])
+        {
+            NSString *selectSql = [NSString stringWithFormat:@"SELECT * FROM SearchCache_Sqlit  WHERE modType = '%@' and userId = '%@' ORDER BY addTime DESC limit 5", modType,[NFUserEntity shareInstance].userId];
+            FMResultSet *rs = [db executeQuery:selectSql];
+            while ([rs next])
+            {
+                //遍历查处的内容， 根据type自己定义各自的实体或者直接返回str数组
+                orgEntity *entity = [[orgEntity alloc]init];
+                entity.name = [rs stringForColumn:@"searchStr"];
+                entity.code = [rs stringForColumn:@"searchCode"];
+                [reMuArr addObject:entity];
+            }
+        }else
+        {
+            NSString *selectSql = [NSString stringWithFormat:@"SELECT * FROM SearchCache_Sqlit  WHERE modType = '%@' and userId = '%@' ORDER BY addTime DESC", modType,[NFUserEntity shareInstance].userId];
+            FMResultSet *rs = [db executeQuery:selectSql];
+            while ([rs next])
+            {
+                //遍历查处的内容， 根据type自己定义各自的实体或者直接返回str数组
+                [reMuArr addObject:[rs stringForColumn:@"searchStr"]];
+            }
+        }
+        
+    }];
+    
+    NSLog(@"%@",reMuArr);
+    return reMuArr;
+}
+
+//clear data
++(BOOL)clearSearchCache: (NSString *)modType
+{
+    FMDatabaseQueue *queue = [NFDatabaseQueue shareInstance];
+    
+    [queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        NSString *selectSql = [NSString stringWithFormat:@"delete from SearchCache_Sqlit where  userId = '%@' AND modType = '%@'",[NFUserEntity shareInstance].userId, modType];
+        [db executeUpdate:selectSql];
+    }];
+    
+    return YES;
+}
+
+@end

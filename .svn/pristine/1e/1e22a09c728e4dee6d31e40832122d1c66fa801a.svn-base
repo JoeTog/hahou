@@ -1,0 +1,450 @@
+//
+//  NFMatchManager.m
+//  nationalFitness
+//
+//  Created by 林向阳 on 16/2/29.
+//  Copyright © 2016年 chenglong. All rights reserved.
+//
+
+#import "NFMatchManager.h"
+
+@implementation NFMatchManager
+
+//赛事首页
+- (void)matchInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:matchInfoUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser matchInfoParser:data];
+        return bizData;
+    };
+}
+
+//队伍列表
+- (void)teamListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:teamListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser teamListParser:data];
+        return bizData;
+    };
+}
+
+//赛事列表
+- (void)matchListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:matchListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser matchListParser:data];
+        return bizData;
+    };
+}
+
+//队伍待审核成员列表
+- (void)waitApplyManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:waitApplyUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser waitApplyParser:data];
+        return bizData;
+    };
+}
+
+//审核成员
+- (void)checkApplyManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:checkApplyUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser checkApplyParser:data];
+        return bizData;
+    };
+}
+
+//我的队伍
+- (void)myTeamManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:myTeamUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser myTeamParser:data];
+        return bizData;
+    };
+}
+
+//赛事类型
+- (void)matchTypeManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:matchTypeUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser matchTypeParser:data];
+        return bizData;
+    };
+}
+
+//排名列表
+- (void)pwRankListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:pwRankListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser pwRankListParser:data];
+        return bizData;
+    };
+}
+
+//创建队伍
+- (void)creatMyTeamManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:creatMyTeamUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser creatMyTeamParser:data];
+        return bizData;
+    };
+}
+
+//参赛历史
+- (void)historyMatchManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:historyMatchUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser matchHistoryParser:data];
+        return bizData;
+    };
+}
+
+//赛事统计
+- (void)matchCountManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:matchCountUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser matchCountParser:data];
+        return bizData;
+    };
+}
+
+//加入队伍
+- (void)joinTeamManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:joinTeamUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser joinTeamParser:data];
+        return bizData;
+    };
+}
+
+//退出队伍
+- (void)exitTeamManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:exitTeamUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser exitTeamParser:data];
+        return bizData;
+    };
+}
+
+//解散队伍
+- (void)deleteTeamManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:deleteTeamUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser deleteTeamParser:data];
+        return bizData;
+    };
+}
+
+//赛事提醒
+- (void)matchRemindManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:matchRemindUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser matchRemindParser:data];
+        return bizData;
+    };
+}
+
+//赛事详情
+- (void)matchDetailManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:matchDetailUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser matchDetailParser:data];
+        return bizData;
+    };
+}
+
+//赛事结果
+- (void)matchResultManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:matchResultUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser matchResultParser:data];
+        return bizData;
+    };
+}
+
+//报名赛事
+- (void)joinMatchManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:joinMatchUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser joinMatchParser:data];
+        return bizData;
+    };
+}
+
+//队伍详情
+- (void)teamInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:teamInfoUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser teamInfoParser:data];
+        return bizData;
+    };
+}
+
+//邀请好友
+- (void)inviteFriendManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:inviteFriendUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser inviteParser:data];
+        return bizData;
+    };
+}
+
+//赛事列表实体
+- (void)competitionListManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:competitionListUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser competitionListParser:data];
+        return bizData;
+    };
+}
+
+//赛事列表详情
+- (void)competitionInfoManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:competitionInfoUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser competitionInfoParser:data];
+        return bizData;
+    };
+}
+
+//我的赛事
+- (void)mineCompetitionManager
+{
+    __strong NSDictionary *infoDic = [_argList objectAtIndex:0];
+    
+    //获取request对象-----网络层构建
+    requestGetter = ^ {
+        NSURLRequest *request = [NFMatchRequest gotRequest:infoDic andURL:mineCompetitionUrl];
+        
+        return request;
+    };
+    
+    //网络数据解析为结构化数据----解析层
+    handler = ^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        id bizData = [NFMatchParser mineCompetitionParser:data];
+        return bizData;
+    };
+}
+
+@end

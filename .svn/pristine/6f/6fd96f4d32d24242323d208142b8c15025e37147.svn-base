@@ -1,0 +1,16 @@
+//
+//  NFMineEntity.m
+//  nationalFitness
+//
+//  Created by 程long on 14-12-11.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFMineEntity.h"
+
+
+@implementation NFMineEntity : NSObject
+
+@end
+
+

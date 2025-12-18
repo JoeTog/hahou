@@ -1,0 +1,13 @@
+//
+//  NFPointMallData.h
+//  nationalFitness
+//
+//  Created by 林向阳 on 15/6/12.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import "NFDatabaseQueue.h"
+
+@interface NFPointMallData : NFDatabaseQueue
+
+@end

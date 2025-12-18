@@ -1,0 +1,52 @@
+//
+//  NFMyWalletManager.h
+//  nationalFitness
+//
+//  Created by 林向阳 on 15/9/22.
+//  Copyright © 2015年 chenglong. All rights reserved.
+//
+
+#import "NFBaseManager.h"
+
+@interface NFMyWalletManager : NFBaseManager
+
+// 我的主页
+- (void)myHomePageManager;
+
+// 修改设置手势密码
+-(void)changeSetGustureManager;
+
+// 验证手势密码
+- (void)checkGustureManamger;
+
+// 获取我的钱包余额信息
+- (void)getMyWalletInfoManager;
+
+// 钱包消费明细
+- (void)costDetailListManager;
+
+// 我的钱包信息
+- (void)myWalletInfoManager;
+
+//设置修改支付密码
+- (void)setPayPswManager;
+
+//验证支付密码
+- (void)checkPayPswManager;
+
+//获取验证码
+- (void)getYzmManager;
+
+//获取支付方式
+- (void)getRechargeManager;
+
+//钱包支付
+- (void)walletPayManager;
+
+//取现
+- (void)takeMoneyManager;
+
+//充值
+- (void)rechargeMoneyManager;
+
+@end

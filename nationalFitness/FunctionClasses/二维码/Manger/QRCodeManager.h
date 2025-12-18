@@ -1,0 +1,21 @@
+//
+//  QRCodeManager.h
+//  nationalFitness
+//
+//  Created by 程long on 14-12-25.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFBaseManager.h"
+#import "QRCodeParser.h"
+#import "QRCodeRequest.h"
+
+@interface QRCodeManager : NFBaseManager
+
+//扫描二维码
+- (void)querySignOrdersManager;
+
+//确认签到信息
+- (void)signOrdersManager;
+
+@end

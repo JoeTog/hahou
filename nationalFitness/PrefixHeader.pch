@@ -1,0 +1,445 @@
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
+
+#ifdef __OBJC__
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <Availability.h>
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
+#endif
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+//#import "NSObject+Subscripts.h"
+#import <CoreData/CoreData.h>
+#endif
+
+#import "ChatDemoUIDefine.h"
+//#import "EMAlertView.h"
+//#import "TTGlobalUICommon.h"
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+//#import "ACMacros.h"
+
+
+#define NSEaseLocalizedString(key, comment) [[NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"EaseUIResource" withExtension:@"bundle"]] localizedStringForKey:(key) value:@"" table:nil]
+
+#endif
+
+
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+
+#import "KeepAppBox.h"
+
+#ifdef DEBUG
+#   define DLog(format, ...) NSLog((@"%s [Line %d]:\n %s = " format), __PRETTY_FUNCTION__, __LINE__, #__VA_ARGS__, ##__VA_ARGS__);
+#else
+#   define DLog(...)
+#endif
+
+//消除版本警告
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+//过期的方法
+#pragma clang diagnostic pop
+
+//回传下载图片结果
+typedef void (^ResultDown)(BOOL success, UIImage *image);
+
+//the status bar of the window after removing highly when equipment vertical screen
+#define SCREEN_HEIGHT                   [[UIScreen mainScreen] bounds].size.height
+//width of window when equipment vertical screen
+#define SCREEN_WIDTH                    [[UIScreen mainScreen] bounds].size.width
+
+//适配的宽度跟xib宽带的比例
+#define kPLUS_SCALE_X(x)                 (x * (SCREEN_WIDTH/320))
+
+#define kPLUSIX_SCALE_X(x)                 (x * (SCREEN_WIDTH/375))
+
+//切换日历通知
+#define CHANGEDATE   @"changeMatchDate"
+
+
+// View 圆角
+#define ViewRadius(View, Radius)\
+\
+[View.layer setCornerRadius:(Radius)];\
+[View.layer setMasksToBounds:YES]
+
+// add by 约走
+#define TABLEBG_COLOR      [UIColor colorWithRed:242.0/255 green:242.0/255 blue:242.0/255 alpha:1]
+#define NFGraycolor        [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1]
+
+
+// 13 89 167 字体默认的RGB颜色值
+#define NFBlueColor        [UIColor colorWithRed:13/255.0 green:86/255.0 blue:167/255.0 alpha:1.0]
+#define NFLightBlueColor   [UIColor colorWithRed:13/255.0 green:86/255.0 blue:167/255.0 alpha:0.4]
+#define NFLightGrayColor   [UIColor colorWithRed:95/255.0 green:94/255.0 blue:95/255.0 alpha:1.0]
+#define NFGreenColor       [UIColor colorWithRed:61/255.0 green:149/255.0 blue:229/255.0 alpha:1.0]
+#define NFRedColor         [UIColor colorWithRed:44/255.0 green:121/255.0 blue:209/255.0 alpha:1.0]
+#define NFYellowColor      [UIColor colorWithRed:240/255.0 green:168/255.0 blue:33/255.0 alpha:1.0]
+#define NFLightGreenColor  [UIColor colorWithRed:0/255.0 green:136/255.0 blue:0/255.0 alpha:1.0]
+#define NFDarkGreenColor   [UIColor  colorWithRed:82/255.0 green:110/155.0 blue:29/255.0 alpha:1.0]
+#define NFEdgeBgColor  [UIColor colorWithRed:199/255.0 green:197/255.0 blue:199/255.0 alpha:1.0]
+
+//通用cell,透明灰色描边
+//#define NFClearGrayColor   [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1]
+#define NFClearGrayColor  UIColorFromRGB(0xdddddd)
+
+
+//我的主页背景色调
+#define NFMineHomeBlueColor      [UIColor colorWithRed:0/255.0 green:160/255.0 blue:233/255.0 alpha:1.0]
+
+//发布主题秀界面蓝色
+#define NFSendBlueColor   [UIColor colorWithRed:0/255.0 green:160/255.0 blue:232/255.0 alpha:1.0]
+
+//导航栏颜色
+#define NFNavBackColor   [UIColor colorWithRed:44/255.0 green:121/255.0 blue:209/255.0 alpha:1.0]
+
+//晒心情界面名字等统一字体颜色
+#define NFShareMoodFontColor   [UIColor colorWithRed:118/255.0 green:177/255.0 blue:211/255.0 alpha:1.0]
+
+//约运动，男女颜色
+//#define kManBackColor       [UIColor colorWithRed:52/255.0 green:153/255.0 blue:231/255.0 alpha:1.0]
+//#define kWoManBackColor     [UIColor colorWithRed:230/255.0 green:105/255.0 blue:105/255.0 alpha:1.0]
+
+#define kManBackColor    UIColorFromRGB(0x349ae7)
+#define kWoManBackColor  UIColorFromRGB(0xe66a68)
+
+// 最新版 红色主题色
+#define knewMainColor [UIColor colorWithRed:202/255.0 green:52/255.0 blue:55/255.0 alpha:1.0]
+
+// View 圆角和加边框
+#define ViewBorderRadius(View, Radius, Width, Color)\
+\
+[View.layer setCornerRadius:(Radius)];\
+[View.layer setMasksToBounds:YES];\
+[View.layer setBorderWidth:(Width)];\
+[View.layer setBorderColor:[Color CGColor]]
+
+#define kCircleImageRadiu           12
+
+#define kRequestTimeout             30
+#define kAlertShowTime              1.5
+
+/**
+ *  提示用户的文字提示
+ */
+#define kWrongDlog                   @"kWrong_Dlog"
+
+#define kWrongMessage                @"系统正在开小差,请稍后再试!"
+
+#define kWrongNetMissing                @"请检查网络设置"
+
+/**
+ *  数据库在缓存文件里面的名字
+ */
+#define kFMDBFilename               @"NFSystemfmdb.db"
+
+#define kDeviceTokenKey             @"kDeviceTokenKeyForPush"
+
+//登陆用户名密码
+#define kLoginUserName                       @"kLoginUserNametongxun"
+#define kLoginUserNickName                       @"kLoginUserNickNametongxun"
+#define kLoginPassWord                       @"kLoginPassWordtongxun"
+//微信登录id
+#define kLoginWeixinUserName                       @"kLoginWeixinUserName"
+//微信登录id
+#define kLoginWeixinUserNickName                       @"kLoginWeixinUserNickName"
+//微信登录id
+#define kLoginWeixinUserHeadIcon                       @"kLoginWkLoginWeixinUserIconeixinUserName"
+//最后一次登录的时间
+#define kLoginLastTime                       @"kLoginLastTime"
+
+
+
+//用户逆地理位置城市名称和地址
+#define kLoginCityName                       @"kLoginCityName"
+#define kLoginCityCode                       @"kLoginCityCode"
+
+/**
+ *  NOTI NAME AND USE
+ */
+//在手机号码填写完毕， 或者资料填写完毕之后返回登陆界面
+#define kGoto_Login_Rootview                    @"kGoto_Login_Rootview"
+//跳转信息完善界面
+#define kGoto_Login_Rootview_infomation         @"kGoto_Login_Rootview_infomation"
+//跳转到APP首页
+#define kGoto_Login_Rootview_SportHome          @"kGoto_Login_Rootview_SportHome"
+//不跳转直接到登陆首页
+#define kGoto_Login_Rootview_LgoinHome          @"kGoto_Login_Rootview_LgoinHome"
+//跟新界面系统消息
+#define kRefurbish_System_Message               @"kRefurbish_System_Message"
+//获取走跑点赞的系统消息
+#define kZanRefurbish_Message                   @"kZanRefurbish_Message"
+//活动支付成功之后界面跳转到首页
+#define kGoto_Home_afterActSuccess              @"kGoto_Home_afterActSuccess"
+
+#define kDefaultMsg        @"服务器忙，请稍候再试!"
+
+/*
+ 支付相关
+ */
+// tn: 交易流水号
+// mode: 接入模式 00(正式版本), 01(测试版本)
+#define kUPPayMode              @"01"
+#define kUPPayResultSuccess     @"success"
+#define kUPPayResultFail        @"fail"
+#define kUPPayResultCancel      @"cancel"
+#define kAppScheme              @"myluoyang"
+
+
+//wtx
+
+#define myNavgationBarHeight 44.f
+
+#define  SCREEN_BOUNDS  ([[UIScreen mainScreen]bounds])
+
+//设置界面的尺寸
+#define  RECT_CTR_POINT(id,X,Y,W,H) [id setFrame: CGRectMake(X, Y, W, H)]
+/*
+ 系统设置界面存的全局变量
+ */
+// 加好友需不需要验证
+#define kNeedValidation         @"kNeedValidation"
+// 是否让陌生人查看十条动态
+#define kCanCheckTenInfo        @"kCanCheckTenInfo"
+// 新消息通知是否开启
+#define kNewMessagePush         @"kNewMessagePush"
+//服务器下发的服务器地址
+#define kServiceUrl             @"kServiceUrl"
+//服务器下发的message服务器地址
+#define kMessageUrl             @"kMessageUrl"
+
+
+// HealthKit 是否打开提醒
+#define kHealthKitAlertIsEnable  @"kHealthKitAlertIsEnable"
+#define kNotificationHealthKitNoData  @"kNotificationHealthKitNoData"
+
+// 计步相关通知
+#define kRingViewAtNewStepCountRightBarItemTapNotification   @"kRingViewAtNewStepCountRightBarItemTapNotification"
+#define kStepCountUserDidTakeAnPictureNotification  @"kStepCountUserDidTakeAnPictureNotification"
+
+//是否提醒找到计步邀约
+#define kAlertViewType_AlertNever @"runAlertNever"
+
+// 计步类型atittatableViewpage
+//RunType
+//typedef NS_ENUM(NSInteger, StepCountRunType) {
+//    kRunType_Walk = 1,
+//    kRunType_Run,
+//    kRunType_Bike,
+//    kRunType_Car
+//};
+//
+//typedef enum : NSUInteger {
+//    //可能认识的人
+//    ShowTypePeople = 0,
+//    //约
+//    ShowTypeYue,
+//} ShowTypes;
+
+
+// Font Manage
+#define FONT_SIZE(size)           [UIFont systemFontOfSize:size]
+#define BOLD_FONT_SIZE(size)      [UIFont boldSystemFontOfSize:size]
+#define UIDeviceCurrentDevice     [[[UIDevice currentDevice] systemVersion] floatValue]
+
+// Color Manage
+#define COLOR_RGB(r, g, b)        [UIColor colorWithRed:r/255.f green:g/255.f blue:b/255.f alpha:1.0]
+#define COLOR_RGBA(r, g, b, a)    [UIColor colorWithRed:r/255.f green:g/255.f blue:b/255.f alpha:a]
+
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
+
+#define MainColor [UIColor colorWithRed:208/255.0 green:17/255.0 blue:27/255.0 alpha:1.0]
+
+//#define MainTextColor UIColorFromRGB(0xffffff)
+
+#define MainTextColor [UIColor darkGrayColor]
+
+//培训详情中的星星用到的kPLUS_SCALE_X(x)
+#define GAP kPLUS_SCALE_X(3.5)
+#define GAPB kPLUS_SCALE_X(7)
+
+#define DISCOUNT 0.95
+
+//封装的星星后用到
+#define starViewWidth(gap,starWH) (gap + starWH)*10
+//
+#define starViewCenter(father,son) (father-son)/2
+//星星的高度或者宽度
+//#define starHeight 10.0
+//星星之间的间距
+//#define starGAP 2.5*JOESIZESCALE
+//
+//#define starGAPB 5*JOESIZESCALE
+//深灰
+#define FirstGray UIColorFromRGB(0x98999A)
+
+#define SecondGray UIColorFromRGB(0xDCDDDE)
+
+#define SsecondGray UIColorFromRGB(0xF1F2F3)
+
+#define ThirdGray UIColorFromRGB(0xF9FAFB)
+
+#define CellMainBackGroundPic @"我的票卡背景图"
+
+//调试开关 0为关闭 1为打开 2为只进行网络请求
+
+//调试开关 0为如果没有返回数据就不显示 1为如果没有返回数据就崩溃 [一般都是0]
+#define DATASWITCH @"0"
+
+//解析开关 0为插入假数据 1为用真数据
+#define PARSERSWITCH @"1"
+
+//正常假数据展示 PARSERSWITCH 为0 DATASWITCH 0或1
+
+//测试找对接口 PARSERSWITCH 为1 DATASWITCH 为 1
+
+//不崩溃展示真数据 PARSERSWITCH 为1 DATASWITCH 为 0
+
+
+// 0为不要 1位需要
+#define isNEEDData @"0"
+
+#define defaultHeadImaghe @"联系人默认头像"
+
+#define kNotificationCategoryIdentifile @"kNotificationCategoryIdentifile"
+#define kNotificationActionIdentifileStar @"kNotificationActionIdentifileStar"
+#define kNotificationActionIdentifileComment @"kNotificationActionIdentifileComment"
+#define kLocalNotificationKey @"kLocalNotificationKey"
+
+#import "ClearManager.h"
+
+#define translucentBOOL NO
+
+
+/** 表情相关 */
+// 表情的最大行数
+#define SDFaceMaxRows 3
+// 表情的最大列数
+#define SDFaceMaxCols 7
+// 每页最多显示多少个表情
+#define SDFaceMaxCountPerPage (SDFaceMaxRows * SDFaceMaxCols - 1)
+
+//color
+#define mRGB(r,g,b,a) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:a]
+#define mHexRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+#define mHexRGBAlpha(rgbValue,a) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:(a)]
+#define fontHightColor mHexRGB(0x919191) //字体深色
+#define fontNomalColor mHexRGB(0xbbbbbb) //字体浅色
+#define fontBlackColor mHexRGB(0x404040) //字体黑
+
+#define SDRandomColor mRGB(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256),1);
+
+#define bjMainColor mHexRGB(0x27bac1) //主题色
+#define bjColor mHexRGB(0xefefef)  //背景深灰色 mHexRGB(0xe4e4e4):浅灰0xf9f9f9
+#define borderCol mHexRGB(0xe4e4e4)    //border颜色
+
+#define buttonSeleteColor mHexRGB(0xe91a10) //字体深红色
+
+#define TheColor_BlueColor mHexRGB(0x157efb) //蓝色
+
+#define SDDeviceWidth [UIScreen mainScreen].bounds.size.width        //屏幕宽
+#define SDDeviceHeight [UIScreen mainScreen].bounds.size.height      //屏幕高
+
+//log扩展
+#ifdef DEBUG
+#   define SDLog(fmt, ...) {NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);}
+#   define SDELog(err) {if(err) DLog(@"%@", err)}
+#else
+#   define SDLog(...)
+#   define SDELog(err)
+#endif
+
+//#import "UIView+Extension.h"
+#import "UIView+SDFrame.h"
+#import "SDChatMessageConst.h"
+#import "MJExtension.h"
+ /* SDPrefixHeader_pch */
+
+#import "MBProgressHUD.h"
+
+#define fontSize 18
+
+#define  xInsets_NO(scrollView,vc)\
+do { \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"") \
+if ([UIScrollView instancesRespondToSelector:NSSelectorFromString(@"setContentInsetAdjustmentBehavior:")]) {\
+[scrollView   performSelector:NSSelectorFromString(@"setContentInsetAdjustmentBehavior:") withObject:@(2)];\
+} else {\
+vc.automaticallyAdjustsScrollViewInsets = NO;\
+}\
+_Pragma("clang diagnostic pop") \
+} while (0)
+
+
+#define kStatusBarHeight [[UIApplication sharedApplication] statusBarFrame].size.height
+#define kNavBarHeight 44.0
+//注意：请直接获取系统的tabbar高度，若没有用系统tabbar，建议判断屏幕高度；之前判断状态栏高度的方法不妥，如果正在通话状态栏会变高，导致判断异常，下面只是一个例子，请勿直接使用！
+//tabbar高度
+#define HitoSafeAreaHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?34:0)
+#define kTabBarHeight (49+HitoSafeAreaHeight)
+
+//tabbar正常的高度
+#define kNormalTabBarHeight 49
+
+//导航栏高度
+#define kTopHeight (kStatusBarHeight + kNavBarHeight)
+
+// 在X多出来的tabbar高度 34
+#define kTabbarMoreHeight 34
+
+#define kNavMoreHeight 14
+
+//status 在X多出来的status 状态栏高度 22
+#define kStatusBarMoreHeight 22
+
+
+
+
+
+
+
+//红包
+#define NTES_USE_CLEAR_BAR - (BOOL)useClearBar{return YES;}
+
+#define NTES_FORBID_INTERACTIVE_POP - (BOOL)forbidInteractivePop{return YES;}
+
+//基地址
+#define BASE_URL @"http://47.111.4.228"
+
+#define HEAD_IMG_CornerRadius 5.0
+
+//#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+//#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
+#define STATUSBAR_HEIGHT [[UIApplication sharedApplication] statusBarFrame].size.height
+#define REDPACKET_COLOR [UIColor colorWithRed:229.0/255 green:65.0/255.0 blue:65.0/255 alpha:1.0]
+#define BASE_GRAY [UIColor grayColor]
+#define BGCOLOR_GRAY [UIColor colorWithRed:241.0/255 green:241.0/255 blue:241.0/255 alpha:1.0]
+
+#define LOGIN_BG_COLOR [UIColor colorWithRed:0.0/255 green:153.0/255.0 blue:204.0/255 alpha:1.0]
+
+
+#define PAGE_LIMIT_COUNT @"20"
+
+
+#define DOCUMENT_PATH [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]
+
+#define COLLECT_DIRECTORY_PATH [DOCUMENT_PATH stringByAppendingPathComponent:@"CollectImages"]
+#define COLLECT_IMAGE_FILE_NAME  [COLLECT_DIRECTORY_PATH stringByAppendingPathComponent:@"storemycollectimage.plist"]
+
+
+
+
+
+

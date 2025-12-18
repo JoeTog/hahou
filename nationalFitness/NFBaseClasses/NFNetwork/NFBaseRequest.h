@@ -1,0 +1,66 @@
+//
+//  NFBaseRequest.h
+//  nationalFitness
+//
+//  Created by 程long on 14-10-28.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+#import "NFPacketHandler.h"
+
+#import "PublicDefine.h"
+
+
+//#define kainuo @"http://47.98.105.33:7999/"
+//#define kainuo @"http://121.43.116.159:7999/"
+#define kainuo @"http://121.43.116.159:7999/"
+// socket地址
+//oss地址
+//http地址 这里是http地址，群组头像也是http地址
+
+@interface NFBaseRequest : NSObject
+
+/**
+ *  默认直接传入参数和URL生成一个NSURLRequest
+ *
+ *  @param info 字典类型的参数
+ *  @param url  URL
+ *
+ *  @return NSURLRequest
+ */
++ (NSURLRequest *) gotRequest:(NSDictionary *)info andURL:(NSString *)url;
+
+
+/**
+ *  默认上传图片
+ *
+ *  @param params    参数
+ *  @param imageData 图片
+ *
+ *  @return NSURLRequest
+ */
++ (NSURLRequest *)uploadPicRequestWithParams:(NSDictionary*)params imageData:(NSData*)imageData;
+
+//上传相册
++ (NSURLRequest *)uploadAlbumWithParams:(NSDictionary*)params imageData:(NSData*)imageData;
+
+//上传徽章
++ (NSURLRequest *)uploadBadgeWithParams:(NSDictionary*)params imageData:(NSData*)imageData;
+
+//上传举报图片
++ (NSURLRequest *)uploadReportWithParams:(NSDictionary*)params imageData:(NSData*)imageData;
+
+//上传语音
++ (NSURLRequest *)uploadAudioWithParams:(NSDictionary*)params audioData:(NSData*)audioData;
+
+
+
+
+
+
+
+
+
+@end

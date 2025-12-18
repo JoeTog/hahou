@@ -1,0 +1,26 @@
+//
+//  NFShareMoodParser.h
+//  nationalFitness
+//
+//  Created by wangping on 15/4/7.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import "NFBaseParser.h"
+#import "NFKCEntity.h"
+
+@interface NFKCParser : NFBaseParser
+
+//课程列表
++ (id)CourseListParser:(NSData *)data;
+
+//课程详情
++ (id)CourseInfoParser:(NSData *)data;
+
+//支付生成订单
++ (id)createOrderInfoParser:(NSData *)data;
+
+//我的课程
++ (id)MyCourseListParser:(NSData *)data;
+
+@end

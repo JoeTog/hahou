@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="GroupAddMemberTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="图片" translatesAutoresizingMaskIntoConstraints="NO" id="qL9-eQ-22r">
+                        <rect key="frame" x="15" y="4.5" width="35" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="IPW-fM-8x1"/>
+                            <constraint firstAttribute="width" constant="35" id="ziR-Va-ZP8"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昵称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BbW-c2-3sQ">
+                        <rect key="frame" x="65" y="13" width="31" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NKQ-Ek-aiw">
+                        <rect key="frame" x="275" y="7" width="30" height="30"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="6Z4-bh-lSm"/>
+                            <constraint firstAttribute="height" constant="30" id="Zhr-bg-1pb"/>
+                        </constraints>
+                        <state key="normal" image="添加群聊未选中"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="NKQ-Ek-aiw" secondAttribute="trailing" constant="15" id="27w-FF-3B5"/>
+                    <constraint firstItem="BbW-c2-3sQ" firstAttribute="leading" secondItem="qL9-eQ-22r" secondAttribute="trailing" constant="15" id="PyJ-m3-HbV"/>
+                    <constraint firstItem="BbW-c2-3sQ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="i4N-In-084"/>
+                    <constraint firstItem="qL9-eQ-22r" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="ooE-YL-6rR"/>
+                    <constraint firstItem="NKQ-Ek-aiw" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="rmH-bq-I7S"/>
+                    <constraint firstItem="qL9-eQ-22r" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="st2-kp-x7v"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="headImageView" destination="qL9-eQ-22r" id="K6A-Ih-6t9"/>
+                <outlet property="nickNameLabel" destination="BbW-c2-3sQ" id="GD3-8C-F61"/>
+                <outlet property="selectBtn" destination="NKQ-Ek-aiw" id="R4c-FK-BF3"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="图片" width="230" height="230"/>
+        <image name="添加群聊未选中" width="26" height="26"/>
+    </resources>
+</document>

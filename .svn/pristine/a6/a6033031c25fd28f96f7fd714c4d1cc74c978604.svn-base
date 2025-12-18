@@ -1,0 +1,44 @@
+//
+//  MessageTableViewCell.m
+//  nationalFitness
+//
+//  Created by 童杰 on 2017/2/27.
+//  Copyright © 2017年 chenglong. All rights reserved.
+//
+
+#import "MessageTableViewCell.h"
+
+@implementation MessageTableViewCell{
+    //2017第一季度DCL
+    __weak IBOutlet UILabel *titleLabel;
+    //时间：2017-06-28
+    __weak IBOutlet UILabel *timeLabel;
+    //图片 已查看 未查看
+    __weak IBOutlet UIImageView *cornerImageV;
+    
+    
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Initialization code
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+@end

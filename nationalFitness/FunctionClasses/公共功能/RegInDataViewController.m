@@ -1,0 +1,203 @@
+//
+//  RegInDataViewController.m
+//  nationalFitness
+//
+//  Created by 程long on 14-10-24.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "RegInDataViewController.h"
+//#import "UserHeightViewController.h"
+//#import "SetUserInfoManager.h"
+
+@interface RegInDataViewController ()
+{
+    __weak IBOutlet UIPickerView *dataPicker;
+    NSMutableArray *pickerArray_;
+    NSString *dataStr_;
+}
+
+@end
+
+@implementation RegInDataViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self initUi];
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (!_isFromSet)
+    {
+    }
+}
+
+- (void)initUi
+{
+    //默认前100年后100年
+    for (NSInteger i = 1900; i < 2100; i ++)
+    {
+        if (!pickerArray_)
+        {
+            pickerArray_ = [[NSMutableArray alloc] initWithCapacity:201];
+        }
+        
+        [pickerArray_ addObject:[NSString stringWithFormat:@"%@",@(i)]];
+    }
+    
+    if(![NFUserEntity shareInstance].birthDay || [NFUserEntity shareInstance].birthDay.length == 0)
+    {
+        [dataPicker selectRow:89 inComponent:0 animated:NO];
+        
+        [NFUserEntity shareInstance].birthDay = @"1989-01-01";
+        dataStr_ = @"1989-01-01";
+    }
+    else
+    {
+         NSInteger data = [[[NFUserEntity shareInstance].birthDay substringToIndex:4] integerValue];
+        if (data > 1900 && data < 2100)
+        {
+            [dataPicker selectRow:data - 1900 inComponent:0 animated:NO];
+        }
+        dataStr_ = [NFUserEntity shareInstance].birthDay;
+    }
+    if (_isFromSet)
+    {
+        self.title = @"修改年龄";
+        [self setNavBarButton];
+    }
+}
+
+/**
+ *  给当前界面添加手势，滑到下一个界面
+ *
+ *  @param sender sender
+ */
+- (IBAction)goNetView:(id)sender
+{
+    if (!_isFromSet)
+    {
+//        UserHeightViewController *heightCtrol = [[UserHeightViewController alloc] initWithNibName:@"UserHeightView" bundle:nil];
+//        [self.navigationController pushViewController:heightCtrol animated:YES];
+    }
+}
+
+/**
+ *  返回前一个设置界面
+ *
+ *  @param sender sender
+ */
+- (IBAction)goBackView:(id)sender
+{
+    if (!_isFromSet)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+#pragma mark - pickerView delegate
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+-(NSInteger) pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return [pickerArray_ count];
+}
+
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+{
+    UILabel *label = (UILabel *)view;
+    if (!label)
+    {
+        label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 45.0f)];
+        label.font = [UIFont systemFontOfSize:60.0f];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = NFBlueColor;
+    }
+    label.text = [pickerArray_ objectAtIndex:row];
+    
+    return label;
+}
+
+
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+{
+    return 60.0;
+}
+
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    if (!_isFromSet)
+    {
+        [NFUserEntity shareInstance].birthDay = [NSString stringWithFormat:@"%@-01-01",[pickerArray_ objectAtIndex:row]];
+    }
+    else
+    {
+        dataStr_ = [NSString stringWithFormat:@"%@-01-01",[pickerArray_ objectAtIndex:row]];
+    }
+}
+
+#pragma mark - 右侧保存
+
+- (void)setNavBarButton
+{
+    // 设置 navigation bar 右侧按钮
+    UIButton * leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 27)];
+    leftBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
+    
+    [leftBtn setTitle:@"保存" forState:UIControlStateNormal];
+    [leftBtn addTarget:self action:@selector(handleRightBtn) forControlEvents:UIControlEventTouchUpInside];
+//    [leftBtn setBackgroundColor:NFSendBlueColor];
+    leftBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    ViewRadius(leftBtn, 2);
+    
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
+    self.navigationItem.rightBarButtonItem = leftButtonItem;
+}
+
+- (void)handleRightBtn
+{
+//    SetUserInfoManager *setUserInfo_ = [[SetUserInfoManager alloc] init];
+//    [setUserInfo_ setUserInfoWithType:SetStringTypeBirthDay withInfo:dataStr_ result:^(BOOL success, NSString *wrongStr) {
+//        if (success)
+//        {
+            [NFUserEntity shareInstance].birthDay = dataStr_;
+//            [KeepAppBox keepVale:[NFUserEntity shareInstance].birthDay forKey:@"birthday"];
+//            NSInteger userDate = [[[NFUserEntity shareInstance].birthDay substringToIndex:4] integerValue];
+//            NSDate *date = [NSDate date];
+//            NSDateFormatter * forma = [[NSDateFormatter alloc]init];
+//            forma.dateFormat = @"YYYY";
+//            NSString * newStr = [forma stringFromDate:date];
+//            [NFUserEntity shareInstance].userAge = [NSString stringWithFormat:@"%@",@([newStr integerValue] - userDate)];
+//            [KeepAppBox keepVale:[NFUserEntity shareInstance].userAge forKey:@"age"];
+//        }
+//        else
+//        {
+//            [self showAlertHud:CGPointZero withStr:wrongStr];
+//        }
+//    }];
+    
+    if (self.fromType == 0) {
+        [self.delegate sendDateValue:dataStr_];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+    
+}
+
+@end

@@ -1,0 +1,141 @@
+//
+//  NFbaseViewController.m
+//  nationalFitness
+//
+//  Created by 程long on 14-10-22.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFbaseViewController.h"
+//#import "BaiduMobStat.h"
+#import "SystemInfo.h"
+
+@interface NFbaseViewController ()
+
+@end
+
+@implementation NFbaseViewController
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.tabBarController.tabBar.hidden = YES;
+//    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBar.translucent = YES;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+//    isConnectNet = ([self currentNetworkStatus] == 0 ? NO :YES);
+    
+    if (self.navigationController && self.navigationController.viewControllers.count > 1)
+    {
+        UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 24, 24)];
+        [backBtn setImage:[UIImage imageNamed:@"everyday1_return"] forState:UIControlStateNormal];
+        [backBtn addTarget:self action:@selector(backClicked:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithCustomView:backBtn];
+        self.navigationItem.leftBarButtonItem = backButtonItem;
+    }
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    orepationType = [NFUserEntity shareInstance].orepationType;
+    // Do any additional setup after loading the view.
+}
+
+//自定义NAV返回按钮
+- (void)backClicked:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+//- (void)viewWillAppear:(BOOL)animated
+//{
+//    [super viewWillAppear:animated];
+//    
+//    NSString* cName;
+//    if (self.title)
+//    {
+//        cName = self.title;
+////        [[BaiduMobStat defaultStat] pageviewStartWithName:cName];
+//    }
+//}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    NSString* cName;
+    if (self.title)
+    {
+        cName = self.title;
+//        [[BaiduMobStat defaultStat] pageviewEndWithName:cName];
+    }
+}
+
+
+#pragma mark - show alert hud
+
+-(void)showAlertHud:(CGPoint)point withStr:(NSString *)message
+{
+    if([SVProgressHUD isVisible])
+    {
+        [SVProgressHUD setStatus:message];
+    }
+    else
+    {
+        [SVProgressHUD showInfoWithStatus:message];
+    }
+}
+
+#pragma mark - showHUD
+- (void)showHUD
+{
+    [SVProgressHUD show];
+}
+
+#pragma mark - hideHud
+-(void)hideHud
+{
+    [SVProgressHUD dismiss];
+}
+
+- (UIViewController*)topViewController {
+    return [self topViewControllerWithRootViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
+}
+
+- (UIViewController*)topViewControllerWithRootViewController:(UIViewController*)rootViewController {
+    if ([rootViewController isKindOfClass:[UITabBarController class]]) {
+        UITabBarController* tabBarController = (UITabBarController*)rootViewController;
+        return [self topViewControllerWithRootViewController:tabBarController.selectedViewController];
+    } else if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* navigationController = (UINavigationController*)rootViewController;
+        return [self topViewControllerWithRootViewController:navigationController.visibleViewController];
+    } else if (rootViewController.presentedViewController) {
+        UIViewController* presentedViewController = rootViewController.presentedViewController;
+        return [self topViewControllerWithRootViewController:presentedViewController];
+    } else {
+        return rootViewController;
+    }
+}
+
+/**
+ *  返回当前网络状态
+ *
+ *  @return     NotReachable = 0,
+ ReachableViaWiFi,
+ ReachableViaWWAN
+ */
+//- (NetworkStatus)currentNetworkStatus
+//{
+//    return [[SystemInfo shareSystemInfo] currentNetworkStatus];
+//}
+
+@end

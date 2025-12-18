@@ -1,0 +1,91 @@
+//
+//  HotLineViewController.m
+//  nationalFitness
+//
+//  Created by 童杰 on 2017/2/25.
+//  Copyright © 2017年 chenglong. All rights reserved.
+//
+
+#import "HotLineViewController.h"
+#import "HotLineTableViewCell.h"
+
+
+@interface HotLineViewController ()<UITableViewDelegate,UITableViewDataSource>
+
+@end
+
+@implementation HotLineViewController{
+    
+    __weak IBOutlet UITableView *hotLineTableV_;
+    
+    __weak IBOutlet UIImageView *topBackView_;
+    
+    __weak IBOutlet NSLayoutConstraint *topDistance;
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.tabBarController.tabBar.hidden = NO;
+    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBar.translucent = YES;
+}
+
+
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    //用的xib 宽度为375
+    topDistance.constant = kPLUSIX_SCALE_X(110);
+    hotLineTableV_.backgroundColor = [UIColor clearColor];
+    self.title = @"热线";
+    
+}
+
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 4;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 70;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString* cellIdentifier = @"HotLineTableViewCell";
+    HotLineTableViewCell  * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil) {
+        cell = [[[NSBundle mainBundle]loadNibNamed:@"HotLineTableViewCell" owner:nil options:nil]firstObject];
+    }
+    
+    cell.backgroundColor = [UIColor clearColor];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+}
+
+
+
+
+
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HeadCircleCell" id="gTV-IL-0wX" customClass="HeadCircleCell">
+            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z3b-ZB-OFV">
+                        <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                        <animations/>
+                    </imageView>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lu_64" translatesAutoresizingMaskIntoConstraints="NO" id="cCY-ae-Olw">
+                        <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                        <animations/>
+                    </imageView>
+                </subviews>
+                <animations/>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <animations/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="cCY-ae-Olw" secondAttribute="bottom" id="593-Tq-15R"/>
+                <constraint firstItem="Z3b-ZB-OFV" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="8oh-KA-0wP"/>
+                <constraint firstAttribute="trailing" secondItem="Z3b-ZB-OFV" secondAttribute="trailing" id="JgA-Ae-0Oy"/>
+                <constraint firstAttribute="trailing" secondItem="cCY-ae-Olw" secondAttribute="trailing" id="X06-ko-yQh"/>
+                <constraint firstItem="Z3b-ZB-OFV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ZSY-wu-PXd"/>
+                <constraint firstItem="cCY-ae-Olw" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="efe-b8-9jX"/>
+                <constraint firstAttribute="bottom" secondItem="Z3b-ZB-OFV" secondAttribute="bottom" id="f0O-EG-mkX"/>
+                <constraint firstItem="cCY-ae-Olw" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="upI-gj-cBp"/>
+            </constraints>
+            <connections>
+                <outlet property="headImageView" destination="Z3b-ZB-OFV" id="MIb-lA-ah8"/>
+                <outlet property="showImage" destination="cCY-ae-Olw" id="JkL-Mp-Dqj"/>
+            </connections>
+            <point key="canvasLocation" x="368" y="233"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="lu_64" width="89" height="89"/>
+    </resources>
+</document>

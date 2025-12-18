@@ -1,0 +1,13 @@
+//
+//  NFMatchData.m
+//  nationalFitness
+//
+//  Created by 林向阳 on 16/2/29.
+//  Copyright © 2016年 chenglong. All rights reserved.
+//
+
+#import "NFMatchData.h"
+
+@implementation NFMatchData
+
+@end

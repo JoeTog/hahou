@@ -1,0 +1,18 @@
+//
+//  UserWeightViewController.h
+//  Demo
+//
+//  Created by Ares on 14/10/28.
+//  Copyright (c) 2014年 Ares. All rights reserved.
+//
+
+#import "NFbaseViewController.h"
+
+@interface UserWeightViewController : NFbaseViewController
+
+/**
+ *  是否来着设置界面，默认为否
+ */
+@property (nonatomic) BOOL isFromSet;
+
+@end

@@ -1,0 +1,48 @@
+//
+//  NFLoginManger.h
+//  nationalFitness
+//
+//  Created by 程long on 14-10-28.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFBaseManager.h"
+#import "NFLoginRequest.h"
+#import "NFLoginParser.h"
+#import "NFLoginData.h"
+
+@interface NFLoginManger : NFBaseManager
+
+//检查版本升级
+- (void)checkLastVersionManager;
+
+//上传图片
+- (void)uploadPicManager;
+
+//获取验证码
+- (void)gotVerificationManager;
+
+
+//密码找回
+- (void)findPassWordManager;
+
+
+//注册信息填写
+- (void)registerInfoManager;
+
+
+//用户登录
+- (void)loginRequestManager;
+
+
+//验证码校验
+- (void)checkVerificationManager;
+
+
+//第三方登陆
+- (void)loginThirdManager;
+
+//广告
+- (void)adsListManager;
+
+@end

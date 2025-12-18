@@ -1,0 +1,164 @@
+//
+//  YourDatabaseQueue.m
+//  SummaryHoperun
+//
+//  Created by 程long on 14-7-30.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFDatabaseQueue.h"
+#import "NFUserEntity.h"
+
+NSString *const databaseKey = @"Qmjs";
+
+@implementation NFDatabaseQueue
+
+-(void)createAllTables
+{
+    [self createList];
+    [self creatManagerCache];
+    [self creatSearchCache];
+    [self creatComUseCache];
+    [self createWeightList];
+    
+}
+
+//创建一个体重的数据库
+-(void)createWeightList
+{
+    //weight_Sqlit 体重表
+    //userId
+    //weight
+    //bmi
+    //rate
+    //dateStr
+    //date
+    //isUpdate  0 OK 1NO
+    FMDatabaseQueue *queue = [NFDatabaseQueue shareInstance];
+    
+    [queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        [db executeUpdate:@"CREATE TABLE weight_Sqlit (userId TEXT,weight TEXT,bmi TEXT,rate TEXT,dateStr TEXT,date DATE,isUpdate TEXT, PRIMARY KEY (userId,dateStr))"];
+    }];
+}
+
+//creat table
+-(void)createList
+{
+//    SystemMessage_Sqlit
+//    userId TEXT               用户id
+//    messageContent TEXT       消息描述
+//    messageType TEXT          消息类型
+//    sendName TEXT             发送名称
+//    sendId TEXT               发送id
+//    sendHead TEXT             发送头像
+//    isRead TEXT               是否已读
+//    operateContent  TEXT      操作内容
+//    sendTime DATE             发送时间
+    FMDatabaseQueue *queue = [NFDatabaseQueue shareInstance];
+    
+    [queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        [db executeUpdate:@"CREATE TABLE SystemMessage_Sqlit (userId TEXT,messageContent TEXT,messageType TEXT,sendName TEXT,sendId TEXT,sendHead TEXT, isRead TEXT,sendUserId TEXT, operateContent TEXT, sendTime DATE)"];
+    }];
+}
+
+- (void)creatSearchCache
+{
+    //userId       用户的id
+    //modType      模块名
+    //searchStr    存入的内容
+    //searchCode   code 如果存在的话
+    //addTime      添加时间倒叙
+    FMDatabaseQueue *queue = [NFDatabaseQueue shareInstance];
+    
+    [queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        [db executeUpdate:@"CREATE TABLE SearchCache_Sqlit (userId TEXT,modType TEXT,searchStr TEXT,searchCode TEXT, addTime DATE , PRIMARY KEY (userId,searchStr))"];
+    }];
+}
+
+//----系统里面的借口请求缓存---
+
+- (void)creatManagerCache
+{
+    //userId   用户的id
+    //url      请求的url
+    //dataStr  服务器返回的反正的str
+    FMDatabaseQueue *queue = [NFDatabaseQueue shareInstance];
+    
+    [queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        [db executeUpdate:@"CREATE TABLE ManagerCache_Sqlit (userId TEXT,url TEXT,dataStr TEXT, PRIMARY KEY (userId,url))"];
+    }];
+}
+
+- (void)creatComUseCache
+{
+    //type 模块名, comUseId 小类ID, bigId 大类ID,spName 运动名,spType 运动类型,picUrl 图片地址,remark 备注,addTime 插入时间, userId 用户id
+    FMDatabaseQueue *queue = [NFDatabaseQueue shareInstance];
+    
+    [queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        [db executeUpdate:@"CREATE TABLE ComUseCache_Sqlit (userId TEXT,type TEXT,comUseId TEXT,bigId TEXT,spName TEXT,spType TEXT,picUrl TEXT,remark TEXT,addTime DATA, PRIMARY KEY (userId,spName))"];
+    }];
+}
+
+//插入缓存数据
++ (BOOL)insertManagerCache: (NSString *)url dataStr:(NSString *)dataStr
+{
+    FMDatabaseQueue *queue = [NFDatabaseQueue shareInstance];
+    
+    [queue inTransaction:^(FMDatabase *db, BOOL *rollback){
+        //重新插入数据
+        NSString *insertSql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO ManagerCache_Sqlit (url, dataStr, userId) values (?,?,?)"];
+        [db executeUpdate:
+         insertSql,
+         url,
+         dataStr,
+         [NFUserEntity shareInstance].hdnumber];
+    }];
+    
+    return YES;
+}
+
+//取出缓存数据
++ (NSString *)selectManagerCache: (NSString *)url
+{
+    FMDatabaseQueue *queue = [NFDatabaseQueue shareInstance];
+    
+    __block NSString *totalCount;
+    [queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        NSString *selectSql = [NSString stringWithFormat:@"SELECT dataStr FROM ManagerCache_Sqlit  WHERE url = '%@' and userId = '%@'", url,[NFUserEntity shareInstance].hdnumber];
+        FMResultSet *rs = [db executeQuery:selectSql];
+        while ([rs next])
+        {
+            totalCount = [rs stringForColumn:@"dataStr"];
+        }
+    }];
+    
+    return totalCount;
+}
+
+
+//----系统里面的借口请求缓存---
+
+//clear data
+-(BOOL)clearCache
+{
+    FMDatabaseQueue *queue = [NFDatabaseQueue shareInstance];
+    
+    [queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        NSString *selectSql = [NSString stringWithFormat:@"delete from SystemMessage_Sqlit where  userId = '%@'",[NFUserEntity shareInstance].hdnumber];
+        [db executeUpdate:selectSql];
+    }];
+    
+    [queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        NSString *selectSql = [NSString stringWithFormat:@"delete from ManagerCache_Sqlit where  userId = '%@'",[NFUserEntity shareInstance].hdnumber];
+        [db executeUpdate:selectSql];
+    }];
+    
+    [queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        NSString *selectSql = [NSString stringWithFormat:@"delete from SearchCache_Sqlit where  userId = '%@'",[NFUserEntity shareInstance].hdnumber];
+        [db executeUpdate:selectSql];
+    }];
+    
+    return YES;
+}
+
+@end

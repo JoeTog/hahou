@@ -1,0 +1,137 @@
+//
+//  NewHomeViewController.m
+//  nationalFitness
+//
+//  Created by 童杰 on 2017/2/25.
+//  Copyright © 2017年 chenglong. All rights reserved.
+//
+
+#import "NewHomeViewController.h"
+#import "CycleScrollView.h"
+#import "DailyAdminTableViewController.h"
+
+
+
+//轮播图高度
+//#define kHomeWeatherHeight kPLUS_SCALE_X(198.0f)
+
+@interface NewHomeViewController ()<CycleScrollViewDelegate>{
+    
+    //轮播图
+    __weak IBOutlet UIView *CycleScrollV_;
+    
+    //培训管理
+    
+    __weak IBOutlet UIButton *PractiseBtn;
+    //日常管理
+    
+    __weak IBOutlet UIButton *dailyBtn;
+    //店面管理
+    
+    __weak IBOutlet UIButton *StorefrontBtn;
+    //业绩查询
+    __weak IBOutlet UIButton *PerformanceQueryBtn;
+    
+    
+    
+    
+}
+//带标题的轮播图
+@property (strong,nonatomic) CycleScrollView *networkTitleScrollView;
+
+@end
+
+@implementation NewHomeViewController
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.tabBarController.tabBar.hidden = NO;
+    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBar.translucent = YES;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    self.title = @"首页";
+    
+    [self initUI];
+}
+
+
+-(void)initUI{
+    if (_networkTitleScrollView == nil) {
+        _networkTitleScrollView = [CycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, CycleScrollV_.frame.size.height) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
+        //        _networkTitleScrollView.imageURLStringsGroup = self.networkImageNameAry;
+        _networkTitleScrollView.currentPageDotColor = MainColor;
+        _networkTitleScrollView.pageDotColor = [UIColor whiteColor];
+        _networkTitleScrollView.pageControlBottomOffset = 25;
+        // 自定义分页控件小圆标颜色
+        //        _networkTitleScrollView.titlesGroup = self.networkTextAry;
+        //        _networkTitleScrollView.imageURLStringsGroup = self.networkImageNameAry;
+        
+        NSArray *picArr = @[@"banner",@"banner",@"banner"];
+        NSArray *titleArr = @[@"111",@"222",@"333",];
+        _networkTitleScrollView.imageURLStringsGroup = picArr;
+        _networkTitleScrollView.titlesGroup = titleArr;
+        [CycleScrollV_ addSubview:_networkTitleScrollView];
+        
+    }
+    
+    
+    
+}
+
+//培训管理
+- (IBAction)PractiseBtnClick:(id)sender {
+    
+}
+
+//日常管理
+- (IBAction)dailyBtnClick:(id)sender {
+    //
+    UIStoryboard * sb = [UIStoryboard storyboardWithName:@"DailyAdminStoryboard" bundle:nil];
+    DailyAdminTableViewController *toCtrol = [sb instantiateViewControllerWithIdentifier:@"DailyAdminTableViewController"];
+    [self.navigationController pushViewController:toCtrol animated:YES];
+}
+
+//店面管理
+- (IBAction)StorefrontBtnClick:(id)sender {
+    
+    
+}
+
+//业绩查询
+- (IBAction)PerformanceQueryBtnClick:(id)sender {
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

@@ -1,0 +1,94 @@
+//
+//  MessageDetailTableViewController.m
+//  nationalFitness
+//
+//  Created by 童杰 on 2017/2/27.
+//  Copyright © 2017年 chenglong. All rights reserved.
+//
+
+#import "MessageDetailTableViewController.h"
+#import "Masonry.h"
+
+
+@interface MessageDetailTableViewController ()
+
+@end
+
+@implementation MessageDetailTableViewController{
+    //textView
+    __weak IBOutlet UITextView *textV_;
+    //确定
+    __weak IBOutlet UIButton *downLoadBtn_;
+    
+    
+    __weak IBOutlet UIButton *commitBtn;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = @"2017年第一季度DCL";
+    [self initUI];
+    
+}
+
+-(void)initUI{
+    #pragma mark - 设置UIBarButtonItem返回
+    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 20, 34)];
+    [backBtn setImage:[UIImage imageNamed:@"everyday1_return"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithCustomView:backBtn];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+    
+    
+    ViewRadius(downLoadBtn_, 3);
+    ViewRadius(commitBtn, 5);
+    NSString *str = @"好的营销是创业公司发展非常关键的一步。而作为公司的EDM营销必备的“企业邮箱营销，也必须跟上时代的发展，作出有料，有趣，有点急甚至有病毒传播性的营销条件。好的营销是创业公司发展非常关键的一步。而作为公司的EDM营销必备的“企业邮箱营销，也必须跟上时代的发展，作出有料，有趣，有点急甚至有病毒传播性的营销条件。";
+    textV_.text = [NSString stringWithFormat:@"先生你好:\n%@",str];
+    textV_.userInteractionEnabled = NO;
+    
+}
+
+- (void)backClicked
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+//-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+//    return 300;
+//}
+
+//tableView footer
+//-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+//    UIView *footV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
+//    footV.backgroundColor = UIColorFromRGB(0xF2F2F2);
+//    UIButton *commitBtn = [UIButton new];
+//    [commitBtn setTitle:@"确定" forState:(UIControlStateNormal)];
+//    commitBtn.backgroundColor = UIColorFromRGB(0x1B6DB2);
+//    ViewRadius(commitBtn, 5);
+//    [commitBtn addTarget:self action:@selector(commitBtnClick) forControlEvents:(UIControlEventTouchDown)];
+//    [footV addSubview:commitBtn];
+//    [commitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(footV.mas_top);
+//        make.centerX.mas_equalTo(footV.mas_centerX);
+//        make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH/2.0, 40));
+//        
+//    }];
+//    return footV;
+//}
+
+-(void)commitBtnClick{
+    NSLog(@"确认");
+    
+}
+
+
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+
+@end

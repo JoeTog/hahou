@@ -1,0 +1,13 @@
+//
+//  NFShareMoodRequest.m
+//  nationalFitness
+//
+//  Created by wangping on 15/4/7.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import "NFKCRequest.h"
+
+@implementation NFKCRequest
+
+@end

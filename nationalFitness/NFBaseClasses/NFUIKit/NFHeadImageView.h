@@ -1,0 +1,55 @@
+//
+//  NFTouchImageView.h
+//  nationalFitness
+//  用户点击的头像
+//  Created by 程long on 14-11-4.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "PublicDefine.h"
+
+//点击头像事件
+typedef void (^clickHeadView)(void);
+
+
+@interface NFHeadImageView : UIImageView
+
+/**
+ *  头像类型 - 不够加，不用的话就不用管
+ */
+typedef NS_ENUM(NSInteger, NFTouchImageType)
+{
+    /**
+     *  用户点击的自己头像
+     */
+    NFTouchTypeSelfHead = 0,
+    /**
+     *  用户点击的其他头像
+     */
+    NFTouchTypeOtherHead
+};
+
+@property(nonatomic,copy)clickHeadView clickHeadImage;
+
+-(void)afterClickHeadImage:(clickHeadView)block;
+
+
+/**
+ *  从缓存或者下载图片，带回调，可用可不用
+ *
+ *  @param URLStr     头像图片路径
+ *  @param completion 带成功BOLL 和 IMAGE结果
+ */
+- (void)ShowHeadImageWithUrlStr: (NSString *)URLStr withUerId:(NSString *)userId completion:(ResultDown)completion;
+
+
+/**
+ *  新增设置头像根据性别设置width像素的边框
+ *
+ *  @param URLStr     头像图片路径
+ *  @param sex        性别
+ */
+- (void)ShowHeadImageWithUrlStr: (NSString *)URLStr withUerId:(NSString *)userId andSex:(NFSex)sex lineWidth:(CGFloat)width;
+
+@end

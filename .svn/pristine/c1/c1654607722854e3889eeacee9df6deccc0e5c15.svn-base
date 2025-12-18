@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserWeightViewController">
+            <connections>
+                <outlet property="view" destination="iN0-l3-epB" id="sXQ-Dj-Pcb"/>
+                <outlet property="weightPickerView" destination="MLS-2c-OeA" id="W7V-XJ-LjD"/>
+                <outlet property="weightPlateIndicator" destination="qLz-93-bcz" id="B9L-YR-zFH"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="weight" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GAX-sz-Num" userLabel="WeightEnglishLabel">
+                    <rect key="frame" x="26" y="64" width="268" height="46"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="38"/>
+                    <color key="textColor" red="0.050980392159999999" green="0.34901960780000002" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="体重" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="roB-ui-GiU" userLabel="WeightChineseLabel">
+                    <rect key="frame" x="26" y="115" width="268" height="46"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="38"/>
+                    <color key="textColor" red="0.050980392159999999" green="0.34901960780000002" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Bc-Pp-61H" userLabel="WeightSelectContainerView">
+                    <rect key="frame" x="26" y="175" width="268" height="290"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WeightPlate" translatesAutoresizingMaskIntoConstraints="NO" id="vJg-Rb-Yf8" userLabel="WeightPlateContainerView">
+                            <rect key="frame" x="3" y="0.0" width="268" height="145"/>
+                            <animations/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WeightPlateIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="qLz-93-bcz" userLabel="WeightPlateIndicator">
+                            <rect key="frame" x="128" y="38" width="12" height="91"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="12" id="Ki7-cp-Xec"/>
+                                <constraint firstAttribute="height" constant="91" id="n2g-v6-0Nk"/>
+                            </constraints>
+                        </imageView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wOR-tv-E6c" userLabel="WeightSelectBottomContainerView">
+                            <rect key="frame" x="0.0" y="145" width="268" height="145"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lVr-mD-auY" userLabel="WeightPickerContainerView">
+                                    <rect key="frame" x="0.0" y="0.0" width="268" height="109"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2xE-uD-Q6n" userLabel="WeightPickerContainerTopDivider">
+                                            <rect key="frame" x="0.0" y="0.0" width="268" height="1"/>
+                                            <animations/>
+                                            <color key="backgroundColor" red="0.050980392159999999" green="0.34901960780000002" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="f4e-sv-k6B"/>
+                                            </constraints>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MLS-2c-OeA" userLabel="WeightPickerView" customClass="IZValueSelectorView">
+                                            <rect key="frame" x="0.0" y="1" width="268" height="107"/>
+                                            <animations/>
+                                        </view>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WeightPickerMask" translatesAutoresizingMaskIntoConstraints="NO" id="4er-63-JQZ" userLabel="WeightPickerMaskView">
+                                            <rect key="frame" x="0.0" y="1" width="268" height="107"/>
+                                            <animations/>
+                                            <color key="tintColor" red="0.050980392159999999" green="0.34901960780000002" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
+                                        </imageView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kh1-Cj-SvD" userLabel="WeightPickerContainerBottomDivider">
+                                            <rect key="frame" x="0.0" y="108" width="268" height="1"/>
+                                            <animations/>
+                                            <color key="backgroundColor" red="0.050980392159999999" green="0.34901960780000002" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
+                                        </view>
+                                    </subviews>
+                                    <animations/>
+                                    <constraints>
+                                        <constraint firstAttribute="centerX" secondItem="2xE-uD-Q6n" secondAttribute="centerX" id="0HX-0a-q7V"/>
+                                        <constraint firstItem="Kh1-Cj-SvD" firstAttribute="height" secondItem="2xE-uD-Q6n" secondAttribute="height" id="1Ug-Fp-vOn"/>
+                                        <constraint firstItem="MLS-2c-OeA" firstAttribute="top" secondItem="4er-63-JQZ" secondAttribute="top" id="F8Y-zl-gCL"/>
+                                        <constraint firstItem="MLS-2c-OeA" firstAttribute="bottom" secondItem="Kh1-Cj-SvD" secondAttribute="top" id="Kxt-yU-fUg"/>
+                                        <constraint firstAttribute="width" secondItem="4er-63-JQZ" secondAttribute="width" id="RH9-HE-auQ"/>
+                                        <constraint firstAttribute="centerX" secondItem="MLS-2c-OeA" secondAttribute="centerX" id="XuR-Dp-Oxa"/>
+                                        <constraint firstAttribute="width" secondItem="2xE-uD-Q6n" secondAttribute="width" id="crM-lm-73U"/>
+                                        <constraint firstAttribute="width" secondItem="Kh1-Cj-SvD" secondAttribute="width" id="e3x-km-zH1"/>
+                                        <constraint firstItem="MLS-2c-OeA" firstAttribute="height" secondItem="4er-63-JQZ" secondAttribute="height" id="ekW-iB-3tT"/>
+                                        <constraint firstItem="2xE-uD-Q6n" firstAttribute="top" secondItem="lVr-mD-auY" secondAttribute="top" id="kCS-ac-bza"/>
+                                        <constraint firstItem="MLS-2c-OeA" firstAttribute="top" secondItem="2xE-uD-Q6n" secondAttribute="bottom" id="l1q-rL-oII"/>
+                                        <constraint firstAttribute="centerX" secondItem="4er-63-JQZ" secondAttribute="centerX" id="rFQ-L7-5FE"/>
+                                        <constraint firstAttribute="bottom" secondItem="Kh1-Cj-SvD" secondAttribute="bottom" id="um2-Jz-WJN"/>
+                                        <constraint firstAttribute="width" secondItem="MLS-2c-OeA" secondAttribute="width" id="xnv-63-9nd"/>
+                                        <constraint firstAttribute="centerX" secondItem="Kh1-Cj-SvD" secondAttribute="centerX" id="yzH-sc-jSR"/>
+                                    </constraints>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公斤" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zfy-fz-amd" userLabel="WeightUnitLabel">
+                                    <rect key="frame" x="0.0" y="116" width="268" height="29"/>
+                                    <animations/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                    <color key="textColor" red="0.050980392159999999" green="0.34901960780000002" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <animations/>
+                            <constraints>
+                                <constraint firstItem="Zfy-fz-amd" firstAttribute="width" secondItem="wOR-tv-E6c" secondAttribute="width" id="A8r-CC-5L1"/>
+                                <constraint firstItem="lVr-mD-auY" firstAttribute="width" secondItem="wOR-tv-E6c" secondAttribute="width" id="FCM-Ap-LIS"/>
+                                <constraint firstItem="Zfy-fz-amd" firstAttribute="top" secondItem="lVr-mD-auY" secondAttribute="bottom" constant="7" id="KeK-g2-QLt"/>
+                                <constraint firstAttribute="centerX" secondItem="lVr-mD-auY" secondAttribute="centerX" id="Scp-MF-Wkl"/>
+                                <constraint firstItem="lVr-mD-auY" firstAttribute="top" secondItem="wOR-tv-E6c" secondAttribute="top" id="YvL-bu-YyM"/>
+                                <constraint firstAttribute="bottom" secondItem="Zfy-fz-amd" secondAttribute="bottom" id="e5g-7F-gf0"/>
+                                <constraint firstAttribute="centerX" secondItem="Zfy-fz-amd" secondAttribute="centerX" id="vlE-ab-8f7"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <animations/>
+                    <constraints>
+                        <constraint firstItem="vJg-Rb-Yf8" firstAttribute="width" secondItem="6Bc-Pp-61H" secondAttribute="width" id="GH2-JL-GEv"/>
+                        <constraint firstItem="qLz-93-bcz" firstAttribute="bottom" secondItem="vJg-Rb-Yf8" secondAttribute="bottom" constant="-16" id="Osw-ME-ecE"/>
+                        <constraint firstItem="vJg-Rb-Yf8" firstAttribute="height" secondItem="wOR-tv-E6c" secondAttribute="height" id="Tzo-62-eFk"/>
+                        <constraint firstItem="vJg-Rb-Yf8" firstAttribute="leading" secondItem="6Bc-Pp-61H" secondAttribute="leading" constant="3" id="VOG-QI-k3T"/>
+                        <constraint firstAttribute="centerX" secondItem="qLz-93-bcz" secondAttribute="centerX" id="Vmm-fu-QEb"/>
+                        <constraint firstAttribute="bottom" secondItem="vJg-Rb-Yf8" secondAttribute="bottom" multiplier="2:1" id="ZqG-0c-lqX"/>
+                        <constraint firstAttribute="height" constant="290" id="fbe-s1-wZy"/>
+                        <constraint firstAttribute="bottom" secondItem="wOR-tv-E6c" secondAttribute="bottom" id="kmJ-uk-kZS"/>
+                        <constraint firstItem="wOR-tv-E6c" firstAttribute="leading" secondItem="6Bc-Pp-61H" secondAttribute="leading" id="nP4-5I-T5z"/>
+                        <constraint firstItem="vJg-Rb-Yf8" firstAttribute="top" secondItem="6Bc-Pp-61H" secondAttribute="top" id="pwS-Sc-YRD"/>
+                        <constraint firstAttribute="width" secondItem="wOR-tv-E6c" secondAttribute="width" id="y9u-2O-uMu"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="roB-ui-GiU" firstAttribute="width" secondItem="GAX-sz-Num" secondAttribute="width" id="5jm-LA-Oud"/>
+                <constraint firstItem="roB-ui-GiU" firstAttribute="top" secondItem="GAX-sz-Num" secondAttribute="bottom" constant="5" id="5js-Kf-vU9"/>
+                <constraint firstItem="GAX-sz-Num" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="26" id="5sj-7Y-u4y"/>
+                <constraint firstItem="GAX-sz-Num" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="64" id="7Pt-dR-LAf"/>
+                <constraint firstItem="GAX-sz-Num" firstAttribute="width" secondItem="6Bc-Pp-61H" secondAttribute="width" id="I8I-Ut-7BA"/>
+                <constraint firstItem="roB-ui-GiU" firstAttribute="bottom" secondItem="6Bc-Pp-61H" secondAttribute="top" constant="-14" id="Odb-1S-DOY"/>
+                <constraint firstItem="roB-ui-GiU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="26" id="anp-NB-tn0"/>
+                <constraint firstItem="6Bc-Pp-61H" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="26" id="hC7-bP-nfl"/>
+                <constraint firstAttribute="trailing" secondItem="GAX-sz-Num" secondAttribute="trailing" constant="26" id="nrl-R5-ZUj"/>
+            </constraints>
+            <point key="canvasLocation" x="245" y="348"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="WeightPickerMask" width="268" height="107"/>
+        <image name="WeightPlate" width="268" height="145"/>
+        <image name="WeightPlateIndicator" width="12" height="91"/>
+    </resources>
+</document>

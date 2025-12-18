@@ -1,0 +1,84 @@
+//
+//  NFMatchManager.h
+//  nationalFitness
+//
+//  Created by 林向阳 on 16/2/29.
+//  Copyright © 2016年 chenglong. All rights reserved.
+//
+
+#import "NFBaseManager.h"
+#import "NFMatchRequest.h"
+#import "NFMatchParser.h"
+
+@interface NFMatchManager : NFBaseManager
+
+//赛事首页
+- (void)matchInfoManager;
+
+//队伍列表
+- (void)teamListManager;
+
+//赛事列表
+- (void)matchListManager;
+
+//队伍待审核成员列表
+- (void)waitApplyManager;
+
+//审核成员
+- (void)checkApplyManager;
+
+//我的队伍
+- (void)myTeamManager;
+
+//赛事类型
+- (void)matchTypeManager;
+
+//排名列表
+- (void)pwRankListManager;
+
+//创建队伍
+- (void)creatMyTeamManager;
+
+//参赛历史
+- (void)historyMatchManager;
+
+//赛事统计
+- (void)matchCountManager;
+
+//加入队伍
+- (void)joinTeamManager;
+
+//退出队伍
+- (void)exitTeamManager;
+
+//解散队伍
+- (void)deleteTeamManager;
+
+//赛事提醒
+- (void)matchRemindManager;
+
+//赛事详情
+- (void)matchDetailManager;
+
+//赛事结果
+- (void)matchResultManager;
+
+//报名赛事
+- (void)joinMatchManager;
+
+//队伍信息
+- (void)teamInfoManager;
+
+//邀请好友
+- (void)inviteFriendManager;
+
+//赛事列表实体
+- (void)competitionListManager;
+
+//赛事列表详情
+- (void)competitionInfoManager;
+
+//我的赛事
+- (void)mineCompetitionManager;
+
+@end

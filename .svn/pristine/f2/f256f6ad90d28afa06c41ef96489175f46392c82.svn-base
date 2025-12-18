@@ -1,0 +1,90 @@
+//
+//  NFUserEntity.h
+//  SummaryHoperun
+//
+//  Created by 程long on 14-7-30.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFUserEntity.h"
+#import "KeepAppBox.h"
+#import "GetUserLoaction.h"
+
+static NFUserEntity *userEntity = nil;
+
+@implementation NFUserEntity
+{
+    GetUserLoaction *getLoaction_;
+}
+
+/*!
+ @function
+ @abstract      用户对象的实体单例
+ 
+ @note          该对象中的对象属性不可被多线程共享访问修改
+ 
+ @result        返回用户的单例对象
+ */
++ (instancetype)shareInstance
+{
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        
+        userEntity = [NFUserEntity new];
+        
+            });
+    
+    return userEntity;
+}
+
+//改变对象
+- (void)changeUserDistanceFilter:(CGFloat)distanceFilter andDelagate:(id)delagate
+{
+}
+
+#pragma mark - CLLocationManagerDelegate
+
+#pragma mark - cleardata
+
+- (void)clearUserData
+{
+    userEntity.userId                         = nil;
+    userEntity.mobile                       = nil;
+    userEntity.accessToken                  = nil;
+    userEntity.loginName                    = nil;
+    userEntity.password                     = nil;
+    userEntity.hobby                        = nil;
+    userEntity.signaTure                    = nil;
+    userEntity.dynamicNew                   = nil;
+    userEntity.currentArea                  = nil;
+    userEntity.roleType                 = nil;
+    userEntity.smallpicpath                   = nil;
+    userEntity.bigpicpath                   = nil;
+    userEntity.matrixPicUrl                 = nil;
+    userEntity.sex                           = NFUnknow;
+    userEntity.idNumber                     = nil;
+    userEntity.nickName                       = nil;
+    userEntity.remark                       = nil;
+    userEntity.realName                     = nil;
+    userEntity.proName                      = nil;
+    userEntity.nickNameChanged              =   0;
+    userEntity.userType                   = NFUserGeneral;
+    userEntity.isUserMynj                     = NO;
+    userEntity.orepationType                = OT_LoginDefault;
+    userEntity.userHeight                   = nil;
+    userEntity.userWeight                   = nil;
+    userEntity.birthDay                      = nil;
+    userEntity.hdnumber                      = nil;
+    userEntity.userAge                      = nil;
+    userEntity.healthStatus                 = nil;
+    userEntity.conStell                     = nil;
+    userEntity.sexUality                    = nil;
+    userEntity.orgCode                      = nil;
+    userEntity.sysCode                      = nil;
+    userEntity.currentArea                  = nil;
+    userEntity.inviteCode                   = nil;
+    getLoaction_                           =  nil;
+}
+
+@end

@@ -1,0 +1,62 @@
+//
+//  RecentConEntity.h
+//  nationalFitness
+//  最近联系人以及群组的实例
+//  Created by liumac on 15/5/14.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface FriendEntity : NSObject
+
+//ask
+@property (strong,nonatomic)    NSString *ask;
+
+// displayName
+@property (strong,nonatomic)    NSString *displayName;
+
+// groups
+@property (strong,nonatomic)    NSString *groups;
+
+// jid
+@property (strong,nonatomic)    NSString *jid;
+
+//jidStr
+@property (strong,nonatomic)    NSString *jidStr;
+
+//nickName
+@property (strong,nonatomic)    NSString *nickName;
+
+//photo
+@property (strong,nonatomic)    NSString *photo;
+
+//primaryResource
+@property (strong,nonatomic)    NSString *primaryResource;
+
+//resources
+@property (strong,nonatomic)    NSString *resources;
+
+//section
+@property (strong,nonatomic)    NSString *section;
+
+//sectionName
+@property (strong,nonatomic)    NSString *sectionName;
+
+//sectionNum
+@property (strong,nonatomic)    NSString *sectionNum;
+
+//streamBareJidStr
+@property (strong,nonatomic)    NSString *streamBareJidStr;
+
+//subscription
+@property (strong,nonatomic)    NSString *subscription;
+
+//unreadMessages
+@property (strong,nonatomic)    NSString *unreadMessages;
+
+@property (assign, nonatomic)   BOOL isSelect;
+
+- (id)initWithUser:(NSString *)userid;
+
+@end

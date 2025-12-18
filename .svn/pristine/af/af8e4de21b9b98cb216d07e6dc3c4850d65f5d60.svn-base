@@ -1,0 +1,61 @@
+//
+//  NFMyWalletEntity.h
+//  nationalFitness
+//
+//  Created by 林向阳 on 15/9/22.
+//  Copyright © 2015年 chenglong. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface NFMyWalletEntity : NSObject
+
+@end
+
+//钱包实体
+@interface MyWalletEntity : NSObject
+//钱包id
+@property (nonatomic, strong)NSString * walletId;
+//账户总金额
+@property (nonatomic, strong)NSString *         actTotalBalance;
+//手机是否绑定(1绑定0未绑定)
+@property (nonatomic, strong)NSString * isTelephoneBinding;
+//解锁密码是否开启(1启用0未启用)
+@property (nonatomic, strong)NSString * isGustUnlockPswUsed;
+//手势密码
+@property (nonatomic, strong)NSString *   gustureUnlockPsw;
+//支付密码是否开启(1启用0未启用)
+@property (nonatomic, strong)NSString * isPayPswUsed;
+
+//账户真是金额
+@property (nonatomic, strong)NSString * actRealBalance;
+//账户虚拟金额
+@property (nonatomic, strong)NSString * actGiveBalance;
+
+//账户余额
+@property (nonatomic, strong)NSString * accountBalance;
+//广告节点
+@property (nonatomic, strong)NSString * addUrl;
+
+@end
+
+/**
+ 
+ *消费实体
+ 
+ **/
+@interface CosumeEntity : NSObject
+//交易进出金额
+@property (nonatomic, strong)NSString *transTotalAmt;
+//交易时间 用于显示
+@property (nonatomic, strong)NSString * transDate;
+//交易方式(1支付宝2微支付3慧钱包)
+@property (nonatomic, strong)NSString * transWay;
+//交易类型名称
+@property (nonatomic, strong)NSString * transTypeName;
+//交易备注
+@property (nonatomic, strong)NSString * transRemark;
+//交易时间 用于分页
+@property (nonatomic, strong)NSString * createDate;
+
+@end

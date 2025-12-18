@@ -1,0 +1,33 @@
+//
+//  GetUserLoaction.m
+//  nationalFitness
+//
+//  Created by 程龙 on 15/9/9.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import "GetUserLoaction.h"
+#import "NFUserEntity.h"
+
+@implementation GetUserLoaction
+{
+//    AMapSearchAPI *search_;
+}
+
+- (void)searchReGeocodeWithCoordinate:(CGFloat)Longitude userLatitude:(CGFloat)Latitude
+{
+//    if (!search_)
+//    {
+//        search_ = [[AMapSearchAPI alloc] initWithSearchKey:[MAMapServices sharedServices].apiKey Delegate:self];
+//        
+//        AMapReGeocodeSearchRequest *regeo = [[AMapReGeocodeSearchRequest alloc] init];
+//        regeo.location = [AMapGeoPoint locationWithLatitude:Latitude longitude:Longitude];
+//        
+//        regeo.requireExtension = NO;
+//        
+//        [search_ AMapReGoecodeSearch:regeo];
+//    }
+}
+
+
+@end

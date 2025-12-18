@@ -1,0 +1,155 @@
+//
+//  NFShareMoodParser.m
+//  nationalFitness
+//
+//  Created by wangping on 15/4/7.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import "NFKCParser.h"
+#import "NFActivityParser.h"
+
+@implementation NFKCParser
+
+//课程列表
++ (id)CourseListParser:(NSData *)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    if (bodyDic)
+    {
+        NSArray *entityListArr = [bodyDic objectForKey:@"courseList"];
+        NSMutableArray *retMuarr = [[NSMutableArray alloc] initWithCapacity:10];
+        
+        for (NSDictionary *entityDic in entityListArr)
+        {
+            KCEntity *entity = [[KCEntity alloc] init];
+            
+            entity.courseId = [[entityDic objectForKey:@"courseId"] description];
+            entity.courseName = [[entityDic objectForKey:@"courseName"] description];
+            entity.subject = [[entityDic objectForKey:@"subject"] description];
+            entity.joinNum = [[entityDic objectForKey:@"joinNum"] description];
+            entity.planNum = [[entityDic objectForKey:@"planNum"] description];
+            entity.picPath = [[entityDic objectForKey:@"picPath"] description];
+            entity.isRecomm = [[entityDic objectForKey:@"isRecomm"] boolValue];
+            entity.studyCost = [[entityDic objectForKey:@"studyCost"] description];
+            
+            [retMuarr addObject:entity];
+        }
+        return retMuarr;
+    }
+    
+    return nil;
+}
+
+//课程详情
++ (id)CourseInfoParser:(NSData *)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    if (bodyDic)
+    {
+        NSDictionary *entityDic = [bodyDic objectForKey:@"courseEntity"];
+        if (entityDic)
+        {
+            KCEntity *entity = [[KCEntity alloc] init];
+            entity.courseId = [[entityDic objectForKey:@"courseId"] description];
+            entity.courseName = [[entityDic objectForKey:@"courseName"] description];
+            entity.subject = [[entityDic objectForKey:@"subject"] description];
+            entity.joinNum = [[entityDic objectForKey:@"joinNum"] description];
+            entity.planNum = [[entityDic objectForKey:@"planNum"] description];
+            entity.picPath = [[entityDic objectForKey:@"picPath"] description];
+            entity.isRecomm = [[entityDic objectForKey:@"isRecomm"] boolValue];
+            entity.studyCost = [[entityDic objectForKey:@"studyCost"] description];
+            entity.joinNum = [[entityDic objectForKey:@"joinNum"] description];
+            entity.attendDate = [[entityDic objectForKey:@"attendDate"] description];
+            entity.classAddress = [[entityDic objectForKey:@"classAddress"] description];
+            entity.summary = [[entityDic objectForKey:@"summary"] description];
+            entity.applyCost = [[entityDic objectForKey:@"applyCost"] description];
+            entity.joinFlag = [[entityDic objectForKey:@"joinFlag"] description];
+            entity.longitude = [[entityDic objectForKey:@"longitude"] description];
+            entity.latitude = [[entityDic objectForKey:@"latitude"] description];
+            entity.telPhone = [[entityDic objectForKey:@"telPhone"] description];
+            entity.orgName = [[entityDic objectForKey:@"orgName"] description];
+            entity.isCollect = [[entityDic objectForKey:@"isCollect"] description];
+            entity.canSignDate = [[entityDic objectForKey:@"canSignDate"] description];
+            entity.commNum = [[entityDic objectForKey:@"commNum"] description];
+            entity.picMapList = [bodyDic objectForKey:@"picMapList"];
+            entity.photoMapList = [bodyDic objectForKey:@"photoMapList"];
+            
+            return entity;
+        }
+    }
+    
+    return nil;
+}
+
+//我的课程
++ (id)MyCourseListParser:(NSData *)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    if (bodyDic)
+    {
+        NSArray *entityListArr = [bodyDic objectForKey:@"courseList"];
+        NSMutableArray *retMuarr = [[NSMutableArray alloc] initWithCapacity:10];
+        
+        for (NSDictionary *entityDic in entityListArr)
+        {
+            KCEntity *entity = [[KCEntity alloc] init];
+            entity.courseId = [[entityDic objectForKey:@"courseId"] description];
+            entity.courseName = [[entityDic objectForKey:@"courseName"] description];
+            entity.attendDate = [[entityDic objectForKey:@"attendDate"] description];
+            entity.classAddress = [[entityDic objectForKey:@"classAddress"] description];
+            entity.picPath = [[entityDic objectForKey:@"picPath"] description];
+            
+            [retMuarr addObject:entity];
+        }
+        return retMuarr;
+    }
+    
+    return nil;
+}
+
+//支付生成订单
++ (id)createOrderInfoParser:(NSData *)data
+{
+    NSDictionary *bodyDic = [self gotDataParser:data];
+    
+    if (bodyDic)
+    {
+        if ([bodyDic objectForKey:kWrongDlog])
+        {
+            return bodyDic;
+        }
+        else
+        {
+            NSDictionary *retMuDic = [[NSMutableDictionary alloc] initWithCapacity:5];
+            
+            NSMutableArray *payTypeArr = [[NSMutableArray alloc] initWithCapacity:5];
+            
+            NSArray *payArr = [bodyDic objectForKey:@"payTypeList"];
+            for (NSDictionary *typeDic in payArr)
+            {
+                SportsPaymentTypeEntity *entity = [[SportsPaymentTypeEntity alloc] init];
+                //支付id
+                entity.typeId = [[typeDic objectForKey:@"paytypeId"] description];
+                // 支付方式名称
+                entity.name = [[typeDic objectForKey:@"payName"] description];
+                // 服务器端被动通知 URL
+                entity.backendURL = [[typeDic objectForKey:@"backendUrl"] description];
+                
+                entity.picPath = [[typeDic objectForKey:@"picPath"] description];
+                entity.remark = [[typeDic objectForKey:@"remark"] description];
+                entity.type = [[typeDic objectForKey:@"payType"] description];
+                
+                [payTypeArr addObject:entity];
+            }
+            
+            [retMuDic setValue:payTypeArr forKey:@"payTypeList"];
+            [retMuDic setValue:[[bodyDic objectForKey:@"bookNumber"] description] forKey:@"bookNumber"];
+            [retMuDic setValue:[[bodyDic objectForKey:@"totalAmount"] description]forKey:@"totalAmount"];
+            return retMuDic;
+        }
+    }
+    return nil;
+}
+
+@end

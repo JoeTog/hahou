@@ -1,0 +1,177 @@
+//
+//  NFbaseViewController.h
+//  nationalFitness
+//
+//  Created by 程long on 14-10-22.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFtextField.h"
+#import "NFbutton.h"
+#import "NFUserEntity.h"
+#import "NFBaseTableView.h"
+#import "NFLab.h"
+#import "SVProgressHUD.h"
+//#import "Reachability.h"
+#import "PublicDefine.h"
+#import "KeepAppBox.h"
+
+#pragma mark - joe
+//#import "MBProgressHUD.h"
+//#import "AFHTTPSessionManager.h"
+#import "UIImageView+WebCache.h"
+
+
+#define JOESIZESCALE JOESIZE.width/320.0
+#define JOESIZE [UIScreen mainScreen].bounds.size
+#define JoeNAVIGATION_LEFTBARCOLOR [UIColor blackColor]
+#define JoeNAVIGATION_LEFTBARTEXSIZE [UIFont systemFontOfSize:15]
+#define JoeSCREENSCALE JOESIZE.width/320.0
+#define CGRect(x,y,w,h) CGRectMake(x*JoeSCREENSCALE, y*JoeSCREENSCALE, w*JoeSCREENSCALE, h*JoeSCREENSCALE)
+#define BOLDFACE 13*JOESIZESCALE
+#define BOLDFACES 10*JOESIZESCALE
+#define BOLDFACEB 15*JOESIZESCALE
+#define SYSTEXTSIZE 13*JOESIZESCALE
+//#define GAP 3.5*JOESIZESCALE
+//#define GAPB 7*JOESIZESCALE
+#define IMAGESH 34*JOESIZESCALE
+#define IMAGESHS 37*JOESIZESCALE
+#define LABELH 13.5*JOESIZESCALE
+#define collectionCellID @"collectionCellId"
+#define LABELW JOESIZE.width/2
+#define placeHolderImage @"18_9.png"
+#define durationTime 0.3
+#define FONT20 20
+#define FONT10 10
+#define FONT15 15
+
+@interface NFbaseViewController : UIViewController
+{
+    //是否已经连接了网络
+    BOOL isConnectNet;
+    
+    //用户操作类型， 是找回密码还是注册用户判断
+    OPERATION_TYOE orepationType;
+}
+
+/**
+ *  自定义提示操作显示的弹框
+ *
+ *  @param point 显示位置
+ *
+ *  @param frame 提示的内容
+ */
+//- (void)showAlertHud:(CGPoint)point withStr:(NSString *)message;
+//
+///**
+// *  开启HUD等待请求接口
+// */
+//- (void)showHUD;
+//
+///**
+// *  结束HUD
+// */
+//-(void)hideHud;
+
+//- (NetworkStatus)currentNetworkStatus;
+
+- (UIViewController*)topViewController;
+
+-(void)initUI;
+
+
+#pragma mark - joe
+//scrollView 无限轮播图
+//first 同一界面第一个
+@property(nonatomic,strong)UIScrollView *boundlessScrollV;
+@property(nonatomic,strong)UIPageControl *pageControl;
+@property(nonatomic,assign)CGFloat countOfImage;
+@property(nonatomic,strong)NSTimer *timer;
+
+/**网络请求成功后，用于数据的承接
+ * object:表示网络请求成功返回的字节流json对象
+ */
+-(void)getDataSourceWithObject:(id)object;
+
+
+-(void)prepareDataGetURLWithString:(NSString *)string;
+
+
+-(void)prepareData;
+
+#pragma mark - 设置NaviGationbar的titleView内容
+//表示标题内容
+-(void)createNaviGationbarItemWithTitle:(NSString *)title;
+
+#pragma mark - 通过背景图设置左右带图片navigation按钮(图片可为nil)
+//通过背景图设置左右navigation按钮
+-(void)createNaviGationbarItemWithTitleImage:(NSString *)titleImageName andTitleText:(NSString *)titleText andTag:(int)tag isLeft:(BOOL)left;
+
+//左右navigation按钮点击事件
+-(void)barButtonClick:(UIButton *)sender;
+
+#pragma mark - 创建带点击和标题在下方的imageView
+/**创建带点击和标题的imageView
+ *name:表示图片名
+ *frame:注意竖直长方形
+ *tag:tag
+ *title:标题
+ */
+-(UIView *)JoeTitleImageViewWithTitle:(NSString *)title frame:(CGRect)frame imageName:(NSString *)name tag:(int)tag;
+#pragma mark - 创建带点击的imageView
+/**创建带点击事件的imageView
+ *name:表示图片名
+ *frame:正方形
+ *tag:tag
+ */
+-(UIImageView *)JoeImageViewWithImage:(NSString *)name andFrame:(CGRect)frame tag:(int)tag;
+
+
+-(void)JoeImageClick:(UIButton *)sender;
+
+#pragma mark - 创建带点击和标题在下方的imageView 带圆角
+/**创建带点击和标题的imageView
+ *name:表示图片名
+ *frame:注意竖直长方形
+ *tag:tag
+ *title:标题
+ *cornerRadius:圆角
+ */
+-(UIView *)JoeTitleImageViewWithTitle:(NSString *)title frame:(CGRect)frame imageName:(NSString *)name tag:(int)tag cornerRadius:(CGFloat)cornerRadius;
+
+#pragma mark - 创建带点击事件的imageView 带圆角
+/**创建带点击事件的imageView
+ *name:表示图片名
+ *frame:正方形
+ *tag:tag
+ *cornerRadius:圆角
+ */
+-(UIImageView *)JoeImageViewWithImage:(NSString *)name andFrame:(CGRect)frame tag:(int)tag cornerRadius:(CGFloat)cornerRadius;
+
+
+-(void)JoeImageBringCornerRadiusClick:(UIButton *)sender;
+
+
+#pragma mark - scrollV封装 //first 同一界面第一个
+//在子类里面调用完该方法后，如果还需要实现滑动scrollV pagecontrol的currentpage跟着改变的话，只要在didScroll代理里面判断滑动的哪个scroll后将哪个pageControl的currentPage设置一下既：self.pageControl.currentPage = self.boundlessScrollV.contentOffset.x/JOESIZE.width-1;
+-(UIScrollView *)createScrollViewWithImageArr:(NSArray *)imageArray andFrame:(CGRect)frame;
+
+-(void)JoeScrollViewImageClick:(UIButton *)sender;
+
+/**设置view不规则圆角
+ *
+ */
+-(void)setViewRound:(UIView *)view TopLeft:(BOOL)TopLeft TopRight:(BOOL)TopRight BottomLeft:(BOOL)BottomLeft BottomRight:(BOOL)BottomRight cornerRadii:(CGFloat)roundW;
+/**设置button不规则圆角
+ *
+ */
+-(void)setBtnRound:(UIButton *)sender TopLeft:(BOOL)TopLeft TopRight:(BOOL)TopRight BottomLeft:(BOOL)BottomLeft BottomRight:(BOOL)BottomRight cornerRadii:(CGFloat)roundW;
+
+/**延迟n秒调用主线程
+ *
+ */
+-(void)createDispatchWithDelay:(CGFloat)time block:(void(^)(void))block;
+
+
+
+@end

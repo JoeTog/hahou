@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="服务器断开提示" translatesAutoresizingMaskIntoConstraints="NO" id="aBI-PT-gFY">
+                    <rect key="frame" x="20" y="10" width="19" height="19"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ODt-1e-rZB">
+                    <rect key="frame" x="59" y="5.5" width="306" height="29"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="未连接到服务器，请检查您的网络设置">
+                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="0.87450980392156863" blue="0.87450980392156863" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="aBI-PT-gFY" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Rmw-3S-tfu"/>
+                <constraint firstItem="ODt-1e-rZB" firstAttribute="leading" secondItem="aBI-PT-gFY" secondAttribute="trailing" constant="20" id="a9X-rT-YPI"/>
+                <constraint firstAttribute="trailing" secondItem="ODt-1e-rZB" secondAttribute="trailing" constant="10" id="chg-Pg-V82"/>
+                <constraint firstItem="aBI-PT-gFY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="d6h-fF-pm2"/>
+                <constraint firstItem="ODt-1e-rZB" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="fxd-Xg-NKZ"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="34.5" y="54"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="服务器断开提示" width="19" height="19"/>
+    </resources>
+</document>

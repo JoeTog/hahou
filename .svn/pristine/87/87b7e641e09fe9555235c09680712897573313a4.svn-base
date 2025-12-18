@@ -1,0 +1,18 @@
+//
+//  MemInfoCell.m
+//  nationalFitness
+//
+//  Created by liumac on 15-3-16.
+//  Copyright (c) 2015年 chenglong. All rights reserved.
+//
+
+#import "MemInfoCell.h"
+
+@implementation MemInfoCell
+
+- (void)awakeFromNib {
+//    _headImageView.layer.cornerRadius = _headImageView.frame.size.width/2;
+//    _headImageView.layer.masksToBounds = YES;
+}
+
+@end

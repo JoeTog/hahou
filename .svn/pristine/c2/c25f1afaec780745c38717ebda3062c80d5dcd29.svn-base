@@ -1,0 +1,19 @@
+//
+//  NFMineData.m
+//  nationalFitness
+//
+//  Created by 程long on 14-12-17.
+//  Copyright (c) 2014年 chenglong. All rights reserved.
+//
+
+#import "NFMineData.h"
+#import "NFDatabaseQueue.h"
+#import "NFUserEntity.h"
+
+@implementation NFMineData
+
+#pragma mark - system message
+
+@end
+
+
